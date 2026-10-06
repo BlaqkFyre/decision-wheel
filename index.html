@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decision Wheel</title>
+<script id="dw-saved" type="application/json">{"version": 1, "people": [{"name": "Luke", "self": true, "church": "Brethren / Baptist background", "trad": ["Brethren", "Baptist"], "answers": {"Millennium": 0, "Rapture timing": 0, "Reading Revelation": 0, "Israel & the Church": 0, "Daniel's 70th week": 0, "The Antichrist": 0, "Final judgment": 0, "After death": 0, "New creation": 0, "Election": 1, "Spiritual gifts": 1, "Baptism": 0, "Missions & the unreached": 0, "Eternal security": 0, "Creation": 0, "Women in ministry": 1, "Lord's Supper": 0}, "alsoHolds": {"Israel & the Church": [1]}, "conviction": {"Missions & the unreached": 5, "Eternal security": 5, "Creation": 5, "Women in ministry": 4, "Lord's Supper": 5}, "saved": 1791192904025}, {"name": "Sarah", "self": false, "church": "Brethren", "trad": [], "answers": {"Millennium": 0, "Rapture timing": 0, "Reading Revelation": 0, "Israel & the Church": 1, "Daniel's 70th week": null, "The Antichrist": 0, "Final judgment": 0, "After death": 0, "New creation": 0, "Election": 2, "Spiritual gifts": 0, "Baptism": 0, "Missions & the unreached": 0, "Eternal security": 0, "Creation": 0, "Women in ministry": 1, "Lord's Supper": 0}, "alsoHolds": {"Rapture timing": [1], "New creation": [1], "Missions & the unreached": [1]}, "conviction": {"Millennium": 4, "Rapture timing": 3, "Reading Revelation": 4, "Israel & the Church": 4, "The Antichrist": 5, "Final judgment": 5, "After death": 5, "New creation": 4, "Election": 5, "Spiritual gifts": 5, "Baptism": 5, "Missions & the unreached": 4, "Eternal security": 5, "Creation": 5, "Women in ministry": 3, "Lord's Supper": 5}, "saved": 1791192538872}], "deleted": {}}</script>
+<style>
+body{margin:0;background:#fff;font-family:Helvetica,Arial,sans-serif;color:#1F2933;display:flex;flex-direction:column;align-items:center}
+.bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px 16px 4px}
+button{padding:9px 16px;font-size:15px;border:1px solid #0E7C86;border-radius:6px;background:#fff;color:#0E7C86;cursor:pointer}
+button.on,button.primary{background:#0E7C86;color:#fff}
+.hint{font-size:13px;color:#52606D;margin:2px 16px 0;text-align:center}
+#s{width:100%;max-width:1150px}#s svg{width:100%;height:auto;display:block}
+.topic{cursor:pointer}
+#tip{position:fixed;pointer-events:none;max-width:320px;background:#fff;border:1px solid #D9DEE3;border-radius:8px;box-shadow:0 6px 24px rgba(31,41,51,.15);padding:12px 14px;font-size:13px;line-height:1.4;display:none;z-index:10}
+#tip h4{margin:0 0 2px;font-size:15px}
+#tip .q{color:#52606D;margin:0 0 8px;font-style:italic}
+#tip .o{margin:6px 0 0;padding-left:16px;position:relative;color:#52606D}
+#tip .o:before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border-radius:50%;border:2px solid #9AA3AD;box-sizing:border-box}
+#tip .o.dec{color:#1F2933}
+#tip .o.dec:before{background:#0E7C86;border-color:#0E7C86}
+#tip .o b{color:#1F2933}
+#tip .o.dec b,#tip .o.also b{color:#0E7C86}
+#tip .o.also:before{border-color:#0E7C86}
+.cmp{width:100%;max-width:1060px;padding:8px 16px 32px;box-sizing:border-box}
+.cmp h2{font-size:22px;margin:10px 0 2px}
+.cmp .sub{color:#52606D;font-size:14px;margin:0 0 14px}
+.people{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{display:flex;align-items:center;gap:6px;border:1.5px solid #D9DEE3;border-radius:999px;padding:4px 10px 4px 4px;cursor:pointer;background:#fff}
+.chip.active{border-color:#1F2933;box-shadow:0 0 0 2px #1F2933 inset}
+.chip.off{opacity:.4}
+.chip input[type=text]{border:0;font:600 14px Helvetica,Arial;width:80px;color:#1F2933;background:transparent}
+.chip input[type=checkbox]{margin:0 2px 0 4px;cursor:pointer}
+.dot{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:700 11px Helvetica,Arial;flex:none;box-shadow:0 0 0 2px #fff}
+.grid{display:grid;grid-template-columns:minmax(130px,1.1fr) repeat(3,minmax(0,1fr)) 92px;border-top:1px solid #E4E7EB}
+.grid>div{border-bottom:1px solid #E4E7EB;padding:8px 8px;min-height:44px;box-sizing:border-box}
+.gh{font-size:12px;color:#52606D;text-transform:uppercase;letter-spacing:.04em;align-self:end;border-bottom:1px solid #9AA3AD!important}
+.tn{font-weight:700;font-size:14px;display:flex;align-items:center}
+.cell{cursor:pointer;border-radius:4px;transition:background .15s}
+.cell:hover{outline:1.5px solid #9AA3AD;outline-offset:-3px}
+.cell .on{font-size:12.5px;font-weight:600;color:#1F2933;margin-bottom:5px}
+.cell .ds{display:flex;flex-wrap:wrap;gap:3px}
+.agree{font-size:12.5px;color:#52606D;display:flex;align-items:center}
+.agree b{color:#1F2933}
+.pair{margin-top:26px}
+.pair h3{font-size:16px;margin:0 0 2px}
+.pair table{border-collapse:separate;border-spacing:3px;margin-top:8px}
+.pair td,.pair th{width:64px;height:40px;text-align:center;font-size:13px;border-radius:4px}
+.pair th{font-weight:600;color:#1F2933}
+.blank{display:none}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 16px}
+.tabs button{padding:6px 14px;font-size:14px}
+.hm{border-collapse:separate;border-spacing:3px;font-size:12.5px;width:100%}
+.hm th{font-weight:600;text-align:left;padding:4px 6px;white-space:nowrap}
+.hm td{border-radius:4px;padding:8px 6px;text-align:center;font-weight:600;min-width:90px}
+.hm td.n{color:#9AA3AD;background:#F4F5F7;font-weight:400}
+.key{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#52606D;margin:10px 0 0}
+.key span{display:inline-flex;align-items:center;gap:5px}
+.key i{width:14px;height:14px;border-radius:3px;display:inline-block}
+.lbl{border-collapse:collapse;width:100%;font-size:13.5px}
+.lbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#52606D;border-bottom:1px solid #9AA3AD;padding:8px}
+.lbl td{border-bottom:1px solid #E4E7EB;padding:10px 8px;vertical-align:top}
+.tag{display:inline-block;background:#EEF2F4;border-radius:999px;padding:2px 9px;margin:2px 3px 2px 0;font-size:12.5px}
+.src{font-size:12px;color:#52606D;margin-top:18px;line-height:1.5}
+.src a{color:#0E7C86}
+.selref{font:14px Helvetica,Arial;padding:4px 6px;margin-left:6px}
+.pbar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+button.mini{padding:5px 11px;font-size:13px}
+.fams{display:flex;flex-wrap:wrap;gap:10px 22px;margin-bottom:16px}
+.fh{font-size:12px;font-weight:700;color:#52606D;text-transform:uppercase;letter-spacing:.04em;margin:0 0 5px;display:flex;align-items:center;gap:6px}
+.fh i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.fam .people{margin:0;gap:6px}
+button.chip{font:600 13.5px Helvetica,Arial;color:#1F2933;padding:3px 10px 3px 3px;border:1.5px solid #D9DEE3}
+button.chip.off{opacity:.38}
+.hm th.ch{text-align:center;font-size:12px;white-space:normal;min-width:62px}
+.hm{table-layout:fixed}.hm td{min-width:0;font-size:11.5px;padding:7px 3px;overflow-wrap:anywhere;hyphens:auto}.hm th.ch{min-width:0;font-size:11.5px}.hm tr>th:first-child{width:140px}
+.vm{font-size:9px;margin-left:2px;letter-spacing:-1px;opacity:.85}
+.hmt{table-layout:auto;min-width:1480px}.hmt td{min-width:66px}.hmt th:first-child{width:170px;font-size:12.5px}.hmt td{font-size:11.5px;overflow-wrap:normal;hyphens:none}
+.new{font:600 9.5px Helvetica,Arial;background:#FFF4D6;color:#7A5A00;border-radius:4px;padding:1px 4px;margin-left:2px;text-transform:uppercase}
+.chin{font:13.5px Helvetica,Arial;border:1px solid #D9DEE3;border-radius:4px;padding:4px 6px;width:150px}
+
+.tbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:0 0 12px;font-size:14px}
+.qb{display:flex;gap:6px;flex-wrap:wrap}
+button.lnk{border:0;background:none;color:#0E7C86;font:600 11px Helvetica,Arial;padding:0 2px;margin-left:4px;cursor:pointer;text-decoration:underline;text-transform:none;letter-spacing:0}
+button.chip.tgt{border-color:#1F2933;box-shadow:0 0 0 1.5px #1F2933 inset}
+.new.usr{background:#E3F1F2;color:#0E5F66}
+.ch3{font-size:16px;margin:18px 0 6px}
+.clist{list-style:none;padding:0;margin:0}.clist li{padding:9px 0;border-bottom:1px solid #E4E7EB;font-size:14px}
+.cdet{font-size:12.5px;color:#52606D;margin-top:3px}
+.cbar{display:inline-block;width:90px;height:7px;background:#F1F3F5;border-radius:4px;margin-left:10px;vertical-align:middle;overflow:hidden}.cbar i{display:block;height:100%;background:#0E7C86}
+.rl{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.rcard{border:1px solid #E4E7EB;border-radius:8px;padding:12px 14px}
+.rt{font-weight:700;font-size:15px;margin-bottom:4px}.rov{font-size:12.5px;color:#52606D;margin-bottom:6px}
+.ro{font-size:13px;padding:6px 0;border-top:1px dashed #E4E7EB}.ro div{color:#52606D;margin-top:2px}
+.rtag{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:4px}.rtag.dec{background:#0E7C86;color:#fff}.rtag.also{background:#fff;color:#0E7C86;border:1.5px solid #0E7C86}.rtag.con{background:#EEF2F4;color:#52606D}.rcard.flash{box-shadow:0 0 0 3px #0E7C86}.rcard{transition:box-shadow .3s}
+.blinks{display:inline-flex;flex-wrap:wrap;gap:4px;margin-left:4px;vertical-align:middle}
+.blink{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;text-decoration:none;white-space:nowrap}
+.blink.au{background:#E3F1F2;color:#0E5F66}.blink.us{background:#EEF2F4;color:#52606D}.blink.free{background:#E7F6EC;color:#1E6B3A}
+.bk{margin:3px 0}
+.kbadge{font-size:10px;font-weight:700;background:#FFF4D6;color:#7A5A00;border-radius:4px;padding:1px 5px;margin-left:4px}.rtag.dif{background:#FBE3D7;color:#1F2933}
+.sv .svtop{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;font-size:14px}
+.svrow{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0;font-size:14px;align-items:center}
+.svq{border:1px solid #E4E7EB;border-radius:8px;margin:10px 0;padding:10px 14px}
+.svq legend{font-weight:700;font-size:15px;padding:0 4px}.svq legend span{font-weight:400;color:#52606D;font-style:italic;font-size:13px;margin-left:6px}
+.svopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px}
+.svo{display:block;border:1px solid #E4E7EB;border-radius:6px;padding:7px 9px;font-size:13px;cursor:pointer}
+.svo:has(input:checked){border-color:#0E7C86;background:#EAF5F6}
+.svo b{margin-left:4px}.svo span{display:block;color:#52606D;font-size:12px;margin-top:2px}.svo.ns{display:flex;align-items:center}
+.svmeta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:8px;font-size:12.5px;color:#52606D}.svmeta label{margin-right:6px}
+.fbtn{display:inline-block;padding:5px 11px;font-size:13px;border:1px solid #0E7C86;border-radius:6px;color:#0E7C86;cursor:pointer}
+.err{color:#B42318;font-size:13px}
+.savestat{font-size:12.5px;color:#52606D;text-align:center;margin:2px 16px 0}.savestat .lnk{font-size:12.5px}
+button.mini.primary{background:#0E7C86;color:#fff}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#1F2933;color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+select.selref{font:14px Helvetica,Arial;padding:4px 6px}
+</style></head>
+<body>
+<div class="bar">
+  <button id="vWheel" class="on">Wheel</button>
+  <button id="vCompare">Compare people</button>
+  <button id="vSurvey">Survey</button>
+</div>
+<div class="savestat" id="savestat"></div>
+<div class="bar" id="wheelBar">
+  <button id="play" class="primary">Play transition</button>
+  <button id="loop">Loop (2s each)</button>
+  <button id="vBranch" class="on">Branch style</button>
+  <button id="vInline">Inline style</button>
+  <select id="selset" class="selref" title="Which topics to show"><option value="all">All 17 topics</option><option value="core">Original 12</option><option value="end">End times &amp; afterlife (9)</option><option value="church">Salvation, church &amp; mission (8)</option></select>
+  <select id="selowner" class="selref" title="Whose wheel"></select>
+</div>
+<div class="hint" id="hint">Hover a topic for details · click it to change the decision · thicker teal spokes = stronger conviction.</div>
+<div id="s"></div>
+<div id="tip"></div>
+<script>
+const SRC="<!doctype html>\n"+document.documentElement.outerHTML;
+const TOPICS=[
+ {name:"Millennium",q:"When is Christ's 1,000-year reign (Rev\u00a020)?",pick:0,opts:[
+   {s:"Premil",n:"Premillennial",d:"Christ returns before a literal 1,000-year reign on earth."},
+   {s:"Amil",n:"Amillennial",d:"The millennium symbolises Christ's present reign, now."},
+   {s:"Postmil",n:"Postmillennial",d:"The gospel's spread brings a golden age before Christ returns."}]},
+ {name:"Rapture timing",q:"When are believers caught up (1\u00a0Thess\u00a04)?",pick:0,opts:[
+   {s:"Pre-trib",n:"Pre-tribulation",d:"The Church is raptured before the seven-year tribulation."},
+   {s:"Mid / Pre-wrath",n:"Mid-trib / Pre-wrath",d:"Raptured partway through, before God's wrath is poured out."},
+   {s:"Post-trib",n:"Post-tribulation",d:"The Church goes through it; rapture and return are one event."}]},
+ {name:"Reading Revelation",q:"How do Revelation's prophecies map onto history?",pick:0,opts:[
+   {s:"Futurist",n:"Futurist",d:"Most of Revelation (ch. 4–22) is still to come."},
+   {s:"Preterist",n:"Preterist",d:"Much was fulfilled in the first century (AD 70); Christ's return is still future."},
+   {s:"Idealist",n:"Idealist",d:"Timeless symbols of the conflict between God and evil."}]},
+ {name:"Israel & the Church",q:"How do Israel and the Church relate in God's plan?",pick:0,also:[1],opts:[
+   {s:"Distinct",n:"Distinct (Dispensational)",d:"Separate peoples; God's promises to Israel are fulfilled to Israel."},
+   {s:"Progressive",n:"Progressive dispensational",d:"Distinct but closely joined in one unfolding kingdom plan."},
+   {s:"One people",n:"One people (Covenant)",d:"The Church continues Israel as the one people of God."}]},
+ {name:"Daniel's 70th week",q:"Is the final 'week' of Daniel\u00a09:24–27 fulfilled?",pick:0,opts:[
+   {s:"Still future",n:"Still future",d:"A gap follows week 69; the 70th is the coming tribulation."},
+   {s:"Fulfilled",n:"Fulfilled in Christ",d:"Fulfilled in Christ's ministry, death and the first century."}]},
+ {name:"The Antichrist",q:"Who or what is the Antichrist?",pick:0,opts:[
+   {s:"Future individual",n:"Future individual",d:"A single world ruler who rises in the last days."},
+   {s:"Historical",n:"Historical figure",d:"A past figure or institution (e.g. Nero, the papacy)."},
+   {s:"Spirit / system",n:"Recurring spirit",d:"A spirit of opposition to Christ present in every age."}]},
+ {name:"Final judgment",q:"What is the fate of those who reject Christ?",pick:0,opts:[
+   {s:"Eternal",n:"Eternal conscious punishment",d:"Unending, conscious separation from God."},
+   {s:"Annihilation",n:"Annihilationism",d:"The unsaved are finally destroyed and cease to exist."},
+   {s:"Universalism",n:"Universal reconciliation",d:"All are eventually reconciled to God."}]},
+ {name:"After death",q:"Where are believers between death and resurrection?",pick:0,opts:[
+   {s:"Conscious",n:"Conscious with Christ",d:"The soul is immediately and consciously with the Lord."},
+   {s:"Soul sleep",n:"Soul sleep",d:"The dead are unconscious until the resurrection."}]},
+ {name:"New creation",q:"What becomes of this creation in eternity?",pick:0,opts:[
+   {s:"Renewal",n:"Renewal: new heavens & earth",d:"This creation is purified and transformed, not discarded; the redeemed live bodily on a renewed earth."},
+   {s:"Re-creation",n:"Annihilation & re-creation",d:"The present universe is burned up entirely and God creates a new one from nothing (2 Pet 3:10)."},
+   {s:"Spiritual heaven",n:"Spiritual heaven",d:"Eternity is a non-earthly, heavenly existence centred on the vision of God."}]},
+ {name:"Election",q:"How do God's choice and ours relate in salvation?",pick:1,opts:[
+   {s:"Calvinist",n:"Calvinist",d:"God unconditionally chooses who will be saved."},
+   {s:"Arminian",n:"Arminian",d:"God elects based on foreseen faith; grace can be resisted."},
+   {s:"Molinist",n:"Molinist",d:"God's 'middle knowledge' reconciles sovereignty and free will."}]},
+ {name:"Spiritual gifts",q:"Do tongues, prophecy and healing continue today?",pick:1,opts:[
+   {s:"Continuationist",n:"Continuationist",d:"All gifts of the Spirit continue in the Church today."},
+   {s:"Open but cautious",n:"Open but cautious",d:"Open to miraculous gifts, but wary of excesses."},
+   {s:"Cessationist",n:"Cessationist",d:"Miraculous sign gifts ceased with the apostles."}]},
+ {name:"Baptism",q:"Who should be baptised?",pick:0,opts:[
+   {s:"Believer's",n:"Believer's baptism",d:"Only those who personally profess faith."},
+   {s:"Infant",n:"Infant baptism",d:"Children of believers are baptised as covenant members."}]},
+ {name:"Missions & the unreached",q:"Can those who never hear the gospel be saved?",pick:0,opts:[
+   {s:"Exclusivist",n:"Exclusivism",d:"Salvation needs conscious faith in Christ — which makes reaching the unreached urgent."},
+   {s:"Inclusivist",n:"Inclusivism",d:"Some may be saved through Christ's work by responding to the light they have."},
+   {s:"Hopeful agnostic",n:"Hopeful agnosticism",d:"Scripture doesn't say; trust God's justice and keep sending."}]},
+ {name:"Eternal security",q:"Can a true believer lose their salvation?",pick:0,opts:[
+   {s:"OSAS",n:"Once saved, always saved",d:"Salvation can never be lost, whatever happens later in life."},
+   {s:"Perseverance",n:"Perseverance of the saints",d:"True believers are kept by God and will persevere in faith."},
+   {s:"Conditional",n:"Conditional security",d:"A believer can fall away and forfeit salvation."}]},
+ {name:"Creation",q:"How, and how long ago, did God create?",pick:0,opts:[
+   {s:"Young earth",n:"Young-earth creation",d:"Six 24-hour days, roughly 6,000–10,000 years ago."},
+   {s:"Old earth",n:"Old-earth creation",d:"God created over long ages; the days are ages or a literary framework."},
+   {s:"Evolutionary",n:"Evolutionary creation",d:"God created life through evolutionary processes."}]},
+ {name:"Women in ministry",q:"Can women serve as pastors or elders?",pick:1,opts:[
+   {s:"Complementarian",n:"Complementarian",d:"Pastor/elder roles are for qualified men; women serve in many other ministries."},
+   {s:"Soft comp.",n:"Soft complementarian",d:"Elders are men, but women may preach, teach or hold 'pastor' titles."},
+   {s:"Egalitarian",n:"Egalitarian",d:"All roles, including pastor and elder, are open to women."}]},
+ {name:"Lord's Supper",q:"What happens at the Lord's Supper?",pick:0,opts:[
+   {s:"Memorial",n:"Memorial",d:"A remembrance and proclamation of Christ's death (e.g. the Brethren 'breaking of bread')."},
+   {s:"Spiritual presence",n:"Spiritual presence",d:"Christ is spiritually present, nourishing believers by faith (Calvin)."},
+   {s:"Real presence",n:"Real presence",d:"Christ's body and blood are truly present in, with and under the bread and wine (Lutheran)."}]}
+];
+const V=(...a)=>a.map(x=>Array.isArray(x)?{c:x[0],n:x[1]}:{c:x});
+const PEOPLE=[
+ {name:"Luke",self:true,user:true,trad:["Brethren","Baptist"],on:true,church:"Brethren / Baptist background",v:null},
+ {name:"Chuck Smith",trad:["Calvary Chapel"],on:true,church:"Calvary Chapel (founder)",src:"Calvary Chapel Distinctives; CCA statement of faith",v:V(
+  [0,"Literal millennial kingdom; rejects amillennialism."],[0,"Statement of faith: pre-tribulation rapture."],[0,"Taught Rev 4–22 as future."],
+  [0,"Strong focus on national Israel."],[0,"Dispensational reading: 70th week is the future tribulation."],[0,"Future personal Antichrist."],
+  [0,"'Endless separation of the wicked'."],[0,"Widely taught in Calvary Chapel; not in the formal statement."],[null,"Not addressed in the statement of faith."],
+  [1,"Rejects 5-point Calvinism, affirms free will; called it a middle way."],[1,"Middle ground between fundamentalism and Pentecostalism."],[0,"Full-immersion believer's baptism."])},
+ {name:"John MacArthur",trad:["Non-denominational Bible church"],on:false,church:"Grace Community Church (non-denominational)",src:"Grace to You sermons",v:V(0,0,0,0,0,0,0,0,
+  [1,"Present universe 'uncreated' and replaced (Rev 21 sermons)."],0,[2,"Prominent cessationist (Strange Fire)."],0)},
+ {name:"John Walvoord",trad:["Bible church (dispensational)"],on:false,church:"Dallas Theological Seminary (president)",src:"The Rapture Question; The Millennial Kingdom",v:V(0,0,0,0,0,0,0,
+  null,null,null,null,null)},
+ {name:"Darrell Bock",trad:["Bible church (dispensational)"],on:false,church:"Dallas Theological Seminary",src:"Progressive Dispensationalism (with C. Blaising); interviews",v:V(
+  [0,"Christ reigns 1,000 years on earth after his return."],[0,"'The rapture… takes place before the tribulation.'"],[0,"Reads the tribulation and Rev 20 as future events."],
+  [1,"Co-author of Progressive Dispensationalism; church ≠ Israel, one unfolding kingdom plan."],null,[0,"Antichrist comes after the rapture, before Christ's return."],
+  null,null,null,null,null,null)},
+ {name:"J.N. Darby",trad:["Plymouth Brethren"],on:false,church:"Plymouth (Exclusive) Brethren founder",src:"Collected Writings; letter 'Why I could not be a Baptist'",v:V(
+  0,[0,"Pioneered the pre-tribulation rapture teaching."],0,[0,"Father of dispensationalism: Israel and the church kept distinct."],0,0,
+  null,null,null,[0,"Strongly opposed 'free-will' teaching."],null,[1,"Practised household baptism of believers' children; rejected the Baptist position."])},
+ {name:"Wayne Grudem",trad:["Baptist / evangelical"],on:false,church:"Phoenix Seminary (evangelical)",src:"Systematic Theology (chs. 42, 54–57)",v:V(
+  [0,"Classic (historic) premillennialism."],[2,"Christ returns after the tribulation."],[0,"Reads Rev 20 as future events."],
+  [2,"No sharp Israel/church distinction in the NT."],null,[0,"'Man of sin' is a future figure."],0,[0,"Rejects soul sleep."],[0,"Earth renewed, not destroyed."],0,
+  [0,"Continuationist; edited 'Are Miraculous Gifts for Today?'"],0)},
+ {name:"John Piper",trad:["Baptist (Converge)"],on:false,church:"Bethlehem Baptist Church",src:"Desiring God; 'An Evening of Eschatology' (2009)",v:V(
+  [0,"Historic premillennialist; sees amillennialism as next most plausible."],[2,"Post-tribulationist."],[0,"Futurist."],[2,"Not dispensational; one people of God."],
+  null,[0],0,0,[0],0,[0,"Continuationist, with caution."],0)},
+ {name:"Jack Hayford",trad:["Foursquare Pentecostal"],on:false,church:"Foursquare Church (The Church On The Way)",src:"Foursquare Declaration of Faith; Unlocking the End-Book",v:V(
+  [0,"Foursquare was historically premillennial."],[null,"Foursquare deliberately avoids fixing rapture timing."],null,null,null,null,
+  0,0,null,[1,"Wesleyan-Arminian Pentecostal tradition."],[0,"Pentecostal; spiritual gifts active today."],0)},
+ {name:"N.T. Wright",trad:["Anglican"],on:false,church:"Church of England",src:"Surprised by Hope; Jesus and the Victory of God; 'Farewell to the Rapture'",v:V(
+  [1,"Broadly amillennial; Rev 20 not a literal future reign."],[2,"Rejects a separate rapture: one return of Christ."],[null,"Symbolic, first-century-rooted reading."],
+  [2,"One renewed people of God in Christ."],[1,"Jesus' judgment prophecies fulfilled in AD 70."],null,
+  [null,"Own view: the lost become 'ex-human' — not ECP, annihilation or universalism."],[0,"Life after death, then resurrection."],[0,"Leading advocate of creation renewed."],
+  [null,"Covenant-focused election; neither label fits."],null,[1,"Anglican; infant baptism."])},
+ {name:"John Stott",trad:["Anglican"],on:false,church:"Church of England (All Souls, Langham Place)",src:"Evangelical Essentials (1988)",v:V(
+  null,null,null,null,null,null,[1,"Tentatively held annihilationism (Evangelical Essentials)."],null,null,null,null,[1,"Anglican; infant baptism."])},
+ {name:"R.C. Sproul",trad:["Presbyterian (PCA)"],on:false,church:"Presbyterian (Saint Andrew's Chapel)",src:"The Last Days According to Jesus (1998)",v:V(
+  [2,"Leaned postmillennial (undecided between amil and postmil for many years)."],[2,"No separate rapture; one return."],[1,"Partial preterist: much of Revelation fulfilled by AD 70."],
+  2,[1,"Olivet and related prophecy fulfilled in AD 70."],[1,"Leaned toward Nero as the beast, allowing a future fulfilment."],0,0,null,0,2,1)},
+ {name:"Kenneth Gentry",trad:["Presbyterian / Reformed"],on:false,church:"Reformed",src:"He Shall Have Dominion; Before Jerusalem Fell",v:V(
+  [2,"Leading postmillennial advocate."],[2,"No separate rapture."],[1,"Partial preterist; Revelation written before AD 70."],2,[1],[1,"Identifies the beast with Nero."],
+  null,null,null,0,null,null)}
+ ,
+ // ----- Modern authors (prominent 2006–present). Only claims found in sources are filled; see VER for source counts.
+ {name:"Tim Keller",modern:true,trad:["Presbyterian (PCA)"],on:false,church:"Redeemer Presbyterian, NYC (PCA)",src:"The Reason for God (2008); Wikipedia",v:V(
+  [null,"Did not tie his teaching to a millennial system; stressed shared truths over timelines."],null,null,null,null,null,
+  [0,"Hell is real and unending — 'one's freely chosen path going on forever' (The Reason for God)."],null,null,
+  [0,"Identified with Calvinist theology."],null,[1,"PCA minister; the PCA practises infant baptism (inferred from denomination)."])},
+ {name:"Sam Storms",modern:true,trad:["Reformed charismatic"],on:false,church:"Bridgeway Church, Oklahoma City",src:"Kingdom Come: The Amillennial Alternative (2013)",v:V(
+  [1,"Amillennial: the millennium is the present church age (Kingdom Come)."],[2,"Abandoned his earlier pre-trib view; holds one return of Christ."],null,
+  [2,"'Only one people of God, the Church, comprised of Jews and believing Gentiles.'"],null,null,null,null,null,
+  [0,"Self-described 'amillennial, Calvinistic, charismatic, credo-baptistic'."],[0,"Charismatic / continuationist."],[0,"Credo-baptist (believer's baptism)."])},
+ {name:"Matt Chandler",modern:true,trad:["Reformed charismatic","Baptist (SBC)"],on:false,church:"The Village Church, Texas",src:"Wikipedia; Christian Post interview",v:V(
+  null,null,null,null,null,null,null,null,null,
+  [0,"Election is 'free and unconditional' — Reformed soteriology."],[0,"Describes himself as both Reformed and charismatic: 'Word and wonder'."],null)},
+ {name:"David Jeremiah",modern:true,trad:["Baptist (SBC)"],on:false,church:"Shadow Mountain Community Church",src:"Christian Post interview; Turning Point sermons",v:V(
+  [0,"Identifies as premillennial."],[0,"Pre-tribulational ('Translated Before the Tribulation')."],[0,"Many prophecies 'could not be fulfilled until Israel was at home in her nation'."],
+  [0,"Sees the 1948 restoration of national Israel as the start of the end times."],null,null,null,null,null,null,null,null)},
+ {name:"Greg Laurie",modern:true,trad:["Calvary Chapel","Baptist (SBC)"],on:false,church:"Harvest Christian Fellowship (Calvary Chapel roots; SBC since 2017)",src:"Harvest.org end-times articles; Wikipedia",v:V(
+  [0,"Millennial reign of Christ follows the Second Coming."],[0,"'The next event is the Rapture'; it precedes the seven-year tribulation."],[0,"Lays out Revelation's events as a future sequence."],
+  null,null,[0,"The Antichrist emerges after the rapture and brokers a false peace."],null,null,null,null,null,null)},
+ {name:"Amir Tsarfati",modern:true,trad:["Messianic / dispensational"],on:false,church:"Behold Israel (Israel-based ministry)",src:"Israel and the Church (2021); Christ in Prophecy interview",v:V(
+  [0,"Dispensational framework with Israel restored to 'center stage in the last days'."],[0,"'The Rapture happening before the Tribulation begins.'"],[0,"The church 'is not even mentioned throughout the Tribulation in the book of Revelation'."],
+  [0,"Israel and the church are 'two distinct peoples with distinct purposes'."],null,[0,"Past antichrists, but a future 'Antichrist' whom Jesus defeats at his return."],null,null,null,null,null,null)}
+ ,
+ // ----- Added from Koorong bestseller authors (5+ topics with citable views)
+ {name:"C.S. Lewis",trad:["Anglican"],on:false,church:"Church of England",src:"Mere Christianity; The Great Divorce; 'Priestesses in the Church?'",v:V(
+  null,null,null,null,null,null,
+  [0,"Hell is real but chosen — The Great Divorce pictures its residents refusing heaven."],
+  [0,"Held to conscious life after death with purgatory-like purification (The Great Divorce; Letters to Malcolm)."],null,null,null,
+  [1,"Anglican (Church of England) — infant baptism, by denomination."],
+  [1,"'We do not know that only those who know Him can be saved by Him' (Mere Christianity)."],null,
+  [2,"No objection to humans being 'physically descended from animals'; rejected 'Evolutionism' as a worldview."],
+  [0,"'Priestesses in the Church?' (1948) opposed ordaining women as priests."],null)},
+ {name:"J.I. Packer",trad:["Anglican"],on:false,church:"Anglican (Regent College, Vancouver)",src:"Knowing God; 'Baptism and Regeneration' (2013); 'Let's Stop Making Women Presbyters' (1991)",v:V(
+  null,null,null,null,null,null,
+  [0,"Defended eternal punishment against Stott's annihilationism, while calling annihilationists 'honoured fellow-evangelicals'."],null,null,
+  [0,"Calvinist (Reformed) soteriology."],null,
+  [1,"'The baptism of young children is… to be retained in the Church' (Baptism and Regeneration)."],
+  [2,"'Pessimistic agnosticism': no warrant to expect salvation without the gospel, but leaves it with God."],null,
+  [null,"Endorsed books advocating theistic evolution while voicing reservations."],
+  [0,"Complementarian: 'Let's Stop Making Women Presbyters'; CBMW advisory board."],null)},
+ {name:"Kevin DeYoung",modern:true,trad:["Presbyterian (PCA)"],on:false,church:"Christ Covenant Church, Matthews NC (PCA)",src:"Christ Covenant sermons (2024); Men and Women in the Church (2021)",v:V(
+  [1,"'I hold to the amillennial view' (sermon, May 2024)."],null,null,
+  [2,"God 'reconstituted what it means to be Israel around the person of Jesus'; the church is 'the Israel of God'."],null,null,null,null,null,
+  [0,"Reformed; Grace Defined and Defended."],null,[1,"Argues for covenant (infant) baptism."],null,null,null,
+  [0,"Male eldership; author of Men and Women in the Church."],null)}
+,
+ {name:"Rick Warren",modern:true,trad:["Baptist (formerly SBC)"],on:false,church:"Saddleback Church (founder)",src:"2011 interview with John Piper; Saddleback / SBC reporting",v:V(
+  null,null,null,null,null,null,
+  [0,"'I believe in a literal hell… once you're in, you can't get out' (2011 interview with John Piper)."],null,null,
+  [0,"Affirms God's unconditional election alongside human free choice ('an ant trying to understand the Internet')."],null,
+  [0,"Saddleback baptises professing believers — over 50,000 baptisms reported."],
+  [0,"'If you can be saved without Christ, missions is a crock.'"],null,null,
+  [2,"Saddleback ordained women pastors and was removed from the SBC over it (2023); Warren says he was wrong not to allow women pastors earlier."],null)},
+ // ----- Added with fewer than 4 sourced topics (being researched further)
+ {name:"John Lennox",modern:true,trad:["Brethren (background)"],on:false,church:"Northern Ireland evangelical upbringing; Oxford",src:"Determined to Believe (2017); Seven Days That Divide the World (2011)",v:V(
+  null,null,null,null,null,null,null,null,null,
+  [1,"Rejects Calvinist determinism in Determined to Believe; avoids labels — closest to the free-will position."],null,null,null,null,
+  [1,"Seven Days That Divide the World: Genesis leaves the age of the universe open; critiqued by young-earth reviewers."],null,null)},
+ {name:"Rebecca McLaughlin",modern:true,trad:[],on:false,church:"—",src:"'Confessions of a Reluctant Complementarian' (TGC)",v:V(
+  null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[0,"Describes herself as a 'reluctant complementarian'."],null)},
+ {name:"Jonathan Cahn",modern:true,trad:["Messianic Jewish"],on:false,church:"Beth Israel Worship Center (Messianic)",src:"Wikipedia",v:V(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)},
+ {name:"Alistair Begg",modern:true,trad:[],on:false,church:"Parkside Church, Ohio",src:"",v:V(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)},
+ {name:"John Mark Comer",modern:true,trad:[],on:false,church:"Bridgetown Church (former pastor)",src:"",v:V(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)},
+ {name:"Paul David Tripp",modern:true,trad:[],on:false,church:"—",src:"",v:V(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)},
+ {name:"Dane Ortlund",modern:true,trad:[],on:false,church:"—",src:"",v:V(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)}
+];
+
+const VER={
+ "Chuck Smith":{0:2,1:2,6:1,9:1,10:2,11:2},"John MacArthur":{8:1},"Darrell Bock":{0:1,1:1,2:1,3:1,5:1},"J.N. Darby":{9:1,11:1},
+ "Wayne Grudem":{0:1,1:1,2:1,3:1},"John Piper":{0:2,1:2},"Jack Hayford":{1:1},"N.T. Wright":{6:1},"John Stott":{6:2},
+ "R.C. Sproul":{0:1,2:1,4:1,5:1},
+ "Tim Keller":{0:1,6:1,9:1,11:1},"Sam Storms":{0:2,1:1,3:2,9:2,10:1,11:1},"Matt Chandler":{9:2,10:2},
+ "David Jeremiah":{0:1,1:2,2:1,3:1},"Greg Laurie":{0:1,1:3,2:1,5:1},"Amir Tsarfati":{0:1,1:2,2:1,3:2,5:1}};
+const LINKS={
+ "Tim Keller":[["Wikipedia","https://en.wikipedia.org/wiki/Tim_Keller_(pastor)"],["Perriman on Keller and hell","https://www.postost.net/2014/10/tim-keller-gets-lot-right-gets-hell-badly-wrong"]],
+ "Sam Storms":[["Modern Reformation review","https://www.modernreformation.org/resources/book-reviews/-kingdom-come-the-amillennial-alternative-by-sam-storms"],["DTS review","https://voice.dts.edu/review/storms-sam-kingdom-come-amillennial-alternative/"]],
+ "Matt Chandler":[["Wikipedia","https://en.wikipedia.org/wiki/Matt_Chandler_(pastor)"],["Christian Post","https://www.christianpost.com/news/matt-chandler-being-reformed-and-charismatic-feels-like-being-an-orphan-we-need-both.html"]],
+ "David Jeremiah":[["Christian Post","https://www.christianpost.com/news/the-end-times-are-here-and-began-with-the-re-establishment-of-israel-says-david-jeremiah-130010/"],["Sermon: Translated Before the Tribulation","https://sermons.love/david-jeremiah/225-david-jeremiah-translated-before-the-tribulation.html"]],
+ "Greg Laurie":[["Harvest: Chronology of end-times events","https://harvest.org/resources/gregs-blog/post/chronology-of-end-times-events/"],["Harvest: The church and the tribulation","https://harvest.org/know-god-article/the-church-and-the-tribulation-period/"],["Wikipedia","https://en.wikipedia.org/wiki/Greg_Laurie"]],
+ "Amir Tsarfati":[["Christ in Prophecy interview","https://christinprophecyblog.org/2020/11/messianic-jewish-insights-with-amir-tsarfati-which-tribulation-christians-overcome/"],["Council for Truth review of Israel and the Church","https://councilfortruth.org/book-review/israel-and-the-church-amir-tsarfati/"]],
+ "Chuck Smith":[["CCA statement of faith","https://calvarycca.org/statement-of-faith/"],["What Calvary Chapel teaches","https://riversidecalvary.com/calvary-chapel-teaches/"]],
+ "John Piper":[["An Evening of Eschatology","https://adammaarschalk.com/2009/10/02/john-piper-hosts-an-evening-of-eschatology/"],["Christian Post","https://www.christianpost.com/news/john-piper-backs-professors-end-times-theory-of-premillennialism.html"]],
+ "John Stott":[["Stott on annihilationism","https://afterall.net/quotes/john-stott-on-annihilationism/"],["SLJ Institute","https://sljinstitute.net/miscellaneous-topics/john-stott-philip-e-hughes-and-flirtation-with-annihilationism/"]]};
+
+// Views on the five newer topics: [missions, security, creation, women, supper]. null = no clear/sourced position.
+const NEWV={
+ "Chuck Smith":[null,[2,"'As long as I abide in Christ, I'm eternally secure' — security tied to abiding (Calvary Chapel Magazine)."],null,null,null],
+ "John MacArthur":[null,[1,"Lordship salvation: genuine faith continues in holiness."],[0,"Young-earth creationist (The Battle for the Beginning)."],[0,"Women may not preach to or hold authority over men in church."],null],
+ "J.N. Darby":[null,null,null,null,[0,"Brethren 'remembrance meeting': weekly breaking of bread as a memorial."]],
+ "Wayne Grudem":[null,[1],[1,"Old-earth creationist in his Systematic Theology; critic of theistic evolution."],[0,"Co-founder of CBMW; co-edited Recovering Biblical Manhood and Womanhood."],null],
+ "John Piper":[[0,"Wrote 'Jesus: The Only Way to God — Must You Hear the Gospel to Be Saved?'"],[1],[1,"Leans to Sailhamer's 'historical creationism' (ancient earth); rejects human evolution."],[0,"Co-edited Recovering Biblical Manhood and Womanhood."],null],
+ "Jack Hayford":[null,[2,"Foursquare teaches a believer can backslide or commit apostasy."],null,[2,"Foursquare (founded by Aimee Semple McPherson) ordains women — denominational stance."],[0,"Foursquare declaration: the Supper is 'a blessed type' to remind of Christ's blood."]],
+ "John Stott":[[2,"'The most Christian stance is to remain agnostic' — optimistic agnosticism."],null,null,null,null],
+ "N.T. Wright":[null,null,null,[2,"Supported women bishops; argues equality in role 'but not identity'."],null],
+ "R.C. Sproul":[null,[1],[null,"Held to six days but said 'I don't know how old the earth is'."],[0],[1]],
+ "Tim Keller":[null,[1],[null,"Evolution 'neither ruled in nor ruled out' at Redeemer."],[0,"Complementarian (Wikipedia)."],[1]],
+ "Sam Storms":[null,[1],null,[1,"'A complementarian case for women as pastors': elders male, women may serve as pastors."],null],
+ "Matt Chandler":[null,[1],null,[0,"Taught 'the complementary roles of men and women'; Village Church elders are men."],null]
+};
+Object.assign(VER,{"C.S. Lewis":{6:1,7:2,11:1,12:2,14:2,15:2},"J.I. Packer":{6:1,9:2,11:1,12:1,15:1},"Kevin DeYoung":{0:1,3:1,9:1,11:2,15:2},"Rick Warren":{6:1,9:1,11:1,12:1,15:2},"John Lennox":{9:2,14:2},"Rebecca McLaughlin":{15:2},
+ "John Stott":{...VER["John Stott"],12:1},
+ "Chuck Smith":{...VER["Chuck Smith"],13:1},"John MacArthur":{...VER["John MacArthur"],13:1,14:2,15:2},"J.N. Darby":{...VER["J.N. Darby"],16:2},
+ "Wayne Grudem":{...VER["Wayne Grudem"],14:2,15:2},"John Piper":{...VER["John Piper"],12:2,14:2,15:2},"Jack Hayford":{...VER["Jack Hayford"],13:1,15:1,16:1},
+ "N.T. Wright":{...VER["N.T. Wright"],15:2},"R.C. Sproul":{...VER["R.C. Sproul"],14:1},"Tim Keller":{...VER["Tim Keller"],14:1,15:1},
+ "Sam Storms":{...VER["Sam Storms"],15:2},"Matt Chandler":{...VER["Matt Chandler"],15:2}});
+Object.assign(LINKS,{
+ "John Lennox":[["Determined to Believe (publisher page)","https://johnlennox.org/book/determined-to-believe/"],["Review of Determined to Believe","https://stumblingstonepress.com/2021/11/07/determined-to-believe/"],["Lennox on the age of the earth","https://joshualetter.com/2019/12/02/john-c-lennox-on-the-age-of-the-earth/"]],
+ "Rebecca McLaughlin":[["Confessions of a Reluctant Complementarian (TGC)","https://www.thegospelcoalition.org/article/confessions-reluctant-complementarian/"],["Same article on her site","https://www.rebeccamclaughlin.org/post/reluctant-complementarian"]],
+ "Jonathan Cahn":[["Wikipedia","https://en.wikipedia.org/wiki/Jonathan_Cahn"]],
+ "Rick Warren":[["Christian Post: what Warren believes about salvation","https://www.christianpost.com/news/what-rick-warren-believes-about-salvation-eternal-life.html"],["K-LOVE: Saddleback expelled over women pastors","https://www.klove.com/faith/news/faith/saddleback-church-founded-by-rick-warren-expelled-by-sbc-over-ordaining-women-as-pastors-40694"],["ChurchLeaders: Warren on women pastors","https://churchleaders.com/news/453048-rick-warren-believes-he-sinned-by-not-allowing-women-to-be-pastors-saddlebacks-sbc-removal-upheld.html"],["Christian Post: 50,000 baptisms","https://www.christianpost.com/news/rick-warren-saddleback-church-first-baptize-50000-people.html"]],
+ "C.S. Lewis":[["BioLogos: Lewis and evolutionary science","https://biologos.org/articles/surprised-by-jack-c-s-lewis-on-mere-christianity-the-bible-and-evolutionary-science"],["Desiring God: Was C.S. Lewis an egalitarian?","https://www.desiringgod.org/articles/was-c-s-lewis-an-egalitarian"],["Priestesses in the Church? (text)","https://www.anglican.net/works/c-s-lewis-priestesses-in-the-church-1948/"],["Lewis on inclusivism","https://corthodoxy.wordpress.com/2008/02/22/cs-lewis-on-inclusivism/"],["The Great Divorce (Wikipedia)","https://en.wikipedia.org/wiki/The_Great_Divorce"],["C.S. Lewis (Wikipedia)","https://en.wikipedia.org/wiki/C._S._Lewis"]],
+ "J.I. Packer":[["Wikipedia","https://en.wikipedia.org/wiki/J._I._Packer"],["Rethinking Hell on Packer","https://rethinkinghell.com/2015/10/23/why-j-i-packer-is-still-wrong-a-response-to-tgc-part-1/"],["Packer: Baptism and Regeneration","https://bcp2019.anglicanchurch.net/wp-content/uploads/2020/06/ART-Baptism_and_Regeneration_Dr_Packer.pdf"],["TGC: What about those who haven't heard?","https://www.thegospelcoalition.org/article/what-about-those-who-havent-heard/"]],
+ "Kevin DeYoung":[["Sermon: The When and the What of the Millennium","https://christcovenant.org/sermons/the-when-and-the-what-of-the-millennium/"],["Sermon: What is Dispensationalism?","https://christcovenant.org/sermons/questions-from-revelation-what-is-dispensationalism/"],["Wikipedia","https://en.wikipedia.org/wiki/Kevin_DeYoung"],["TGC: New Wave Complementarianism","https://www.thegospelcoalition.org/blogs/kevin-deyoung/new-wave-complementarianism-a-question-and-a-concern/"],["On DeYoung's case for covenant baptism","https://johncarpenter.substack.com/p/colossians-211-12-and-kevin-deyoungs"]],
+ "John Stott":[["Stott on annihilationism","https://afterall.net/quotes/john-stott-on-annihilationism/"],["TGC: What about those who haven't heard?","https://www.thegospelcoalition.org/article/what-about-those-who-havent-heard/"]],
+ "John MacArthur":[["Wikipedia","https://en.wikipedia.org/wiki/John_MacArthur_(American_pastor)"],["Challies on The Battle for the Beginning","https://www.challies.com/book-reviews/john-macarthur-and-the-battle-for-the-beginning/"],["Grace to You: New Heaven and Earth","https://www.gty.org/library/sermons-library/66-82/the-new-heaven-and-the-new-earth-part-3"]],
+ "Wayne Grudem":[["Wikipedia","https://en.wikipedia.org/wiki/Wayne_Grudem"],["Grudem on end-time views","https://nshorechurch.com/2022/01/04/wayne-grudem-on-end-time-views-1-2-22/"],["Desiring God: response to young-earth arguments","https://www.desiringgod.org/articles/a-response-to-young-earth-arguments"]],
+ "John Piper":[...(LINKS["John Piper"]||[]),["Do you accept old earth and evolution?","https://www.desiringgod.org/interviews/do-you-accept-old-earth-and-evolution"],["Wikipedia","https://en.wikipedia.org/wiki/John_Piper_(theologian)"]],
+ "Chuck Smith":[...(LINKS["Chuck Smith"]||[]),["Striking the Balance (Calvary Chapel Magazine)","https://calvarychapelmagazine.org/articles/pastor-chuck-smith-rerelease"]],
+ "Jack Hayford":[["Foursquare Declaration of Faith","https://s3.amazonaws.com/foursquare.org/wp-content/uploads/sites/2/2024/08/08143601/Statement-of-Faith-ENG.pdf"],["Foursquare Church (Wikipedia)","https://en.wikipedia.org/wiki/Foursquare_Church"]],
+ "N.T. Wright":[["Wright on hell (summary)","https://danoudshoorn.com/2008/n-t-wright-on-hell-summary-and-comments/"],["Women's service in the church","https://ntwrightpage.com/2016/07/12/womens-service-in-the-church-the-biblical-basis/"],["Wright on the women bishops vote","https://www.dennyburk.com/tom-wright-on-the-anglican-decision/"]],
+ "R.C. Sproul":[["Critique of The Last Days According to Jesus","https://www.wordexplain.com/PDFdocs/Sproul_Book_Analysis.pdf"],["DBTS: Sproul on creationism","https://dbts.edu/2012/07/27/r-c-sproul-on-creationism/"]],
+ "J.N. Darby":[["Why I could not be a Baptist","https://adoss.co.uk/why-i-could-not-be-a-baptist-believers-baptism-infant-baptism-household-baptism-the-house-and-the-assembly/"],["The Remembrance Meeting (Brethren Lord's Supper)","https://www.academia.edu/18454460/The_Remembrance_Meeting_The_Theology_of_the_Lords_Supper_among_the_Christian_Brethren"],["plymouthbrethren.org on the Lord's Supper","https://plymouthbrethren.org/article/738"]],
+ "Darrell Bock":[["Christian Post interview","https://www.christianpost.com/news/interview-with-a-premillennialist-dr-darrell-bock.html"]],
+ "Sam Storms":[...(LINKS["Sam Storms"]||[]),["A complementarian case for women as pastors","https://www.samstorms.org/enjoying-god-blog/post/a-complementarian-case-for-women-as-pastors"]],
+ "Matt Chandler":[...(LINKS["Matt Chandler"]||[]),["TVC sermon: complementary roles","https://rockassetuploads.blob.core.windows.net/tvcresources/2020/04/201711051115FMWC_MattChandler_MarkedPt12-TheComplementaryRolesOfMenAndWomen.pdf"]]});
+// Notable books by person: [title, [topic indices covered], onKoorongBestsellers]. Well-known titles; topic tags are the main topics each book addresses.
+const BOOKS={
+ "Chuck Smith":[["Calvary Chapel Distinctives",[9,10,13]],["Charisma vs. Charismania",[10]],["Why Grace Changes Everything",[13]],["The Final Act",[0,1,2,5]]],
+ "John MacArthur":[["The Gospel According to Jesus",[13]],["Strange Fire",[10]],["The Battle for the Beginning",[14]],["Because the Time Is Near",[0,1,2,5]],["The Glory of Heaven",[7,8]]],
+ "John Walvoord":[["The Rapture Question",[1]],["The Millennial Kingdom",[0,3]],["Every Prophecy of the Bible",[2,4,5]]],
+ "Darrell Bock":[["Progressive Dispensationalism (with Craig Blaising)",[0,3]],["Three Views on the Millennium and Beyond (ed.)",[0]]],
+ "J.N. Darby":[["Synopsis of the Books of the Bible",[2,3]],["Lectures on the Second Coming",[0,1,3]]],
+ "Wayne Grudem":[["Systematic Theology",[0,1,9,10,11,14,15]],["Recovering Biblical Manhood and Womanhood (co-ed.)",[15]],["Are Miraculous Gifts for Today? (ed.)",[10]],["The Gift of Prophecy",[10]]],
+ "John Piper":[["Desiring God",[9],true],["Don't Waste Your Life",[12],true],["Let the Nations Be Glad!",[12]],["Jesus: The Only Way to God",[12]],["Future Grace",[13]]],
+ "Jack Hayford":[["The Beauty of Spiritual Language",[10]],["Unlocking the End-Book",[0,1,2]]],
+ "N.T. Wright":[["Surprised by Hope",[6,7,8]],["The Resurrection of the Son of God",[7,8]],["Jesus and the Victory of God",[2,4]],["The New Testament in Its World",[2],true]],
+ "John Stott":[["The Cross of Christ",[9]],["Basic Christianity",[12]],["Evangelical Essentials (with David Edwards)",[6,12]],["Baptism and Fullness",[10]]],
+ "R.C. Sproul":[["The Holiness of God",[9]],["Chosen by God",[9]],["The Last Days According to Jesus",[2,4,5]]],
+ "Kenneth Gentry":[["He Shall Have Dominion",[0]],["Before Jerusalem Fell",[2]],["The Beast of Revelation",[5]]],
+ "Tim Keller":[["The Reason for God",[6,12,14],true],["Prayer",[],true],["The Way of Wisdom",[],true],["What Is Wrong with the World?",[],true],["The Prodigal God",[9]]],
+ "Sam Storms":[["Kingdom Come: The Amillennial Alternative",[0,3,4,5]],["Practicing the Power",[10]],["Understanding Spiritual Gifts",[10]],["Chosen for Life",[9]]],
+ "Matt Chandler":[["The Explicit Gospel",[8,9]],["Recovering Redemption",[13]]],
+ "David Jeremiah":[["What in the World Is Going On?",[0,1,3,5]],["Agents of the Apocalypse",[2,5]],["The Book of Signs",[1,2,4,5]]],
+ "Greg Laurie":[["Jesus Revolution",[]],["Revelation: The Next Dimension",[0,1,2,5]]],
+ "Amir Tsarfati":[["The Last Hour",[1,3,5]],["Israel and the Church",[3]],["The Day Approaching",[1,2]],["The Elijah Mandate (with Tolik Piflaks)",[2],true]],
+ "C.S. Lewis":[["Mere Christianity",[12,14],true],["The Screwtape Letters",[],true],["The Great Divorce",[6,7]],["The Problem of Pain",[6,14]],["Miracles",[]]],
+ "J.I. Packer":[["Knowing God",[9],true],["Evangelism and the Sovereignty of God",[9,12]],["Fundamentalism and the Word of God",[]],["Concise Theology",[9,11,13]]],
+ "Rick Warren":[["The Purpose Driven Life",[],true],["The Purpose Driven Church",[]]],
+ "Kevin DeYoung":[["Daily Doctrine",[9],true],["Men and Women in the Church",[15]],["The Hole in Our Holiness",[]],["Taking God at His Word",[]]]
+};
+// Reading list: overview (multi-view book) + one book per option. From general knowledge — check editions before buying.
+const READ=[
+ {ov:"Three Views on the Millennium and Beyond — Darrell Bock (ed.)",o:["A Case for Historic Premillennialism — Blomberg & Chung (eds.); Things to Come — J. Dwight Pentecost","A Case for Amillennialism — Kim Riddlebarger; Kingdom Come — Sam Storms","Postmillennialism: An Eschatology of Hope — Keith Mathison"]},
+ {ov:"Three Views on the Rapture — Alan Hultberg (ed.)",o:["The Rapture Question — John Walvoord","The Pre-Wrath Rapture of the Church — Marvin Rosenthal","The Church and the Tribulation — Robert Gundry"]},
+ {ov:"Four Views on the Book of Revelation — C. Marvin Pate (ed.)",o:["Revelation (2 vols) — Robert L. Thomas","The Last Days According to Jesus — R.C. Sproul","More Than Conquerors — William Hendriksen"]},
+ {ov:"Perspectives on Israel and the Church: 4 Views — Chad Brand (ed.)",o:["Dispensationalism — Charles Ryrie","Progressive Dispensationalism — Craig Blaising & Darrell Bock","The Israel of God — O. Palmer Robertson"]},
+ {ov:"(Covered in most Daniel commentaries)",o:["Daniel's Prophecy of the 70 Weeks — Alva McClain","The Seventy Weeks and the Great Tribulation — Philip Mauro"]},
+ {ov:"Antichrist: Two Thousand Years of the Human Fascination with Evil — Bernard McGinn (history)",o:["The Coming Prince — Robert Anderson","The Beast of Revelation — Kenneth Gentry","1, 2 & 3 John commentaries (e.g. John Stott, Tyndale)"]},
+ {ov:"Four Views on Hell — Preston Sprinkle (ed.)",o:["Hell Under Fire — Morgan & Peterson (eds.)","The Fire That Consumes — Edward Fudge","The Evangelical Universalist — Gregory MacDonald (Robin Parry)"]},
+ {ov:"Body, Soul, and Life Everlasting — John W. Cooper",o:["Body, Soul, and Life Everlasting — John W. Cooper","Immortality or Resurrection? — Samuele Bacchiocchi"]},
+ {ov:"Heaven — Randy Alcorn",o:["A New Heaven and a New Earth — J. Richard Middleton; Surprised by Hope — N.T. Wright","The Glory of Heaven — John MacArthur","Seeing God: The Beatific Vision in Christian Tradition — Hans Boersma"]},
+ {ov:"Perspectives on Election: Five Views — Chad Brand (ed.)",o:["Chosen by God — R.C. Sproul","Against Calvinism — Roger Olson","Salvation and Sovereignty: A Molinist Approach — Kenneth Keathley"]},
+ {ov:"Are Miraculous Gifts for Today? Four Views — Wayne Grudem (ed.)",o:["Practicing the Power — Sam Storms","Charisma vs. Charismania — Chuck Smith","Strange Fire — John MacArthur"]},
+ {ov:"Understanding Four Views on Baptism — John Armstrong (ed.)",o:["Believer's Baptism — Schreiner & Wright (eds.)","The Case for Covenantal Infant Baptism — Gregg Strawbridge (ed.)"]},
+ {ov:"What About Those Who Have Never Heard? — John Sanders (ed.); Let the Nations Be Glad! — John Piper (missions)",o:["Jesus: The Only Way to God — John Piper; Faith Comes by Hearing — Morgan & Peterson (eds.)","No Other Name — John Sanders","Four Views on Salvation in a Pluralistic World — Okholm & Phillips (eds.)"]},
+ {ov:"Four Views on Eternal Security — J. Matthew Pinson (ed.)",o:["Eternal Security — Charles Stanley","The Race Set Before Us — Schreiner & Caneday","Life in the Son — Robert Shank"]},
+ {ov:"Four Views on Creation, Evolution, and Intelligent Design — J.B. Stump (ed.)",o:["The Genesis Flood — Whitcomb & Morris","A Matter of Days — Hugh Ross","The Language of God — Francis Collins"]},
+ {ov:"Two Views on Women in Ministry — James Beck (ed.)",o:["Recovering Biblical Manhood and Womanhood — Piper & Grudem (eds.)","(No standard book) — Sam Storms, \"A Complementarian Case for Women as Pastors\" (samstorms.org)","Discovering Biblical Equality — Pierce & Groothuis (eds.)"]},
+ {ov:"Understanding Four Views on the Lord's Supper — John Armstrong (ed.)",o:["The Lord's Supper: Remembering and Proclaiming Christ — Schreiner & Crawford (eds.)","Given for You — Keith Mathison","This Is My Body — Hermann Sasse"]}
+];
+
+// ================= setup =================
+const NT=TOPICS.length;
+const TEAL="#0E7C86",GREY="#9AA3AD",INK="#1F2933",MUTED="#52606D";
+const L=(a,b,t)=>a+(b-a)*t, f=n=>n.toFixed(1);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+function wrap(s,max){const w=s.split(" "),out=[];let l="";for(const x of w){if((l+" "+x).trim().length>max&&l){out.push(l);l=x}else l=(l+" "+x).trim()}if(l)out.push(l);return out}
+// Luke's starting answers come from the original wheel picks
+(function initPeople(){
+  const luke=PEOPLE[0];
+  luke.v=TOPICS.map(T=>({c:T.pick==null?null:T.pick}));luke.also={3:[1]};luke.conv={};
+  PEOPLE.forEach(P=>{ if(P.self)return;
+    if(P.v.length>=NT){P.also=P.also||{};P.conv=P.conv||{};return}
+    while(P.v.length<12)P.v.push({c:null});
+    const nv=NEWV[P.name]||[null,null,null,null,null];
+    nv.forEach(x=>P.v.push(x==null?{c:null}:Array.isArray(x)?{c:x[0],n:x[1]}:{c:x}));
+    P.also=P.also||{};P.conv=P.conv||{};});
+})();
+
+// ---- Verified research (agent pass, Oct 2026): overrides earlier placements, adds sources ----
+const RESEARCH={"J.N. Darby": {"0": {"c": 0, "n": "Saw 1 Thess 4:17 rapture ending the Gentile dispensation, followed by tribulation, Christ's return and an earthly millennial kingdom.", "s": [["Christian History Institute: Caught up to meet Jesus in the clouds", "https://christianhistoryinstitute.org/magazine/article/caught-up-to-meet-jesus-in-the-clouds"], ["Wikipedia: John Nelson Darby", "https://en.wikipedia.org/wiki/John_Nelson_Darby"]]}, "1": {"c": 0, "n": "Originator of the pre-tribulation rapture: Christ raptures the church before the great tribulation (taught at Powerscourt, 1831-33).", "s": [["Christian History Institute: Caught up to meet Jesus in the clouds", "https://christianhistoryinstitute.org/magazine/article/caught-up-to-meet-jesus-in-the-clouds"], ["Wikipedia: John Nelson Darby", "https://en.wikipedia.org/wiki/John_Nelson_Darby"]]}, "2": {"c": 0, "n": "Placed fulfilment of prophecy (tribulation, Antichrist, Armageddon) in the future, after the parenthetical church age.", "s": [["Christian History Institute: Caught up to meet Jesus in the clouds", "https://christianhistoryinstitute.org/magazine/article/caught-up-to-meet-jesus-in-the-clouds"], ["P. Lee, The Shaping of J.N. Darby's Eschatology (UWTSD thesis)", "https://repository.uwtsd.ac.uk/id/eprint/2235"]]}, "3": {"c": 0, "n": "Israel is an earthly people with literal earthly promises; the church a heavenly people with heavenly promises.", "s": [["Christian History Institute: Caught up to meet Jesus in the clouds", "https://christianhistoryinstitute.org/magazine/article/caught-up-to-meet-jesus-in-the-clouds"], ["Wikipedia: John Nelson Darby", "https://en.wikipedia.org/wiki/John_Nelson_Darby"]]}, "4": {"c": 0, "n": "Israel's rejection of Messiah interrupted the 70 weeks after week 69; the 70th week remains future.", "s": [["Christian History Institute: Caught up to meet Jesus in the clouds", "https://christianhistoryinstitute.org/magazine/article/caught-up-to-meet-jesus-in-the-clouds"]]}, "5": {"c": 0, "n": "After the church's removal comes the rise of the Antichrist in the future great tribulation.", "s": [["Christian History Institute: Caught up to meet Jesus in the clouds", "https://christianhistoryinstitute.org/magazine/article/caught-up-to-meet-jesus-in-the-clouds"]]}, "6": {"c": 0, "n": "Booklet 'Eternal Punishment' rejects annihilation: Scripture leaves 'not a doubt' that the punishment of the wicked is eternal.", "s": [["J.N. Darby, Eternal Punishment (Bible Truth Publishers)", "https://bibletruthpublishers.com/eternal-punishment-booklet/john-nelson-darby-jnd/pd2028"]]}, "9": {"c": 0, "n": "Defended Calvinist doctrine: 'predestination to life is the eternal purpose of God' to deliver those chosen in Christ.", "s": [["Wikipedia: John Nelson Darby", "https://en.wikipedia.org/wiki/John_Nelson_Darby"]]}, "11": {"c": 1, "n": "'I have no doubt as to infant baptism of the children of a Christian' - baptism as admission into the professing house.", "s": [["H. Rowdon, Brethren views of baptism (Vox Evangelica 11)", "https://gospelstudies.org.uk/biblicalstudies/pdf/vox/vol11/brethren_rowdon.pdf"], ["Plymouth Brethren baptism timeline", "https://plymouthbrethren.com/baptism-timeline.htm"], ["Darby, On the Baptism of Households (Brethren Archive)", "https://www.brethrenarchive.org/people/john-nelson-darby/pamphlets/on-the-baptism-of-households/"]]}, "16": {"c": 0, "n": "Supper sets forth 'the death of the blessed Lord, and His remembrance now He is gone'; no presence in the elements.", "s": [["J.N. Darby, The Lord's Table (Christian Friend 1877)", "https://www.stempublishing.com/magazines/cf/1877/The-Lord's-Table.html"]]}}, "Wayne Grudem": {"0": {"c": 0, "n": "Rev 20 'seems to be best understood as referring to a future earthly reign of Christ prior to the future judgment.'", "s": [["Grudem class outline, ch. 55 The Millennium (2009)", "https://www.waynegrudem.com/test/2009/032209.pdf"], ["Grudem lecture: Ch. 55 Premillennial view", "https://www.waynegrudem.com/chapter-55-the-millennium-premillennial-view-dr-wayne-grudem-145"]]}, "1": {"c": 2, "n": "'It seems best to conclude that the church will go through the time of tribulation predicted by Jesus.'", "s": [["Grudem class outline, ch. 55 The Millennium (2009)", "https://www.waynegrudem.com/test/2009/032209.pdf"]]}, "5": {"c": 0, "n": "Man of sin is a sign before Christ's return; past identifications of antichrist 'have proved false' (holds it unlikely signs already fulfilled).", "s": [["Grudem class outline, ch. 54 Return of Christ (2009)", "https://www.waynegrudem.com/test/2009/030109.pdf"]]}, "6": {"c": 0, "n": "Hell is 'a place of eternal conscious punishment for the wicked'; rebuts annihilationism.", "s": [["Grudem class outline, ch. 56 Final Judgment and Eternal Punishment", "https://www.waynegrudem.com/test/2009/040509.pdf"]]}, "7": {"c": 0, "n": "'The souls of believers go immediately into God's presence'; 'The Bible does not teach the doctrine of soul sleep.'", "s": [["Grudem class outline, ch. 41 Death and the Intermediate State", "http://www.waynegrudem.com/test/2008/051108.pdf"]]}, "8": {"c": 0, "n": "'The physical creation will be renewed'; 'preferable... to think that the earth is to be changed and renewed.'", "s": [["Grudem class outline, ch. 57 New Heavens and New Earth", "https://www.waynegrudem.com/test/2009/041909.pdf"]]}, "9": {"c": 0, "n": "His Systematic Theology advocates a Calvinistic soteriology.", "s": [["Wikipedia: Wayne Grudem", "https://en.wikipedia.org/wiki/Wayne_Grudem"]]}, "10": {"c": 0, "n": "Noncessationist; wants 'not just openness to, but encouragement of the miraculous works of the Holy Spirit.'", "s": [["Challies interview with Wayne Grudem", "https://www.challies.com/interviews/continuationism-and-cessationism-an-interview-with-dr-wayne-grudem/"], ["Wikipedia: Wayne Grudem", "https://en.wikipedia.org/wiki/Wayne_Grudem"]]}, "11": {"c": 0, "n": "Baptism 'has to follow a personal profession of faith'; holds believer's baptism.", "s": [["Wayne Grudem's Response to Piper (Desiring God)", "https://www.desiringgod.org/articles/wayne-grudems-response-to-piper"], ["Wikipedia: Wayne Grudem", "https://en.wikipedia.org/wiki/Wayne_Grudem"]]}, "13": {"c": 1, "n": "Defends perseverance of the saints; Hebrews 6 warnings do not describe true believers losing salvation.", "s": [["Grudem, Perseverance of the Saints: A Case Study from Hebrews 6:4-6", "http://www.waynegrudem.com/perseverance-of-the-saints-a-case-study-from-hebrews-64-6-and-the-other-warning-passages-in-hebrews"], ["Grudem lecture: Ch. 40 Perseverance of the Saints", "https://www.waynegrudem.com/chapter-40-perseverance-of-the-saints-pt-1-of-2-dr-wayne-grudem-106"]]}, "14": {"c": 1, "n": "Holds Old Earth creationism; rejects theistic evolution.", "s": [["Wikipedia: Wayne Grudem", "https://en.wikipedia.org/wiki/Wayne_Grudem"], ["Grudem, Theistic Evolution Denies Twelve Creation Events (ETS 2017)", "https://www.waynegrudem.com/wp-content/uploads/2017/12/ETS-paper-2017-Theistic-Evolution-Critique-handout.pdf"]]}, "15": {"c": 0, "n": "Co-founder of CBMW; complementarian, teaching that pastor/elder roles are restricted to men.", "s": [["Wikipedia: Wayne Grudem", "https://en.wikipedia.org/wiki/Wayne_Grudem"], ["Grudem outline, ST ch. 47 pt 2: Women and church office", "https://www.waynegrudem.com/test/2008/112308.pdf"]]}, "16": {"c": 1, "n": "Supper is 'not simply an ordinary meal... it is a fellowship with Christ, in his presence and at his table' (Systematic Theology).", "s": [["SharperIron thread quoting Grudem's Systematic Theology", "https://sharperiron.org/node/12223"]]}}, "John Piper": {"1": {"c": 2, "n": "'The rapture and the glorious second coming are part of one simultaneous event' - post-tribulational.", "s": [["Piper, Definitions and Observations Concerning the Second Coming", "https://www.desiringgod.org/articles/definitions-and-observations-concerning-the-second-coming-of-christ"]]}, "3": {"c": 2, "n": "Gentiles in Christ become heirs of Abraham's promises incl. the land; ethnic Israel to be saved at Christ's return.", "s": [["Piper, Israel, Palestine, and the Middle East (sermon)", "https://www.desiringgod.org/messages/israel-palestine-and-the-middle-east"], ["Piper, Who Is the True Israel? (sermon)", "https://www.desiringgod.org/messages/who-is-the-true-israel"]]}, "5": {"c": 0, "n": "The man of lawlessness is an end-of-age figure 'destroyed by the final fiery second coming'; past figures were forerunners.", "s": [["Ask Pastor John: Who Is the Man of Lawlessness?", "https://www.desiringgod.org/interviews/who-is-the-man-of-lawlessness"]]}, "6": {"c": 0, "n": "Affirms 'the endless suffering of the wicked'; annihilation 'reduces sin from high treason to a misdemeanor.'", "s": [["Piper, The Echo and Insufficiency of Hell (sermon)", "https://www.desiringgod.org/messages/the-echo-and-insufficiency-of-hell-part-1"]]}, "7": {"c": 0, "n": "Rejects soul sleep: death is 'gain' because Paul 'will be in the presence of Christ.'", "s": [["Ask Pastor John: Does My Soul Sleep After Death?", "https://www.desiringgod.org/interviews/does-my-soul-sleep-after-death"]]}, "8": {"c": 0, "n": "Creation 'will be set free from its bondage to corruption'; what we rightly love will be 'perfected and preserved.'", "s": [["Ask Pastor John: Will the New Creation Look Like This One?", "https://www.desiringgod.org/interviews/will-the-new-creation-look-like-this-one"]]}, "9": {"c": 0, "n": "'God's election is an unconditional act of free grace... given through his Son Jesus before the world began.'", "s": [["Piper, What We Believe About the Five Points of Calvinism", "https://www.desiringgod.org/articles/what-we-believe-about-the-five-points-of-calvinism"], ["Wikipedia: John Piper (theologian)", "https://en.wikipedia.org/wiki/John_Piper_(theologian)"]]}, "10": {"c": 0, "n": "Advocates obeying 'earnestly desire the spiritual gifts, especially that you might prophesy'; has prayed for tongues.", "s": [["Christian Post: Piper on Strange Fire, prophecy and tongues", "https://assets.christianpost.com/news/john-piper-talks-john-macarthurs-strange-fire-conference-pursuing-gifts-of-prophecy-and-speaking-in-tongues-109022/"], ["Ask Pastor John: Do Cessationists Miss Out on the Full Joys?", "https://www.desiringgod.org/interviews/do-cessationists-miss-out-on-the-full-joys-of-christianity"]]}, "11": {"c": 0, "n": "Baptist: church membership awaits 'credible profession of faith... publicly signified by baptism'; infants not baptized.", "s": [["Ask Pastor John: How Do My Unbaptized Children Relate to the New-Covenant Promises?", "https://www.desiringgod.org/interviews/how-do-my-unbaptized-children-relate-to-the-new-covenant-promises"], ["Wikipedia: John Piper (theologian) - Reformed Baptist", "https://en.wikipedia.org/wiki/John_Piper_(theologian)"]]}, "13": {"c": 1, "n": "'All who are justified will win the fight of faith. They will persevere in faith and will not surrender finally.'", "s": [["Piper, What We Believe About the Five Points of Calvinism", "https://www.desiringgod.org/articles/what-we-believe-about-the-five-points-of-calvinism"]]}, "15": {"c": 0, "n": "Co-editor of Recovering Biblical Manhood and Womanhood; complementarian.", "s": [["Wikipedia: John Piper (theologian)", "https://en.wikipedia.org/wiki/John_Piper_(theologian)"]]}, "16": {"c": 1, "n": "Rejects physical presence but beyond memorial: 'eat spiritually... by faith', feasting on the risen, living Christ.", "s": [["Piper, Why We Eat the Lord's Supper, Part 1 (sermon)", "https://www.desiringgod.org/messages/why-we-eat-the-lords-supper-part-1"]]}}, "Jack Hayford": {"0": {"c": 0, "n": "Teaches a future millennial age after the tribulation (saints reign with Christ), while weighing strengths of all three views.", "s": [["Hayford, The Millennium Dilemma (message series)", "https://www.jackhayford.org/message_series/the-millennium-dilemma/"], ["Hayford, Beginning to Reign (1976)", "https://www.jackhayford.org/teaching/beginning-to-reign/"]]}, "6": {"c": 0, "n": "(inferred) Foursquare Declaration (church he led): the wicked 'adjudged to everlasting punishment'; hell as lake of fire.", "s": [["Foursquare Church Declaration of Faith, arts. XVIII, XX", "https://resources.foursquare.org/wp-content/uploads/sites/2/2024/08/Statement-of-Faith-ENG.pdf"]]}, "9": {"c": 1, "n": "(inferred) Criticised Reformed theology as 'a monster of theology that dampens... our passion and partnership with God'; Pentecostal Arminian tradition.", "s": [["Christianity Today profile (July 2005)", "https://christianitytoday.com/ct/2005/july/18.24.html"]]}, "10": {"c": 0, "n": "'Tongues are God's Idea!'; passion 'to move every Christian to the free exercise of tongues.'", "s": [["Hayford, The Beauty of Spiritual Language", "https://jackhayford.org/?p=1916"], ["Christianity Today profile (July 2005)", "https://christianitytoday.com/ct/2005/july/18.24.html"]]}, "11": {"c": 0, "n": "(inferred) Foursquare Declaration: water baptism is 'a blessed outward sign of an inward work' following repentance and faith.", "s": [["Foursquare Church Declaration of Faith, art. IX", "https://resources.foursquare.org/wp-content/uploads/sites/2/2024/08/Statement-of-Faith-ENG.pdf"]]}, "15": {"c": 2, "n": "'The Foursquare Church is wide open to women in leadership'; his wife Anna was an ordained Foursquare minister.", "s": [["Foursquare report, Connection '09 convention", "https://resources.foursquare.org/?p=5066"], ["PAOC: In memoriam Anna Hayford, Foursquare minister", "https://paoc.org/missions/global-view/2017/03/08/in-memoriam---anna-hayford-foursquare-minister"]]}, "16": {"c": 1, "n": "Bread doesn't become flesh, 'yet neither are we saying these are just a piece of bread'; Spirit's power nourishes partakers.", "s": [["Hayford, Come to the Table", "https://www.jackhayford.org/come-to-the-table/"]]}}, "N.T. Wright": {"1": {"c": 2, "n": "\"Farewell to the Rapture\": Jesus 'never predicted such an event'; 1 Thess 4 is the one public return, living transformed, not a secret rapture.", "s": [["Wright, 'Farewell to the Rapture', Bible Review 17:4 (2001)", "https://library.biblicalarchaeology.org/endnote/endnote-2-farewell-to-the-rapture/"], ["Tim White, 'N. T. Wright's Denial of the Rapture'", "https://drtimwhite.net/blog/2017/4/13/n-t-wrights-denial-of-the-rapture"]]}, "3": {"c": 2, "n": "Reads 'all Israel' (Rom 11:26) as the one family of Jews and Gentiles in Christ; no separate future national program.", "s": [["Perriman, 'Will all Israel be saved? Hurtado and Wright'", "https://www.postost.net/2012/04/will-all-israel-be-saved-hurtado-wright"], ["Vanlaningham, 'An Evaluation of N. T. Wright's View of Israel in Romans 11', BSac 170", "https://www.galaxie.com/article/bsac170-678-05"]]}, "6": {"c": null, "n": "Surprised by Hope: rejects universalism and classic torment imagery; the finally impenitent become 'ex-human', ceasing to bear God's image.", "s": [["Modern Reformation review of Surprised by Hope", "https://www.modernreformation.org/resources/articles/surprised-by-hope-rethinking-heaven-the-resurrection-and-the-mission-of-the-church-by-n-t-wright"], ["Jay Guin, 'Surprised by Hope: Hell, Part 1'", "https://oneinjesus.info/2008/07/surprised-by-hope-hell-part-1/"]]}, "7": {"c": 0, "n": "Dead are 'with Christ' and conscious: 'Had the post-mortem state been unconscious, would Paul have thought of it as far better?'", "s": [["Wright, 'Rethinking the Tradition' (ntwrightpage)", "https://ntwrightpage.com/2016/07/12/rethinking-the-tradition"], ["iMonk, 'NT Wright on the Intermediate State'", "https://imonk.blog/2013/09/23/nt-wright-on-the-intermediate-state/"]]}, "8": {"c": 0, "n": "Heaven is stage one; the goal is bodily resurrection in a renewed heaven and earth, the redemption of the whole cosmos.", "s": [["Wright, 'Rethinking the Tradition' (ntwrightpage)", "https://ntwrightpage.com/2016/07/12/rethinking-the-tradition"], ["Modern Reformation review of Surprised by Hope", "https://www.modernreformation.org/resources/articles/surprised-by-hope-rethinking-heaven-the-resurrection-and-the-mission-of-the-church-by-n-t-wright"]]}, "11": {"c": 1, "n": "\"God's people in Christ are all, including children, to be marked with the covenant sign\"; asks what justifies NOT baptizing children.", "s": [["Wright, WrightSaid Q&A, Nov 2004 (ntwrightpage)", "https://ntwrightpage.com/2016/04/25/wrightsaid-qa-november-2004/"]]}, "14": {"c": 2, "n": "Hominids arose in 'the long slow process of God's good creation'; God then called one pair. 'If creation is through Christ, evolution is what you'd expect.'", "s": [["Interview with N. T. Wright on Eden, the Flood, Babel (One In Jesus)", "https://oneinjesus.info/2014/06/apologetics-ruminations-on-eden-the-flood-babel-archaeology-an-interview-with-n-t-wright/"], ["Gentry, 'Would Christ Create Through Evolution?' (quoting Wright)", "https://postmillennialworldview.com/2017/07/14/would-christ-create-through-evolution/"]]}, "15": {"c": 2, "n": "\"We have seriously misread the relevant passages\"; supports women's ordination incl. as bishops, teaching and leading.", "s": [["Wright, 'Women's Service in the Church: The Biblical Basis' (Fulcrum)", "https://fulcrum-anglican.org.uk/?p=14014"], ["Wright, 'The Biblical Basis for Women's Service in the Church' (CBE)", "https://www.cbeinternational.org/?p=38728"]]}}, "John Stott": {"6": {"c": 1, "n": "Endless torment 'emotionally... intolerable'; tentatively holds annihilation is a legitimate biblical view (Essentials, 1988, p.314ff).", "s": [["Stott in Edwards & Stott, Essentials (1988), quoted at afterall.net", "https://afterall.net/quotes/john-stott-on-annihilationism/"], ["Anglican Ink, 'John Stott, Annihilationism and the Evangelical Controversy'", "https://anglican.ink/2026/07/09/john-stott-annihilationism-and-the-evangelical-controversy/"]]}, "11": {"c": 1, "n": "Defended infant baptism as Anglican evangelical; baptism signifies union with Christ, forgiveness, gift of the Spirit.", "s": [["Stott & Motyer, The Anglican Evangelical Doctrine of Infant Baptism (Latimer Trust)", "https://latimertrust.org/product-page/the-anglican-evangelical-doctrine-of-infant-baptism"], ["Latimer Trust, 'Infant Baptism' review of Stott", "https://www.latimertrust.org/post/infant-baptism"]]}, "12": {"c": 2, "n": "\"The most Christian stance is to remain agnostic on this question... however, I am imbued with hope.\"", "s": [["TGC, 'What About Those Who Haven't Heard?' (quoting Stott, Evangelical Essentials)", "https://www.thegospelcoalition.org/article/what-about-those-who-havent-heard/"]]}, "14": {"c": 2, "n": "Our bodies 'are related to the primates'; evolution may have produced the hominid into whom God breathed his image (Homo divinus), Adam historical.", "s": [["Scot McKnight on Stott's The Message of Romans (Jesus Creed)", "https://www.beliefnet.com/columnists/jesuscreed/?p=5145"], ["Banner of Truth review of Stott, Through the Bible Through the Year", "https://banneroftruth.org/us/?p=2601"]]}, "15": {"c": 1, "n": "Women may teach men and be ordained, but within a local team where 'a man should be the team leader' (masculine headship).", "s": [["Robert Brow review of Stott, 'Women, Men and God' (Our Social & Sexual Revolution, 1999)", "https://brow.on.ca/Articles/Stott1.htm"], ["Kevin DeYoung, 'Why Complemegalitarianism Doesn't Work' (discusses Stott)", "https://clearlyreformed.org/go-big-or-go-home-why-complemegalitarianism-doesnt-work-3/"]]}}, "R.C. Sproul": {"1": {"c": 2, "n": "\"When Jesus comes... with his whole church; the church will be caught up to meet him as he descends\" - one return, no pre-trib rapture.", "s": [["Gospel Herald, 'Theologian Offers Clarity to Rapture, Last Days Beliefs' (Sproul)", "https://www.gospelherald.com/news/theologian-offers-clarity-to-rapture-last-days-beliefs"]]}, "2": {"c": 1, "n": "Self-described partial preterist: most of Revelation fulfilled around AD 70, but not full preterism (future return and resurrection).", "s": [["Effectual Grace, 'R.C. Sproul: Three Questions on his Eschatology' (Sproul quotes)", "https://effectualgrace.com/2025/06/16/r-c-sproul-three-questions-on-his-eschatology/"], ["Mayhue, critique of Sproul's preterism, TMSJ 14", "https://tyndale.tms.edu/wp-content/uploads/2021/09/tmsj14a.pdf"]]}, "5": {"c": 1, "n": "The Last Days According to Jesus: matches the beast of Revelation with Nero, 'right down to the name' (666 gematria).", "s": [["Ligonier, The Last Days According to Jesus: 'The Beast'", "https://learn.ligonier.org/series/last-days-according-to-jesus/the-beast"], ["Tony Garland, 'The Last Days According to Sproul'", "https://www.spiritandtruth.org/teaching/topics_by_tony_garland_01/15_The_Last_Days_According_to_Sproul/20131119_last_days_according_to_sproul.html"]]}, "6": {"c": 0, "n": "Hell is 'ongoing, eternal punishment', 'a place of unspeakable pain and torment'; rejects annihilationism.", "s": [["Sproul, 'The Place of God's Disfavor' (Ligonier)", "https://www.ligonier.org/blog/place-gods-disfavor/"]]}, "7": {"c": 0, "n": "Rejects soul sleep: 'Even as disembodied souls, there will be a continued consciousness of our personal existence.'", "s": [["Ligonier Q&A, Sproul: 'Do Christians go immediately to heaven when they die?'", "https://learn.ligonier.org/qas/do-christians-go-immediately-to-heaven-when-they-die"]]}, "9": {"c": 0, "n": "Chosen by God defends Reformed predestination and sovereign election as grounded in God's love.", "s": [["Ligonier, Chosen by God collection", "https://learn.ligonier.org/collections/chosen-by-god"], ["Wikipedia, R. C. Sproul", "https://en.wikipedia.org/wiki/R._C._Sproul"]]}, "11": {"c": 1, "n": "\"I think it's a sin—you can quote me—not to baptize your children\"; covenant household sign never revoked.", "s": [["Heidelblog, 'R. C. Sproul On Infant Baptism, Sin, And Patience'", "https://heidelblog.net/2014/07/r-c-sproul-on-infant-baptism-sin-and-patience/"], ["Ligonier, Sproul, The Sacraments: 'The Case for Infant Baptism'", "https://learn.ligonier.org/series/sacraments/the-case-for-infant-baptism-part-1"]]}, "13": {"c": 1, "n": "\"The only reason we persevere... is because God preserves us.\"", "s": [["Ligonier, Ultimately with R.C. Sproul: 'Perseverance of the Saints'", "https://learn.ligonier.org/podcasts/ultimately-with-rc-sproul/perseverance-of-the-saints"]]}, "14": {"c": 0, "n": "Later affirmed creation in 'six twenty-four-hour periods' (Truths We Confess), after earlier openness to framework view.", "s": [["Rachel Miller, 'What Is R.C. Sproul's Position on Creation?' (quoting Truths We Confess)", "https://rachelgreenmiller.com/2011/11/08/what-is-r-c-sprouls-position-on-creation/"], ["Associates for Biblical Research, 'R.C. Sproul Changes his Views on Genesis 1'", "https://biblearchaeology.org/rc-sproul-changes-his-views-on-genesis-1/"]]}, "15": {"c": 0, "n": "Governing/juridical authority 'is not to be held by women'; women barred from office of elder (Now That's a Good Question, p.346).", "s": [["Ligonier/Tabletalk devotional 'Female Authority' (quoting Sproul)", "https://learn.ligonier.org/devotionals/female-authority"]]}, "16": {"c": 1, "n": "Holds Calvin's view: Christ's body stays in heaven but is spiritually 'made present' to believers; real but spiritual presence.", "s": [["Sproul, Essential Truths of the Christian Faith (BibleGateway devotional)", "https://www.biblegateway.com/devotionals/essential-truths-of-the-christian-faith/2023/10/19"]]}, "0": {"c": null, "n": "Surveyed every millennial view in his Ligonier lectures without firmly endorsing one.", "s": []}}, "Kenneth Gentry": {"0": {"c": 2, "n": "Leading postmillennial author (He Shall Have Dominion): the gospel will progressively triumph before Christ's return.", "s": [["Wikipedia, Kenneth Gentry", "https://en.wikipedia.org/wiki/Kenneth_Gentry"], ["Gentry, He Shall Have Dominion (Goodreads)", "https://www.goodreads.com/book/show/2058227"]]}, "1": {"c": 2, "n": "1 Thess 4 is 'the visible, glorious, second advent to conclude history, not an invisible rapture'.", "s": [["Gentry, 'Rapture in 1 Thessalonians 4?' (PostmillennialWorldview)", "https://postmillennialworldview.com/2017/10/10/rapture-in-1-thess-4/"]]}, "2": {"c": 1, "n": "Orthodox (partial) preterist; argues Revelation written before AD 70 and largely fulfilled in Jerusalem's fall.", "s": [["Wikipedia, Kenneth Gentry", "https://en.wikipedia.org/wiki/Kenneth_Gentry"], ["Gentry, 'How to Introduce Preterism (1)'", "https://postmillennialworldview.com/2025/12/16/how-to-introduce-preterism-1/"]]}, "3": {"c": 2, "n": "\"The biblical record presents Christianity as the fruition of Israel, never to be undone\"; Jew and Gentile one people in Christ.", "s": [["Gentry, 'Dispensationalism, Israel and the Church'", "https://postmillennialworldview.com/2022/05/03/dispensationalism-israel-and-the-church/"]]}, "4": {"c": 1, "n": "70th week fulfilled in the first century: Christ's death mid-week ends sacrifice; AD 70 follows as judgment.", "s": [["Gentry, 'Postmillennialism and Daniel's 70th Week'", "https://postmillennialworldview.com/2013/11/18/postmillennialism-and-daniels-70th-week/"]]}, "5": {"c": 1, "n": "The Beast of Revelation: the beast/666 is Nero Caesar, 'one of John's contemporaries'.", "s": [["DTS Voice review of Gentry, The Beast of Revelation", "https://voice.dts.edu/review/kenneth-l-gentry-jr-the-beast-of-revelation/"], ["Wikipedia, Kenneth Gentry", "https://en.wikipedia.org/wiki/Kenneth_Gentry"]]}, "9": {"c": 0, "n": "\"Not all postmillennialists are Calvinists. But they should be!\" Affirms sovereign predestination and election.", "s": [["Gentry, 'Questioning God's Sovereignty (1)'", "https://postmillennialworldview.com/2022/03/22/gods-sovereignty-mans-questions-1/"], ["Gentry, 'God's Sovereignty; Our Hope (2)'", "https://postmillennialworldview.com/2021/09/28/gods-sovereignty-our-hope-2/"]]}, "10": {"c": 2, "n": "Cessationist: wrote The Charismatic Gift of Prophecy (reply to Grudem) and on tongues' 'cessation'.", "s": [["Wikipedia, Kenneth Gentry", "https://en.wikipedia.org/wiki/Kenneth_Gentry"], ["Gentry, The Charismatic Gift of Prophecy: A Reformed Response (Goodreads)", "https://www.goodreads.com/book/show/2703342"]]}, "14": {"c": 0, "n": "Young-earth, literal six-day creation; argues Jesus read Genesis literally, critiques Wright's evolution claim.", "s": [["Gentry, 'Would Christ Create Through Evolution?'", "https://postmillennialworldview.com/2017/07/14/would-christ-create-through-evolution/"], ["Wikipedia, Kenneth Gentry", "https://en.wikipedia.org/wiki/Kenneth_Gentry"]]}}, "Greg Laurie": {"0": {"c": 0, "n": "Harvest statement of faith: 'premillennial return of the Lord Jesus Christ'; Laurie's timeline places Jesus' 1000-year reign after the Second Coming.", "s": [["Harvest Christian Fellowship – Statement of Faith", "https://harvest.org/know-god-article/statement-of-faith/"], ["ChurchLeaders – Laurie: 'The Second Coming Is Different From the Rapture'", "https://churchleaders.com/news/457420-pastor-greg-laurie-second-coming-rapture.html"]]}, "1": {"c": 0, "n": "'The Rapture...will take place before the seven years of tribulation'; antichrist 'cannot even emerge until we are caught up'.", "s": [["ChurchLeaders – Laurie: Second Coming vs Rapture", "https://churchleaders.com/news/457420-pastor-greg-laurie-second-coming-rapture.html"], ["Christian Post – Laurie preaches 'Who Is the Antichrist?'", "https://www.christianpost.com/news/greg-laurie-preaches-on-who-is-the-antichrist.html"], ["Christian Post – Laurie says Rapture next event on prophetic calendar", "https://www.christianpost.com/news/megachurch-pastor-greg-laurie-says-rapture-next-event-on-end-times-prophetic-calendar-140044/"]]}, "2": {"c": 0, "n": "Reads Revelation as future sequence: Rapture, Antichrist, 7-year Tribulation, Armageddon, Second Coming, Millennium, New Jerusalem.", "s": [["ChurchLeaders – Laurie: Second Coming vs Rapture", "https://churchleaders.com/news/457420-pastor-greg-laurie-second-coming-rapture.html"], ["Christian Post – Laurie preaches 'Who Is the Antichrist?'", "https://www.christianpost.com/news/greg-laurie-preaches-on-who-is-the-antichrist.html"]]}, "3": {"c": 0, "n": "Dispensational end-times framework; podcast with Joel Rosenberg critiques Replacement Theology, says God's promises to Israel remain.", "s": [["Greg Laurie Show – Have the Jews Been Replaced as God's Chosen People?", "https://www.lifeaudio.com/the-greg-laurie-show/have-the-jews-been-replaced-as-gods-chosen-people-a-conversation-with-joel-rosenberg"], ["ChurchLeaders – Laurie: Second Coming vs Rapture", "https://churchleaders.com/news/457420-pastor-greg-laurie-second-coming-rapture.html"]]}, "4": {"c": 0, "n": "(inferred) Teaches a still-future seven-year Tribulation after the Rapture (the standard futurist reading of Daniel's 70th week).", "s": [["ChurchLeaders – Laurie: Second Coming vs Rapture", "https://churchleaders.com/news/457420-pastor-greg-laurie-second-coming-rapture.html"]]}, "5": {"c": 0, "n": "Antichrist is a future charismatic 'man of peace', 'history's vilest embodiment of sin', ruling 42 months.", "s": [["Christian Post – Laurie preaches 'Who Is the Antichrist?'", "https://www.christianpost.com/news/greg-laurie-preaches-on-who-is-the-antichrist.html"], ["Christian Post – Rapture next event on prophetic calendar", "https://www.christianpost.com/news/megachurch-pastor-greg-laurie-says-rapture-next-event-on-end-times-prophetic-calendar-140044/"]]}, "6": {"c": 0, "n": "Statement: the lost 'experience eternal wrath in Hell'; Laurie: 'you determine now where you will spend eternity. There are no changes later.'", "s": [["Harvest Christian Fellowship – Statement of Faith", "https://harvest.org/know-god-article/statement-of-faith/"], ["Christian Post – Laurie: heaven or hell decision made on earth", "https://assets.christianpost.com/news/greg-laurie-ultimate-heaven-or-hell-decision-is-made-by-you-on-earth.html"]]}, "7": {"c": 0, "n": "'When a believer dies, he or she goes directly to Heaven'; explicitly rejects soul sleep.", "s": [["Harvest.org devotion – When a Christian Dies", "https://harvest.org/resources/devotion/when-a-christian-dies/"], ["Christian Post (Laurie) – When Heaven and Earth Become One", "https://christianpost.com/news/when-heaven-and-earth-become-one.html"]]}, "8": {"c": 0, "n": "'God is not going to abandon His creation; He's going to restore it!' Heaven and earth become one; saved dwell in new heaven and new earth.", "s": [["Christian Post (Laurie) – When Heaven and Earth Become One", "https://christianpost.com/news/when-heaven-and-earth-become-one.html"], ["Harvest Christian Fellowship – Statement of Faith", "https://harvest.org/know-god-article/statement-of-faith/"]]}, "11": {"c": 0, "n": "Baptism is a 'public declaration of the believer's salvation in Christ... symbolized by immersion in water.'", "s": [["Harvest Christian Fellowship – Statement of Faith", "https://harvest.org/know-god-article/statement-of-faith/"]]}, "12": {"c": 0, "n": "Jesus is the only way (Jn 14:6, Acts 4:12); sincere belief in other paths is not enough—content of faith matters.", "s": [["Harvest.org – FAQ: Is Jesus the Only Way to God?", "https://harvest.org/resources/devotion/faq-is-jesus-the-only-way-to-god/"], ["Harvest Christian Fellowship – Statement of Faith", "https://harvest.org/know-god-article/statement-of-faith/"]]}, "13": {"c": 1, "n": "Believer is 'secured as an adopted child of God forever' and true faith perseveres; those who leave for good 'never really belonged' (1 Jn 2:19).", "s": [["Harvest Christian Fellowship – Statement of Faith", "https://harvest.org/know-god-article/statement-of-faith/"], ["Crosswalk – Greg Laurie Daily Devotion, Feb 7 2013", "https://www.crosswalk.com/devotionals/harvestdaily/greg-laurie-daily-devotion-feb-7-2013.html"]]}, "14": {"c": 0, "n": "Church statement: 'God the Father created all things in six literal days for His glory.' (Harvest statement, not a personal Laurie quote.)", "s": [["Harvest Christian Fellowship – Statement of Faith", "https://harvest.org/know-god-article/statement-of-faith/"]]}, "16": {"c": 0, "n": "Church statement: the Lord's Supper is a 'united commemoration by believers of Christ's death until He comes.'", "s": [["Harvest Christian Fellowship – Statement of Faith", "https://harvest.org/know-god-article/statement-of-faith/"]]}}, "Amir Tsarfati": {"0": {"c": 0, "n": "Statement: promises to Israel fulfilled 'in His millennium'; teaches Jesus will physically reign on David's throne for 1,000 years.", "s": [["Behold Israel – Statement of Faith", "https://beholdisrael.org/statement-of-faith/"], ["Charisma – Revelation 20 Explained (Tsarfati)", "https://mycharisma.com/spiritled-living/revelation-20-explained-satans-final-deception-after-christs-1000-year-reign/"]]}, "1": {"c": 0, "n": "Jesus will 'return in the clouds for His church before the tribulation', then return with His saints at the end of it.", "s": [["Behold Israel – Statement of Faith", "https://beholdisrael.org/statement-of-faith/"]]}, "2": {"c": 0, "n": "Treats Revelation as God's plan for the future: future tribulation, Christ's return and millennial reign; wrote 'Revealing Revelation'.", "s": [["Behold Israel – Statement of Faith", "https://beholdisrael.org/statement-of-faith/"], ["Harvest House – Revealing Revelation Workbook", "https://www.harvesthousepublishers.com/books/revealing-revelation-workbook-9780736985185/"]]}, "3": {"c": 0, "n": "Israel has 'a special place in God's plan'; book 'Israel and the Church' presents 'two chosen groups' and refutes Replacement Theology.", "s": [["Behold Israel – Statement of Faith", "https://beholdisrael.org/statement-of-faith/"], ["Harvest House – Israel and the Church", "https://www.harvesthousepublishers.com/books/israel-and-the-church-9780736982702/"]]}, "5": {"c": 0, "n": "In 'Discovering Daniel' the Antichrist is a coming individual who rises through deceit posing as a man of peace, persecutes Israel, demands worship.", "s": [["Shortform summary – Discovering Daniel (Tsarfati)", "https://www.shortform.com/pdf/discovering-daniel-pdf-amir-tsarfati"]]}, "6": {"c": 0, "n": "'Hell is a literal place of torment where unbelievers will suffer forever.'", "s": [["Behold Israel – Statement of Faith", "https://beholdisrael.org/statement-of-faith/"]]}, "12": {"c": 0, "n": "People 'can only be saved by a personal faith in the death and resurrection of our Lord Jesus Christ.'", "s": [["Behold Israel – Statement of Faith", "https://beholdisrael.org/statement-of-faith/"]]}, "13": {"c": 0, "n": "Believers are sealed by the Spirit and 'unable to be separated from the love of Jesus Christ' (eternal security).", "s": [["Behold Israel – Statement of Faith", "https://beholdisrael.org/statement-of-faith/"]]}}, "C.S. Lewis": {"6": {"c": 0, "n": "Hell is real and self-chosen ('doors of hell are locked on the inside'); the damned are 'remains', not men. Rejects universalism; some ambiguity.", "s": [["Wikipedia – The Problem of Pain", "https://en.wikipedia.org/wiki/The_Problem_of_Pain"], ["Wikipedia – Christian views on hell", "https://en.wikipedia.org/wiki/Christian_views_on_hell"], ["Wikipedia – The Great Divorce", "https://en.wikipedia.org/wiki/The_Great_Divorce"]]}, "7": {"c": 0, "n": "Souls are conscious after death; Lewis also held a purgatory of purification ('I believe in Purgatory', Letters to Malcolm), not soul sleep.", "s": [["Wikipedia – C. S. Lewis", "https://en.wikipedia.org/wiki/C._S._Lewis"], ["Wikipedia – The Great Divorce", "https://en.wikipedia.org/wiki/The_Great_Divorce"]]}, "11": {"c": 1, "n": "(inferred) Baptised as an infant (29 Jan 1899) in the Church of Ireland and stayed a lifelong Anglican; no clear statement of his own on paedobaptism found.", "s": [["Wikipedia – C. S. Lewis", "https://en.wikipedia.org/wiki/C._S._Lewis"]]}, "12": {"c": 1, "n": "Mere Christianity: no one is saved except through Christ, 'we do not know that only those who know Him can be saved through Him.'", "s": [["Wikipedia – Inclusivism (cites Mere Christianity p.65)", "https://en.wikipedia.org/wiki/Inclusivism"]]}}, "J.I. Packer": {"3": {"c": 2, "n": "'Covenant theology... is a hermeneutic that forces itself upon every thoughtful Bible-reader' (intro to Witsius, Economy of the Covenants).", "s": [["Packer – Introduction: On Covenant Theology (Monergism)", "https://www.monergism.com/introduction-covenant-theology"]]}, "6": {"c": 0, "n": "Rejected annihilationism: claiming life goes on while punishment ends 'begs the question' (Reformation & Revival, 1997).", "s": [["TGC – J.I. Packer on Why Annihilationism Is Wrong", "https://www.thegospelcoalition.org/article/j-i-packer-on-why-annihilationism-is-wrong/"], ["The Aquila Report – J.I. Packer on Why Annihilationism Is Wrong", "https://theaquilareport.com/j-i-packer-on-why-annihilationism-is-wrong/"]]}, "9": {"c": 0, "n": "Reformed Anglican; soteriology 'described as Calvinist'.", "s": [["Wikipedia – J. I. Packer", "https://en.wikipedia.org/wiki/J._I._Packer"]]}, "11": {"c": 1, "n": "(inferred) Lifelong Anglican; Anglican formularies teach infant baptism. No direct Packer quote on it found in this pass.", "s": [["Wikipedia – J. I. Packer", "https://en.wikipedia.org/wiki/J._I._Packer"]]}, "15": {"c": 0, "n": "Complementarian on CBMW advisory board; wrote 'Let's Stop Making Women Presbyters' (Christianity Today, 1991).", "s": [["Wikipedia – J. I. Packer", "https://en.wikipedia.org/wiki/J._I._Packer"], ["Christianity Today – Let's Stop Making Women Presbyters (Feb 11 1991)", "https://www.christianitytoday.com/ct/1991/february-11/lets-stop-making-women-presbyters.html"]]}}};
+(function applyResearch(){Object.entries(RESEARCH).forEach(([name,tops])=>{const P=PEOPLE.find(p=>p.name===name);if(!P)return;
+  VER[name]=VER[name]||{};LINKS[name]=LINKS[name]||[];const seen=new Set(LINKS[name].map(x=>x[1]));
+  Object.entries(tops).forEach(([k,x])=>{const i=+k;P.v[i]={c:x.c,n:x.n};VER[name][i]=x.s.length;
+    x.s.forEach(([t,u])=>{if(u&&!seen.has(u)){seen.add(u);LINKS[name].push([t,u])}})})})})();
+// ---- saved users: browser storage + answers built into the file + optional linked save file ----
+const STORE="decisionwheel_users_v1",TOMB="decisionwheel_deleted_v1";
+const keyOf=r=>r.self?"__self__":"u:"+r.name;
+function serializeUsers(){return PEOPLE.filter(P=>P.user).map(P=>{const byName={},al={},cv={};TOPICS.forEach((T,i)=>{byName[T.name]=P.v[i]?P.v[i].c:null;if((P.also||{})[i])al[T.name]=P.also[i];if((P.conv||{})[i])cv[T.name]=P.conv[i]});
+  return {name:P.name,self:!!P.self,church:P.church||"",trad:P.trad||[],answers:byName,alsoHolds:al,conviction:cv,saved:P.saved||0}})}
+let DELETED={};try{DELETED=JSON.parse(localStorage.getItem(TOMB)||"{}")||{}}catch(e){}
+function bundle(){return {version:1,people:serializeUsers(),deleted:DELETED}}
+function storageOK(){try{localStorage.setItem("dw_t","1");localStorage.removeItem("dw_t");return true}catch(e){return false}}
+function saveUsers(...changed){const now=Date.now();changed.forEach(P=>{if(P)P.saved=now});
+  try{localStorage.setItem(STORE,JSON.stringify(serializeUsers()));localStorage.setItem(TOMB,JSON.stringify(DELETED))}catch(e){}
+  writeLinked();markUnsaved();setStatus()}
+// merge records from any source: newest version of each person wins; deletions win if newer
+function mergeBundle(b){if(!b)return;const people=Array.isArray(b)?b:(b.people||[]),del=Array.isArray(b)?{}:(b.deleted||{});
+  Object.entries(del).forEach(([k,t])=>{if(!DELETED[k]||DELETED[k]<t)DELETED[k]=t});
+  people.forEach(u=>{const k=keyOf(u),cur=u.self?PEOPLE.find(p=>p.self):PEOPLE.find(p=>p.user&&p.name===u.name);
+    if(DELETED[k]&&DELETED[k]>=(u.saved||0))return;
+    if(cur&&(cur.saved||0)>(u.saved||0))return;
+    applyUsers([u]);const P=u.self?PEOPLE.find(p=>p.self):PEOPLE.find(p=>p.user&&p.name===u.name);if(P)P.saved=u.saved||0});
+  Object.entries(DELETED).forEach(([k,t])=>{const i=PEOPLE.findIndex(p=>p.user&&!p.self&&keyOf(p)===k&&(p.saved||0)<=t);if(i>=0)PEOPLE.splice(i,1)})}
+function loadUsers(){
+  try{const el=document.getElementById("dw-saved");if(el)mergeBundle(JSON.parse(el.textContent||"null"))}catch(e){}
+  try{const people=JSON.parse(localStorage.getItem(STORE)||"null");if(people)mergeBundle({people,deleted:DELETED})}catch(e){}}
+function deleteUser(P){DELETED[keyOf({name:P.name})]=Date.now();PEOPLE.splice(PEOPLE.indexOf(P),1);saveUsers()}
+// ---- add people from an emailed survey response (code "DW1:..." or JSON file) ----
+function parseResponse(txt){txt=String(txt||"").trim();const m=txt.match(/DW1:([\s\S]*?):END/)||txt.match(/DW1:([A-Za-z0-9+\/=]+)/);
+  if(m){const b=m[1].replace(/[^A-Za-z0-9+\/=]/g,"");return JSON.parse(decodeURIComponent(escape(atob(b))))}
+  const j=txt.indexOf("{"),k=txt.indexOf("[");const st=j<0?k:k<0?j:Math.min(j,k);return JSON.parse(txt.slice(st))}
+function importResponse(txt){let d;try{d=parseResponse(txt)}catch(e){toast("Couldn't read that response — paste the whole DW1: code or choose the .json file");return false}
+  const arr=Array.isArray(d)?d:(d.people||[]);if(!arr.length){toast("No answers found in that response");return false}
+  const isResp=d.type==="decision-wheel-response";const now=Date.now();
+  arr.forEach(u=>{u.saved=now;if(isResp)u.self=false;if(isResp&&u.name&&PEOPLE.find(p=>!p.user&&p.name===u.name))u.name+=" (survey)";if(!u.self)delete DELETED["u:"+u.name]});
+  mergeBundle({people:arr,deleted:{}});
+  const added=arr.filter(u=>!u.self).map(u=>PEOPLE.find(p=>p.user&&p.name===u.name)).filter(Boolean);added.forEach(P=>P.on=true);
+  if(added.length)cwOther=added[added.length-1];
+  saveUsers(...added);if(view==="survey")renderSurvey();toast(isResp?`Added ${added.map(P=>P.name).join(", ")} — see Compare people`:`Imported ${arr.length} people`);return true}
+// ---- 1) save a copy of the app with answers built in (works in any browser, any computer) ----
+let unsaved=false;function markUnsaved(){unsaved=true}
+function buildHTML(){const json=JSON.stringify(bundle()).replace(/</g,"\\u003c");
+  return SRC.replace(/(<script id="dw-saved" type="application\/json">)[\s\S]*?(<\/script>)/,(m,a,b)=>a+json+b)}
+function readBundleText(txt){txt=String(txt||"");if(!txt.trim())return null;
+  const m=txt.match(/<script id="dw-saved" type="application\/json">([\s\S]*?)<\/script>/);
+  return JSON.parse(m?(m[1].trim()||"null"):txt)}
+function downloadApp(){const html=buildHTML();
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([html],{type:"text/html"}));a.download="decision_wheel.html";a.click();unsaved=false;setStatus();toast("Downloaded decision_wheel.html with your answers built in")}
+// ---- 2) link a save file on this computer (Chrome / Edge): written automatically on every change ----
+let fileHandle=null,fileOK=false;
+const idb=(mode,fn)=>new Promise((res,rej)=>{const r=indexedDB.open("decisionwheel",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onerror=()=>rej(r.error);r.onsuccess=()=>{const tx=r.result.transaction("kv",mode),st=tx.objectStore("kv");const q=fn(st);tx.oncomplete=()=>res(q&&q.result);tx.onerror=()=>rej(tx.error)}});
+async function linkFile(){if(!window.showSaveFilePicker){toast("Linking a file needs Chrome or Edge — use 'Save app with my answers' instead");return}
+  try{[fileHandle]=await showOpenFilePicker({types:[{description:"Decision Wheel app (decision_wheel.html)",accept:{"text/html":[".html",".htm"],"application/json":[".json"]}}]});
+    if((await fileHandle.requestPermission({mode:"readwrite"}))!=="granted"){fileHandle=null;return}
+    try{const b=readBundleText(await (await fileHandle.getFile()).text());if(b)mergeBundle(b)}catch(e){}
+    fileOK=true;await idb("readwrite",st=>st.put(fileHandle,"handle"));await writeLinked(true);rerender();toast("Linked — every change now saves into "+fileHandle.name+" on your computer");unsaved=false;setStatus()}catch(e){}}
+async function reconnectFile(){if(!fileHandle)return;try{if(await fileHandle.requestPermission({mode:"readwrite"})==="granted"){fileOK=true;const b=readBundleText(await (await fileHandle.getFile()).text());if(b)mergeBundle(b);await writeLinked(true);rerender();toast("Reconnected to "+fileHandle.name)}}catch(e){}}
+async function writeLinked(force){if(!fileHandle||!fileOK)return;try{const w=await fileHandle.createWritable();await w.write(/\.html?$/i.test(fileHandle.name)?buildHTML():JSON.stringify(bundle(),null,2));await w.close()}catch(e){fileOK=false;setStatus()}}
+async function initLinked(){try{fileHandle=await idb("readonly",st=>st.get("handle"));if(!fileHandle)return;
+  if(await fileHandle.queryPermission({mode:"readwrite"})==="granted"){fileOK=true;const b=readBundleText(await (await fileHandle.getFile()).text());if(b){mergeBundle(b);rerender()}}setStatus()}catch(e){fileHandle=null}}
+function setStatus(){const el=document.getElementById("savestat");if(!el)return;
+  const parts=[];parts.push(storageOK()?"saved in this browser":"browser storage blocked");
+  if(fileHandle)parts.push(fileOK?"and to "+esc(fileHandle.name):`<button class="lnk" id="reconnect">reconnect ${esc(fileHandle.name)}</button>`);
+  el.innerHTML=`✓ Answers ${parts.join(" ")}${unsaved&&!(fileOK&&/\.html?$/i.test(fileHandle.name))?' · <button class="lnk" id="dlapp">save app copy</button>':''}`}
+function rerender(){if(typeof view==="undefined")return;if(view==="wheel"){ownerSel();draw()}else if(view==="compare")renderCompare();else renderSurvey();setStatus()}
+window.addEventListener("beforeunload",e=>{if(unsaved&&!fileOK&&!storageOK()){e.preventDefault();e.returnValue=""}});
+function applyUsers(arr){arr.forEach(u=>{let P=u.self?PEOPLE.find(p=>p.self):PEOPLE.find(p=>p.user&&p.name===u.name);
+  if(!P){P={name:u.name,user:true,on:true,v:[],also:{},conv:{}};PEOPLE.splice(1,0,P)}
+  P.church=u.church||P.church;if(u.trad&&u.trad.length)P.trad=u.trad;
+  if(u.answers){ // name-keyed (current format): topics added later stay blank, saved answers are never lost if topics move
+    P.v=TOPICS.map((T,i)=>{const x=u.answers[T.name];return {c:x!=null&&x<T.opts.length?x:(P.self&&P.v[i]?P.v[i].c:null)}});
+    P.also={};P.conv={};TOPICS.forEach((T,i)=>{if(u.alsoHolds&&u.alsoHolds[T.name])P.also[i]=u.alsoHolds[T.name];if(u.conviction&&u.conviction[T.name])P.conv[i]=u.conviction[T.name]})}
+  else{P.v=TOPICS.map((_,i)=>({c:u.v&&u.v[i]!=null?u.v[i]:null}));P.also=u.also||{};P.conv=u.conv||{}}
+  if(u.self)P.name=u.name||P.name})}
+loadUsers();
+let owner=PEOPLE.find(P=>P.self),target=owner;
+const choice=(P,i)=>P.v[i]?P.v[i].c:null;
+const note=(P,i)=>P.user?"":((P.v[i]&&P.v[i].n)||"");
+const alsoOf=(P,i)=>((P.also||{})[i]||[]).filter(k=>k!==choice(P,i));
+const convOf=(P,i)=>P.user?(P.conv||{})[i]:undefined;
+const ver=(P,i)=>P.user?null:((VER[P.name]||{})[i]||0);
+const verMark=k=>!k?"":`<span class="vm">${k>=2?"••":"•"}</span>`;
+const TSHORT=["Millennium","Rapture","Revelation","Israel","Dan. 70th","Antichrist","Judgment","After death","New creation","Election","Gifts","Baptism","Missions","Security","Creation","Women","Supper"];
+const ABBR={"Continuationist":"Contin.","Cessationist":"Cessat.","Open but cautious":"Open/caut.","Future individual":"Future indiv.","Annihilation":"Annihil.","Universalism":"Univ.","Progressive":"Progr.","Spirit / system":"Spirit/sys.","Mid / Pre-wrath":"Mid/PW","Spiritual heaven":"Spiritual","Historical":"Histor.","Complementarian":"Comp.","Egalitarian":"Egal.","Exclusivist":"Exclus.","Inclusivist":"Inclus.","Hopeful agnostic":"Agnostic","Perseverance":"Persev.","Conditional":"Condit.","Spiritual presence":"Spiritual","Real presence":"Real","Evolutionary":"Evol.","New heavens & earth":"Renewal","Young earth":"Young","Old earth":"Old"};
+const ab=t=>ABBR[t]||t;
+// ================= wheel =================
+let wset="all";
+const SETS={all:[...Array(NT).keys()],core:[...Array(12).keys()],end:[0,1,2,3,4,5,6,7,8],church:[9,10,11,12,13,14,15,16]};
+function geo(){const n=SETS[wset].length;return n>12?{W:1560,H:1400,CX:780,CY:620,R0:84,LR:395,n}:{W:1400,H:1080,CX:700,CY:500,R0:80,LR:345,n}}
+function stage1V(n){return n===3?[34,0,-34]:[30,-30]}
+function targets(i,inline){const T=TOPICS[i],pick=choice(owner,i);const n=T.opts.length,v1=stage1V(n),res=[];
+  const also=alsoOf(owner,i);
+  const others=T.opts.map((_,k)=>k).filter(k=>k!==pick&&!also.includes(k)).sort((a,b)=>v1[b]-v1[a]);
+  res[pick]=[290,0];
+  if(also.length){const side=(!inline&&others.length===1)?(v1[others[0]]>0?-1:1):1;
+    if(inline){const sd=v1[pick]>=v1[also[0]]?1:-1;res[pick]=[292,18*sd];res[also[0]]=[292,-18*sd];others.forEach((k,q)=>res[k]=[236-q*22,0]);return res}
+    res[also[0]]=[266,24*side];
+    if(!inline&&others.length===1){res[others[0]]=[232,-24*side];return res}}
+  if(inline){if(others.length===1)res[others[0]]=[244,0];else if(others.length>1){res[others[0]]=[258,0];res[others[1]]=[232,0]}}
+  else{if(others.length===1)res[others[0]]=[232,v1[others[0]]>0?22:-22];else if(others.length>1){res[others[0]]=[232,22];res[others[1]]=[232,-22]}}
+  return res}
+function block(lines,x,y,anc,op){let o=`<g opacity="${op}">`,yy=y;for(const l of lines){yy+=l.gap;o+=`<text x="${f(x)}" y="${f(yy)}" text-anchor="${anc}" font-size="${l.size}" font-weight="${l.weight||400}" fill="${l.fill}"${l.it?' font-style="italic"':''}>${esc(l.txt)}</text>`}return o+"</g>"}
+const blockH=lines=>lines.reduce((a,l)=>a+l.gap,0);
+function render(t,variant){
+  const inline=variant==="inline",G=geo(),IDX=SETS[wset],N=IDX.length,big=N>12,wq=big?34:40,wd=big?36:42;
+  const pt=(j,u,v)=>{const a=-Math.PI/2+2*Math.PI*j/N,dx=Math.cos(a),dy=Math.sin(a);return[G.CX+u*dx-v*dy,G.CY+u*dy+v*dx,dx,dy]};
+  const place=(j,lines)=>{const [lx,ly,dx,dy]=pt(j,G.LR,0),anc=Math.abs(dx)<0.1?"middle":(dx>0?"start":"end"),h=blockH(lines);
+    let y;if(dy<-0.8)y=ly-h-4-(big?16:0);else if(dy>0.8)y=ly-6+(big?(1-Math.abs(dx))*140:0);else y=ly-h/2-4;return[lx,y,anc]};
+  const fork=L(190,205,t);
+  const o=[`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${G.W} ${G.H}" font-family="Helvetica,Arial,sans-serif"><rect width="${G.W}" height="${G.H}" fill="#fff"/>`,
+   `<circle cx="${G.CX}" cy="${G.CY}" r="${f(L(262,290,t))}" fill="none" stroke="#E4E7EB" stroke-dasharray="3 6"/>`];
+  IDX.forEach((i,j)=>{const T=TOPICS[i],n=T.opts.length,v1=stage1V(n),pick=choice(owner,i),und=pick==null;
+    const tt=und?0:t,tg=und?null:targets(i,inline),AL=und?[]:alsoOf(owner,i),cv=convOf(owner,i);
+    const [x0,y0]=pt(j,G.R0,0),[xf,yf]=pt(j,und?190:fork,0);
+    o.push(`<g class="topic" data-i="${i}">`);
+    const [hx,hy]=pt(j,G.LR-20,0);o.push(`<line x1="${f(x0)}" y1="${f(y0)}" x2="${f(hx)}" y2="${f(hy)}" stroke="transparent" stroke-width="40"/>`);
+    o.push(`<line x1="${f(x0)}" y1="${f(y0)}" x2="${f(xf)}" y2="${f(yf)}" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`);
+    const pos=T.opts.map((_,k)=>und?pt(j,262,v1[k]):pt(j,L(262,tg[k][0],t),L(v1[k],tg[k][1],t)));
+    if(und){T.opts.forEach((_,k)=>{const [x,y]=pos[k];o.push(`<line x1="${f(xf)}" y1="${f(yf)}" x2="${f(x)}" y2="${f(y)}" stroke="${t>0?GREY:INK}" stroke-width="2.5" ${t>0?'stroke-dasharray="4 4"':''}/><circle cx="${f(x)}" cy="${f(y)}" r="8" fill="${t>0?'#fff':INK}" stroke="${GREY}" stroke-width="${t>0?2.5:0}"/>`)})}
+    else{
+      const CON=T.opts.map((_,k)=>k).filter(k=>k!==pick&&!AL.includes(k)).sort((a,b)=>tg[b][0]-tg[a][0]);
+      CON.forEach(k=>{const [x,y]=pos[k];if(!(inline&&t===1))o.push(`<line x1="${f(xf)}" y1="${f(yf)}" x2="${f(x)}" y2="${f(y)}" stroke="${t===0?INK:GREY}" stroke-width="2.5" ${t>0?'stroke-dasharray="4 4"':''} stroke-linecap="round" opacity="${inline?1-t:1}"/>`)});
+      const [xc,yc]=pos[pick],dw=cv&&t>0.5?2+cv*0.7:3,two=inline&&AL.length>0,[f2x,f2y]=two?pt(j,L(190,258,t),0):[xf,yf];
+      if(two)o.push(`<line x1="${f(xf)}" y1="${f(yf)}" x2="${f(f2x)}" y2="${f(f2y)}" stroke="${t>0.5?TEAL:INK}" stroke-width="${f(dw)}" stroke-linecap="round"/>`);
+      o.push(`<line x1="${f(f2x)}" y1="${f(f2y)}" x2="${f(xc)}" y2="${f(yc)}" stroke="${t>0.5?TEAL:INK}" stroke-width="${f(dw)}" stroke-linecap="round"/>`);
+      AL.forEach(k=>{const [x,y]=pos[k];const [sx,sy]=two?[f2x,f2y]:[xf,yf];o.push(`<line x1="${f(sx)}" y1="${f(sy)}" x2="${f(x)}" y2="${f(y)}" stroke="${t>0.5?TEAL:INK}" stroke-width="2.5" stroke-linecap="round"/>`)});
+      if(t>0){const vs=T.opts.map((_,k)=>k===pick?0:tg[k][1]).filter((_,k)=>!(inline&&AL.includes(k)));
+        const lo=inline?-14:Math.min(0,...vs)-8,hi=inline?14:Math.max(0,...vs)+8,[a1,b1]=pt(j,fork,lo),[a2,b2]=pt(j,fork,hi);
+        o.push(`<line x1="${f(a1)}" y1="${f(b1)}" x2="${f(a2)}" y2="${f(b2)}" stroke="${GREY}" stroke-width="2.5" stroke-linecap="round" opacity="${t}"/>`)}
+      T.opts.forEach((_,k)=>{if(k===pick)return;const [x,y]=pos[k];
+        if(AL.includes(k)&&t>0){o.push(`<circle cx="${f(x)}" cy="${f(y)}" r="${f(L(8,7.5,t))}" fill="${t>0.5?'#fff':INK}" stroke="${TEAL}" stroke-width="${f(3*t)}"/>`);return}
+        o.push(`<circle cx="${f(x)}" cy="${f(y)}" r="${f(L(8,6.5,t))}" fill="${t===0?INK:'#fff'}" stroke="${GREY}" stroke-width="${t===0?0:2.5}"/>`)});
+      o.push(`<circle cx="${f(xc)}" cy="${f(yc)}" r="${f(L(8,cv?8+cv*0.9:11,t))}" fill="${t>0.5?TEAL:INK}"/>`);
+    }
+    const l1=[{txt:T.name,size:17,weight:700,fill:INK,gap:17},...wrap(T.q,wq).map(x=>({txt:x,size:13,fill:MUTED,it:1,gap:17})),{txt:T.opts.map(x=>x.s).join("  ·  "),size:13,weight:600,fill:INK,gap:19}];
+    let l2;
+    if(und)l2=[{txt:T.name,size:17,weight:700,fill:INK,gap:17},{txt:"Not answered yet",size:14,weight:700,fill:GREY,gap:19},{txt:"Take the survey to set this",size:12.5,fill:MUTED,it:1,gap:16}];
+    else{const dec=T.opts[pick],con=T.opts.filter((_,k)=>k!==pick&&!AL.includes(k)).map(x=>x.s).join(", ");
+      l2=[{txt:T.name,size:17,weight:700,fill:INK,gap:17},{txt:dec.n,size:14.5,weight:700,fill:TEAL,gap:19},...wrap(dec.d,wd).map(x=>({txt:x,size:12.5,fill:INK,gap:16})),
+        ...AL.map(k=>({txt:"also holds: "+T.opts[k].n,size:12.5,weight:600,fill:TEAL,gap:17})),
+        ...(cv?[{txt:"conviction "+"●".repeat(cv)+"○".repeat(5-cv),size:12,fill:TEAL,gap:16}]:[]),
+        {txt:"considered: "+con,size:12,fill:GREY,gap:17}]}
+    const op1=Math.max(0,1-2*t),op2=Math.max(0,2*t-1);
+    if(op1>0){const [x,y,a]=place(j,l1);o.push(block(l1,x,y,a,op1))}
+    if(op2>0){const [x,y,a]=place(j,l2);o.push(block(l2,x,y,a,op2))}
+    o.push(`</g>`)});
+  const nm=owner.name.length>14?owner.name.split(" ")[0]:owner.name;
+  o.push(`<circle cx="${G.CX}" cy="${G.CY}" r="${G.R0}" fill="${INK}"/><text x="${G.CX}" y="${G.CY-6}" text-anchor="middle" fill="#fff" font-size="16" font-weight="700">${esc(nm)}'s</text><text x="${G.CX}" y="${G.CY+14}" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">views</text>`);
+  const title=t<0.5?"Stage 1 — The options":"Stage 2 — The decisions";
+  o.push(`<text x="${G.CX}" y="${G.H-70}" text-anchor="middle" font-size="24" font-weight="700" fill="${INK}">${title}</text>`);
+  if(t>=0.5)o.push(`<circle cx="${G.CX-230}" cy="${G.H-35}" r="8" fill="${TEAL}"/><text x="${G.CX-216}" y="${G.H-30}" font-size="15" fill="${INK}">Decision</text><circle cx="${G.CX-90}" cy="${G.H-35}" r="6" fill="#fff" stroke="${GREY}" stroke-width="2.5"/><text x="${G.CX-75}" y="${G.H-30}" font-size="15" fill="${INK}">Considered, not chosen</text><circle cx="${G.CX+150}" cy="${G.H-35}" r="7" fill="#fff" stroke="${TEAL}" stroke-width="3"/><text x="${G.CX+164}" y="${G.H-30}" font-size="15" fill="${INK}">Also holds</text>`);
+  else o.push(`<text x="${G.CX}" y="${G.H-32}" text-anchor="middle" font-size="15" fill="${MUTED}">${N} topics, each with two or three possible outcomes</text>`);
+  o.push(`</svg>`);return o.join("")}
+// ================= families, axes, similarity =================
+const FAM=[{n:"Dispensational",col:"#2a78d6",fg:"#fff"},{n:"Historic premil",col:"#1baf7a",fg:"#1F2933"},{n:"Amillennial",col:"#eb6834",fg:"#fff"},{n:"Postmillennial",col:"#eda100",fg:"#1F2933"},{n:"Premil (other)",col:"#e87ba4",fg:"#1F2933"},{n:"Unclassified",col:"#8A949E",fg:"#fff"}];
+function fam(P){const m=choice(P,0),is=choice(P,3);return FAM[m===0?(is===0||is===1?0:is===2?1:4):m===1?2:m===2?3:5]}
+const INI={"C.S. Lewis":"CSL","J.I. Packer":"JIP","John Mark Comer":"JMC"};
+const ini=n=>INI[n]||(n.replace(/\./g," ").trim().split(/\s+/).map(w=>w[0]).join("").slice(0,2)||"?").toUpperCase();
+const surname=n=>n.split(" ").slice(-1)[0];
+const dotH=(P,sz=22)=>{const F=fam(P);return `<span class="dot" style="width:${sz}px;height:${sz}px;background:${F.col};color:${F.fg};${P===target?'box-shadow:0 0 0 2px #fff,0 0 0 4px #1F2933':''}" title="${esc(P.name)} · ${F.n}">${esc(ini(P.name))}</span>`};
+const AXES=[
+ {g:"End times",l:"Future earthly kingdom",r:"Present / spiritual kingdom",t:{0:[0,1,.8]}},
+ {g:"End times",l:"Prophecy still future",r:"Prophecy already fulfilled",t:{2:[0,1,.7],4:[0,1],5:[0,1,.6]}},
+ {g:"End times",l:"Israel distinct",r:"One people of God",t:{3:[0,.5,1]}},
+ {g:"End times",l:"Rescued before tribulation",r:"Endures tribulation",t:{1:[0,.5,1]}},
+ {g:"Afterlife & new creation",l:"Traditional afterlife",r:"Revised afterlife",t:{6:[0,.75,1],7:[0,1]}},
+ {g:"Afterlife & new creation",l:"Earth renewed",r:"Earth replaced / spiritual",t:{8:[0,.6,1]}},
+ {g:"Salvation & church",l:"God's sovereign choice",r:"Human free response",t:{9:[0,1,.5]}},
+ {g:"Salvation & church",l:"Gifts have ceased",r:"Gifts active today",t:{10:[1,.5,0]}},
+ {g:"Salvation & church",l:"Household / infant baptism",r:"Believer's church",t:{11:[1,0]}},
+ {g:"Missions & church life",l:"Must hear to be saved",r:"Wider hope",t:{12:[0,1,.5]}},
+ {g:"Missions & church life",l:"Secure once saved",r:"Salvation can be lost",t:{13:[0,.3,1]}},
+ {g:"Missions & church life",l:"Young earth",r:"Evolutionary creation",t:{14:[0,.5,1]}},
+ {g:"Missions & church life",l:"Male eldership",r:"All roles open to women",t:{15:[0,.5,1]}},
+ {g:"Missions & church life",l:"Memorial supper",r:"Real presence",t:{16:[0,.5,1]}}];
+function axisScore(P,a){let s=0,n=0;for(const i in a.t){const c=choice(P,+i);if(c!=null){s+=a.t[i][c];n++}}return n?s/n:null}
+function axisConv(P,a){const c=Object.keys(a.t).map(i=>convOf(P,+i)).filter(Boolean);return c.length?c.reduce((x,y)=>x+y,0)/c.length:null}
+function sim(A,B){let v=0,n=0;TOPICS.forEach((_,i)=>{const a=choice(A,i),b=choice(B,i);if(a!=null&&b!=null){n++;if(a===b)v++}});return {v,n,f:n?v/n:0}}
+function closest(P,k=3){return PEOPLE.filter(Q=>Q!==P).map(Q=>({Q,...sim(P,Q)})).filter(x=>x.n>=5).sort((a,b)=>b.f-a.f||b.n-a.n).slice(0,k)}
+function labels(P){const c=i=>choice(P,i),also=alsoOf(P,3);const t=[],d=[];const mil=c(0),isr=c(3);
+  if(mil===0){if(isr===0)t.push(also.includes(1)?"Dispensational (progressive leanings)":"Dispensational premillennialist");else if(isr===1)t.push("Progressive dispensationalist");else if(isr===2)t.push("Historic premillennialist");else t.push("Premillennialist")}
+  else if(mil===1)t.push("Amillennialist");else if(mil===2)t.push("Postmillennialist");
+  if(c(1)!=null)t.push(["Pre-tribulationist","Mid-trib / pre-wrath","Post-tribulationist"][c(1)]);
+  if(c(2)!=null)t.push(["Futurist","Partial preterist","Idealist"][c(2)]);
+  if(c(6)===1)t.push("Annihilationist");if(c(6)===2)t.push("Christian universalist");if(c(7)===1)t.push("Soul sleep");if(c(8)===0)t.push("New-creationist");
+  if(c(9)!=null)t.push(["Reformed (Calvinist)","Arminian / free-will","Molinist"][c(9)]);
+  if(c(10)!=null)t.push(["Continuationist","Open but cautious","Cessationist"][c(10)]);
+  if(c(12)!=null)t.push(["Exclusivist","Inclusivist","Hopeful agnostic"][c(12)]);
+  if(c(13)!=null)t.push(["Eternal security (OSAS)","Perseverance of the saints","Conditional security"][c(13)]);
+  if(c(14)!=null)t.push(["Young-earth creationist","Old-earth creationist","Evolutionary creationist"][c(14)]);
+  if(c(15)!=null)t.push(["Complementarian","Soft complementarian","Egalitarian"][c(15)]);
+  if(c(16)!=null)t.push(["Memorialist (Supper)","Spiritual presence (Supper)","Real presence (Supper)"][c(16)]);
+  const bap=c(11),cal=c(9)===0,arm=c(9)===1,disp=mil===0&&(isr===0||isr===1),g=c(10),eg=c(15)===2,mem=c(16)===0;
+  if(bap===0){
+    if(disp&&!cal&&g===1)d.push("Calvary Chapel");
+    if(disp&&g!==0)d.push(cal?"Bible church / independent Baptist":"Open Brethren","Independent / Bible Baptist");
+    if(mem&&disp&&c(15)===0)d.push("Open Brethren");
+    if(cal&&g===2&&!disp)d.push("Reformed Baptist");if(cal&&g===0)d.push("Sovereign Grace / Reformed charismatic");
+    if(!cal&&g===0)d.push(eg?"Foursquare / Assemblies of God":"Pentecostal / charismatic");
+    if(arm&&g===1&&!disp)d.push("Free Will Baptist","Evangelical Free");if(c(13)===0)d.push("Southern / independent Baptist");
+    if(!d.length)d.push("Baptist / free church");
+  }else if(bap===1){if(disp)d.push("Exclusive (Plymouth) Brethren");if(cal&&!disp)d.push(c(16)===1?"Presbyterian / Reformed":"Reformed");if(arm)d.push("Methodist / Wesleyan");if(c(16)===2)d.push("Lutheran");if(!cal&&!arm&&!disp&&c(16)!==2)d.push("Anglican")}
+  if(P.tags)t.push(...P.tags);return {t,d:[...new Set(d)]}}
+// ================= compare UI =================
+let pendingScroll=null;let view="wheel",ctab="tend",editor=0,readMine=false,readMode="topic"; // editor = index of a survey user (Luke by default)
+function chips(){const tg=PEOPLE.indexOf(target);
+  let h=`<div class="tbar"><label>Target person <select class="selref" id="seltarget">${PEOPLE.map((P,k)=>`<option value="${k}"${P===target?' selected':''}>${esc(P.name)}${P.user&&!P.self?' (survey)':''}</option>`).join("")}</select></label>
+  <span class="qb"><button class="mini" data-q="all">Select all</button><button class="mini" data-q="none">Deselect all</button><button class="mini" data-q="two">+ closest</button><button class="mini" data-q="near">+ 3 closest</button><button class="mini" data-q="modern">+ modern authors</button></span></div><div class="fams">`;
+  FAM.forEach((F,fi)=>{const ps=PEOPLE.filter(P=>fam(P)===F);if(!ps.length)return;
+    h+=`<div class="fam"><div class="fh"><i style="background:${F.col}"></i>${F.n}<button class="lnk" data-fa="${fi}">all</button><button class="lnk" data-fn="${fi}">none</button></div><div class="people">`+ps.map(P=>{const k=PEOPLE.indexOf(P);return `<button class="chip${P.on||P===target?'':' off'}${P===target?' tgt':''}" data-p="${k}">${dotH(P,20)}<span>${esc(P.name)}</span>${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}</button>`}).join("")+`</div></div>`});
+  return h+`</div>`}
+const visible=()=>PEOPLE.filter(P=>P.on||P===target);
+function tabTend(vis){
+  const W=1040,Lx=270,Rx=820,TW=Rx-Lx,lane=24,PER=8,GAP=21;let y=10,svg="",lastG="";const F=target;
+  const rows=AXES.map(a=>{const pts=vis.map(P=>({P,s:axisScore(P,a)})).filter(p=>p.s!=null);
+    const groups={};pts.forEach(p=>{(groups[p.s.toFixed(2)]=groups[p.s.toFixed(2)]||[]).push(p)});let nl=1;
+    Object.values(groups).forEach(gp=>{gp.sort((p,q)=>(q.P===F?1:0)-(p.P===F?1:0));const sc=gp[0].s,dir=sc<.34?1:sc>.66?-1:0,base=Lx+sc*TW;
+      gp.forEach((p,j)=>{const col=j%PER,cnt=Math.min(gp.length-Math.floor(j/PER)*PER,PER);p.l=Math.floor(j/PER);nl=Math.max(nl,p.l+1);p.x=dir?base+dir*(col*GAP+10):base+(col-(cnt-1)/2)*GAP})});
+    return {a,pts,nl}});
+  rows.forEach(({a,pts,nl})=>{
+    if(a.g!==lastG){y+=lastG?22:8;svg+=`<text x="0" y="${y+12}" font-size="13" font-weight="700" fill="${MUTED}" letter-spacing=".05em">${a.g.toUpperCase()}</text>`;y+=24;lastG=a.g}
+    const h=nl*lane+12,cy=y+h/2,fs=axisScore(F,a),lw=fs!=null&&fs<.5,rw=fs!=null&&fs>.5,pc=fs==null?0:Math.round((fs<=.5?1-fs:fs)*100);
+    svg+=`<text x="${Lx-14}" y="${cy+5}" text-anchor="end" font-size="14" fill="${lw?TEAL:INK}" font-weight="${lw?700:400}">${lw?pc+'% · ':''}${esc(a.l)}</text><text x="${Rx+14}" y="${cy+5}" font-size="14" fill="${rw?TEAL:INK}" font-weight="${rw?700:400}">${esc(a.r)}${rw?' · '+pc+'%':''}</text>`;
+    svg+=`<rect x="${Lx}" y="${y}" width="${TW}" height="${h}" rx="${Math.min(14,h/2)}" fill="#F1F3F5"/>`;
+    if(fs!=null)svg+=`<rect x="${Math.min(Lx+fs*TW,Lx+TW/2)}" y="${y}" width="${Math.abs(fs-.5)*TW}" height="${h}" fill="${TEAL}" opacity=".08"/>`;
+    svg+=`<line x1="${Lx+TW/2}" y1="${y+4}" x2="${Lx+TW/2}" y2="${y+h-4}" stroke="#D9DEE3" stroke-dasharray="3 3"/>`;
+    if(fs===.5)svg+=`<text x="${Lx+TW/2}" y="${y-3}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${TEAL}">balanced</text>`;
+    if(fs==null)svg+=`<text x="${Lx+TW/2}" y="${y-3}" text-anchor="middle" font-size="11.5" fill="${GREY}">${esc(F.name)}: not answered</text>`;
+    pts.forEach(p=>{const Fm=fam(p.P),dy=y+6+p.l*lane+lane/2,cv=axisConv(p.P,a),r=cv?6+cv*1.3:10;
+      svg+=`<g><title>${esc(p.P.name)}: ${Math.round((p.s<=.5?1-p.s:p.s)*100)}% ${esc(p.s<=.5?a.l:a.r)}${cv?` · conviction ${cv.toFixed(1)}/5`:""}</title><circle cx="${p.x}" cy="${dy}" r="${f(r)}" fill="${Fm.col}" stroke="${p.P===F?INK:'#fff'}" stroke-width="${p.P===F?3:2}"/><text x="${p.x}" y="${dy+3.5}" text-anchor="middle" font-size="9.5" font-weight="700" fill="${Fm.fg}">${esc(ini(p.P.name))}</text></g>`});
+    y+=h+10});
+  return `<p class="sub">Each row is a spectrum between two tendencies. The target person's lean is shaded and shown as a percentage. Survey users' dots are sized by conviction. Hover a dot for details.</p><svg viewBox="0 0 ${W} ${y+6}" style="width:100%;max-width:1040px" font-family="Helvetica,Arial,sans-serif">${svg}</svg>`+famKey(vis)}
+function famKey(vis){const fs=[...new Set(vis.map(fam))];return `<div class="key">${fs.map(F=>`<span><i style="background:${F.col};border-radius:50%"></i>${F.n}</span>`).join("")}<span><i style="background:#fff;border:3px solid ${INK};border-radius:50%;box-sizing:border-box"></i>Target (ringed)</span></div>`}
+function heatLegend(){return `<div class="key"><span><i style="background:${TEAL}"></i>Same view as ${esc(target.name)}</span><span><i style="background:#FBE3D7"></i>Different view</span><span><i style="background:#F4F5F7;border:1px solid #D9DEE3"></i>— No clear position</span><span>•• 2+ sources · • 1 source · unmarked = well known but not yet source-checked</span></div>`}
+function tabHeat(vis){const R=target;
+  const rows=[R,...vis.filter(P=>P!==R).map(P=>({P,s:sim(R,P)})).sort((a,b)=>b.s.f-a.s.f||b.s.n-a.s.n).map(x=>x.P)];
+  let t=`<p class="sub">Rows sorted by closest match to ${esc(R.name)}. Hover a cell for notes and source counts.</p><div style="overflow-x:auto"><table class="hm hmt"><tr><th></th>${TSHORT.map(x=>`<th class="ch">${x}</th>`).join("")}<th class="ch">Match</th></tr>`;
+  rows.forEach(P=>{t+=`<tr><th><span style="display:inline-flex;align-items:center;gap:6px">${dotH(P)}${esc(P.name)}</span></th>`;
+    TOPICS.forEach((T,i)=>{const c=choice(P,i),rc=choice(R,i);
+      if(c==null){t+=`<td class="n" title="${esc(P.name+": "+(note(P,i)||"no clear position"))}">—</td>`;return}
+      const same=rc!=null&&c===rc,isRef=P===R,bg=isRef?"#E4E7EB":rc==null?"#F4F5F7":same?TEAL:"#FBE3D7",fg=same&&!isRef?"#fff":INK,vk=ver(P,i);
+      t+=`<td style="background:${bg};color:${fg}" title="${esc(P.name+": "+T.opts[c].n+(note(P,i)?" — "+note(P,i):"")+(vk==null?"":"\nSources found: "+vk))}">${esc(ab(T.opts[c].s))}${verMark(vk)}</td>`});
+    const sm=sim(R,P);t+=`<td style="background:#fff;color:${INK}">${P===R?"—":sm.n?Math.round(100*sm.f)+"%":"–"}${P===R?"":`<br><span style="font-weight:400;color:${GREY};font-size:10.5px">${sm.v}/${sm.n}</span>`}</td></tr>`});
+  return t+`</table></div>`+heatLegend()}
+function tabGrid(vis){const nv=vis.length;
+  let h=`<p class="sub">Editing: <select class="selref" id="seled">${PEOPLE.map((P,k)=>P.user?`<option value="${k}"${k===editor?' selected':''}>${esc(P.name)}</option>`:"").join("")}</select> — click a cell to set their view (saved). Theologians' researched views are fixed and can't be edited.</p><div class="grid"><div class="gh">Topic</div><div class="gh">Option 1</div><div class="gh">Option 2</div><div class="gh">Option 3</div><div class="gh">Agreement</div>`;
+  TOPICS.forEach((T,i)=>{h+=`<div class="tn">${esc(T.name)}</div>`;
+    const ans=vis.filter(P=>choice(P,i)!=null),counts=T.opts.map((_,k)=>vis.filter(P=>choice(P,i)===k).length);
+    for(let k=0;k<3;k++){if(k>=T.opts.length){h+=`<div></div>`;continue}
+      const who=vis.filter(P=>choice(P,i)===k),frac=nv?who.length/nv:0,bg=who.length?`rgba(14,124,134,${(0.07+0.28*frac).toFixed(2)})`:"transparent";
+      const tt=`${T.opts[k].n}: ${T.opts[k].d}\n`+(who.length?who.map(P=>P.name+(note(P,i)?" — "+note(P,i):"")).join("\n"):"No one");
+      h+=`<div class="cell" data-i="${i}" data-k="${k}" style="background:${bg}" title="${esc(tt)}"><div class="on">${esc(T.opts[k].s)}</div><div class="ds">${who.map(P=>dotH(P)).join("")}</div></div>`}
+    const un=vis.filter(P=>choice(P,i)==null),mx=Math.max(...counts);
+    h+=`<div class="agree">${ans.length<2?"–":mx===ans.length?"<b>✓ All agree</b>":mx>1?`${mx} of ${ans.length} agree`:"No overlap"}${un.length?`<br><span style="color:${GREY}">${un.length} no clear fit</span>`:""}</div>`});
+  return h+`</div>`}
+function tabScatter(vis){const W2=720,H2=560,m=74,pw=W2-2*m,ph=H2-2*m,X=v=>m+v*pw,Y=v=>m+(1-v)*ph;
+  const mean=(P,ix)=>{const s=ix.map(j=>axisScore(P,AXES[j])).filter(x=>x!=null);return s.length?s.reduce((a,b)=>a+b,0)/s.length:null};
+  let g=`<svg viewBox="0 0 ${W2} ${H2}" style="max-width:760px;width:100%" font-family="Helvetica,Arial,sans-serif"><rect x="${m}" y="${m}" width="${pw}" height="${ph}" fill="#FAFBFC" stroke="#D9DEE3"/><line x1="${X(.5)}" y1="${m}" x2="${X(.5)}" y2="${m+ph}" stroke="#E4E7EB"/><line x1="${m}" y1="${Y(.5)}" x2="${m+pw}" y2="${Y(.5)}" stroke="#E4E7EB"/>`;
+  const q=(x,y,t,a)=>g+=`<text x="${x}" y="${y}" font-size="12" fill="${GREY}" text-anchor="${a}">${t}</text>`;
+  q(m+8,m+18,"Future-focused · free church","start");q(m+pw-8,m+18,"Fulfilled · free church","end");q(m+8,m+ph-10,"Future-focused · Reformed","start");q(m+pw-8,m+ph-10,"Fulfilled · Reformed","end");
+  g+=`<text x="${m+pw/2}" y="${H2-30}" text-anchor="middle" font-size="13" fill="${INK}" font-weight="600">End times: future-focused → already fulfilled</text><text transform="translate(24 ${m+ph/2}) rotate(-90)" text-anchor="middle" font-size="13" fill="${INK}" font-weight="600">Salvation &amp; church: Reformed → free church / charismatic</text>`;
+  const pts=vis.map(P=>({P,x:mean(P,[0,1,2,3]),y:mean(P,[6,7,8])})).filter(p=>p.x!=null&&p.y!=null),placed=[];
+  pts.forEach(p=>{let cx=X(p.x),cy=Y(p.y),k=0;while(placed.some(o=>Math.hypot(o[0]-cx,o[1]-cy)<22)&&k<14){k++;cx=X(p.x)+Math.cos(k*1.3)*20*Math.ceil(k/6);cy=Y(p.y)+Math.sin(k*1.3)*20*Math.ceil(k/6)}placed.push([cx,cy]);
+    const F=fam(p.P),right=cx<m+pw*.7;g+=`<g><title>${esc(p.P.name)} · ${F.n}</title><circle cx="${cx}" cy="${cy}" r="11" fill="${F.col}" stroke="${p.P===target?INK:'#fff'}" stroke-width="${p.P===target?3:2}"/><text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="9.5" font-weight="700" fill="${F.fg}">${esc(ini(p.P.name))}</text><text x="${right?cx+15:cx-15}" y="${cy+4}" font-size="12" font-weight="600" fill="${INK}" text-anchor="${right?'start':'end'}">${esc(surname(p.P.name))}</text></g>`});
+  const miss=vis.filter(P=>!pts.find(p=>p.P===P));
+  return `<p class="sub">Across: average of the four end-times tendencies. Up: average of the three salvation &amp; church tendencies.${miss.length?` Not enough data to plot: ${miss.map(P=>esc(P.name)).join(", ")}.`:""}</p>`+g+`</svg>`+famKey(vis)}
+// ---- family tree (average-linkage clustering) ----
+function tabTree(vis){if(vis.length<3)return `<p class="sub">Show at least three people to draw a family tree.</p>`;
+  const d=(A,B)=>{const s=sim(A,B);return s.n>=3?1-s.f:0.7};
+  let cl=vis.map(P=>({m:[P],h:0,kids:null}));
+  const cd=(a,b)=>{let s=0;a.m.forEach(x=>b.m.forEach(y=>s+=d(x,y)));return s/(a.m.length*b.m.length)};
+  while(cl.length>1){let bi=0,bj=1,bd=1e9;for(let i=0;i<cl.length;i++)for(let j=i+1;j<cl.length;j++){const x=cd(cl[i],cl[j]);if(x<bd){bd=x;bi=i;bj=j}}
+    const n={m:[...cl[bi].m,...cl[bj].m],h:bd,kids:[cl[bi],cl[bj]]};cl=cl.filter((_,k)=>k!==bi&&k!==bj);cl.push(n)}
+  const root=cl[0],leaves=root.m.length,rowH=30,Lw=220,TW=600,W=Lw+TW+40,H=leaves*rowH+60;let yi=0,svg="";
+  const maxH=Math.max(root.h,.01),X=h=>Lw+(h/maxH)*TW;
+  function draw(nd){if(!nd.kids){const y=30+yi*rowH+rowH/2;yi++;const P=nd.m[0],F=fam(P);
+      svg+=`<circle cx="${Lw-12}" cy="${y}" r="9" fill="${F.col}" stroke="${P===target?INK:'#fff'}" stroke-width="${P===target?3:1.5}"/><text x="${Lw-12}" y="${y+3.5}" text-anchor="middle" font-size="8.5" font-weight="700" fill="${F.fg}">${esc(ini(P.name))}</text><text x="${Lw-28}" y="${y+5}" text-anchor="end" font-size="13.5" font-weight="${P===target?700:500}" fill="${INK}">${esc(P.name)}</text>`;
+      return {x:Lw,y}}
+    const a=draw(nd.kids[0]),b=draw(nd.kids[1]),x=X(nd.h);
+    svg+=`<path d="M${a.x} ${a.y}H${x}V${b.y}H${b.x}" fill="none" stroke="#9AA3AD" stroke-width="1.6"/>`;
+    return {x,y:(a.y+b.y)/2}}
+  const r=draw(root);
+  let axis=`<line x1="${Lw}" y1="${H-22}" x2="${Lw+TW}" y2="${H-22}" stroke="#D9DEE3"/>`;[0,.25,.5,.75,1].forEach(v=>{const x=Lw+v*TW;axis+=`<text x="${x}" y="${H-6}" text-anchor="middle" font-size="11" fill="${MUTED}">${Math.round(100-v*maxH*100)}%</text>`});
+  return `<p class="sub">People who agree most join earliest (on the left). Branch points show the average agreement between the two groups joined. Pairs with fewer than three topics in common are treated as 30% similar.</p><svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px" font-family="Helvetica,Arial,sans-serif">${svg}${axis}<text x="${Lw+TW/2}" y="${H-32}" text-anchor="middle" font-size="11.5" fill="${MUTED}">average agreement at join</text></svg>`+famKey(vis)}
+// ---- unusual / typical combinations ----
+function tabCombos(){const Tg=target,others=PEOPLE.filter(P=>P!==Tg);const un=[],ty=[];
+  for(let i=0;i<NT;i++)for(let j=0;j<NT;j++){if(i===j)continue;const a=choice(Tg,i),b=choice(Tg,j);if(a==null||b==null)continue;
+    const base=others.filter(P=>choice(P,i)===a&&choice(P,j)!=null),n=base.length;if(n<3)continue;const k=base.filter(P=>choice(P,j)===b).length,r=k/n;
+    const txt=`<b>${esc(TOPICS[i].opts[a].s)}</b> (${esc(TSHORT[i])}) + <b>${esc(TOPICS[j].opts[b].s)}</b> (${esc(TSHORT[j])})`,
+      det=`${k} of ${n} others who hold ${esc(TOPICS[i].opts[a].s)} also hold ${esc(TOPICS[j].opts[b].s)}`;
+    if(r<=.25)un.push({r,n,txt,det,who:base.filter(P=>choice(P,j)===b).map(P=>P.name)});else if(r>=.8&&n>=4)ty.push({r,n,txt,det})}
+  const dedupe=a=>{const s=new Set();return a.filter(x=>{const k=x.txt.split(" + ").sort().join("|");if(s.has(k))return false;s.add(k);return true})};
+  const U=dedupe(un.sort((a,b)=>a.r-b.r||b.n-a.n)),Ty=dedupe(ty.sort((a,b)=>b.r-a.r||b.n-a.n)).slice(0,10);
+  const bar=r=>`<span class="cbar"><i style="width:${Math.round(r*100)}%"></i></span>`;
+  return `<p class="sub">How ${esc(Tg.name)}'s pairs of views compare with everyone else in this list (${others.length} people). This reflects only the people here — a small, hand-picked group — so treat it as a conversation starter.</p>
+  <h3 class="ch3">Unusual combinations</h3>${U.length?`<ul class="clist">${U.map(x=>`<li>${x.txt}${bar(x.r)}<div class="cdet">${x.det}${x.who.length?` (${x.who.map(esc).join(", ")})`:" — no one else here"}.</div></li>`).join("")}</ul>`:`<p class="sub">None found — every pairing appears in at least a quarter of comparable people.</p>`}
+  <h3 class="ch3">Typical combinations</h3>${Ty.length?`<ul class="clist">${Ty.map(x=>`<li>${x.txt}${bar(x.r)}<div class="cdet">${x.det}.</div></li>`).join("")}</ul>`:`<p class="sub">Not enough data yet.</p>`}`}
+// ---- reading list ----
+// Where to get each book. K = Koorong (Australia) product page, checked against Koorong's catalogue.
+// Books not found at Koorong fall back to a Christianbook (US) search. F = free-to-read copies (legal, publisher/author or public domain).
+const KOORONG={
+"The Gospel According to Jesus":"the-gospel-according-to-jesus-271779","Strange Fire":"strange-fire-378695","The Battle for the Beginning":"the-battle-for-the-beginning-223378",
+"Because the Time Is Near":"because-the-time-is-near-john-macarthur-explains-the-book-of-revelation-259145","The Glory of Heaven":"the-glory-of-heaven-the-truth-about-heaven-angels-and-eternal-life-2nd-edition-619448",
+"The Millennial Kingdom":"the-millennial-kingdom-23929","Systematic Theology":"systematic-theology-an-introduction-to-biblical-doctrine-second-edition-564544",
+"Recovering Biblical Manhood and Womanhood":"recovering-biblical-manhood-and-womanhood-a-response-to-evangelical-feminism-586250","Desiring God":"desiring-god-2025-edition-meditations-of-a-christian-hedonist-666369",
+"Don't Waste Your Life":"dont-waste-your-life-2nd-edition-644129","Let the Nations Be Glad!":"let-the-nations-be-glad-30th-anniversay-edition-the-supremacy-of-god-in-missions-654887",
+"Future Grace":"future-grace-2026-edition-the-purifying-power-of-the-promises-of-god-674373","Surprised by Hope":"surprised-by-hope-re-thinking-heaven-resurrection-and-the-mission-of-the-church-335535",
+"The New Testament in Its World":"the-new-testament-in-its-world-an-introduction-to-the-history-literature-and-theology-of-the-first-christians-541320",
+"The Cross of Christ":"the-cross-of-christ-with-study-guide-252641","Basic Christianity":"basic-christianity-centenary-edition-582705","Baptism and Fullness":"baptism-and-fullness-the-work-of-the-holy-spirit-today-577171",
+"The Holiness of God":"the-holiness-of-god-644655","Chosen by God":"chosen-by-god-know-gods-perfect-plan-for-his-glory-and-his-children-72970",
+"The Last Days According to Jesus":"the-last-days-according-to-jesus-when-did-jesus-say-he-would-return-420988","The Reason for God":"the-reason-for-god-belief-in-an-age-of-scepticism-292004",
+"Prayer":"prayer-experiencing-awe-and-intimacy-with-god-428019","The Way of Wisdom":"the-way-of-wisdom-a-year-of-daily-devotions-in-the-book-of-proverbs-539222",
+"What Is Wrong with the World?":"what-is-wrong-with-the-world-the-surprising-hopeful-answer-to-the-question-we-cannot-avoid-667691","The Prodigal God":"the-prodigal-god-recovering-the-heart-of-the-christian-faith-292018",
+"Kingdom Come: The Amillennial Alternative":"kingdom-come-the-amillennial-alternative-374011","Kingdom Come":"kingdom-come-the-amillennial-alternative-374011",
+"Practicing the Power":"practicing-the-power-welcoming-the-gifts-of-the-holy-spirit-in-your-life-457133","Understanding Spiritual Gifts":"understanding-spiritual-gifts-a-comprehensive-guide-559936",
+"Recovering Redemption":"recovering-redemption-bible-study-book-with-video-access-663653","What in the World Is Going On?":"what-in-the-world-is-going-on-300959",
+"Agents of the Apocalypse":"agents-of-the-apocalypse-433766","The Book of Signs":"the-book-of-signs-31-undeniable-prophecies-of-the-apocalypse-548394",
+"Jesus Revolution":"jesus-revolution-how-god-transformed-an-unlikely-generation-and-how-he-can-do-it-again-today-549849","The Last Hour":"the-last-hour-an-israeli-insider-looks-at-the-end-times-511098",
+"Israel and the Church":"israel-and-the-church-an-israeli-examines-gods-unfolding-plans-for-his-chosen-peoples-570218","The Day Approaching":"the-day-approaching-an-israelis-message-of-warning-and-hope-for-the-last-days-73710",
+"The Elijah Mandate":"the-elijah-mandate-a-call-to-courageous-faith-in-a-hostile-world-675225","Mere Christianity":"mere-christianity-351213","The Screwtape Letters":"the-screwtape-letters-351216",
+"The Great Divorce":"the-great-divorce-351219","The Problem of Pain":"the-problem-of-pain-351221","Miracles":"miracles-351218","Knowing God":"knowing-god-with-study-guide-224202",
+"Concise Theology":"concise-theology-gift-edition-572215","Daily Doctrine":"daily-doctrine-a-one-year-guide-to-systematic-theology-659579","The Hole in Our Holiness":"the-hole-in-our-holiness-400824",
+"Taking God at His Word":"taking-god-at-his-word-why-the-bible-is-knowable-necessary-and-enough-442857","Things to Come":"things-to-come-23783",
+"A Case for Amillennialism":"a-case-for-amillennialism-understanding-the-end-times-368530","Three Views on the Rapture":"three-views-on-the-rapture-counterpoints-series-311434",
+"More Than Conquerors":"more-than-conquerors-an-interpretation-of-the-book-of-revelation-75th-anniversary-edition-428323","Perspectives on Israel and the Church: 4 Views":"perspectives-on-israel-and-the-church-411932",
+"Daniel's Prophecy of the 70 Weeks":"daniels-prophecy-of-the-70-weeks-292842","The Coming Prince":"the-coming-prince-robert-anderson-classic-library-series-284917",
+"Four Views on Hell":"four-views-on-hell-2nd-edition-counterpoints-series-438109","Hell Under Fire":"hell-under-fire-218285","The Evangelical Universalist":"the-evangelical-universalist-second-edition-363782",
+"Heaven":"heaven-237954","A New Heaven and a New Earth":"a-new-heaven-and-a-new-earth-reclaiming-biblical-eschatology-359760","Against Calvinism":"against-calvinism-320205",
+"Believer's Baptism":"believers-baptism-02-in-new-american-commentary-studies-in-bible-and-theology-series-256389",
+"What About Those Who Have Never Heard?":"what-about-those-who-have-never-heard-three-views-spectrum-multiview-series-81496","No Other Name":"no-other-name-an-investigation-into-the-destiny-of-the-unevangelized-33293",
+"Eternal Security":"eternal-security-charles-stanley-discipleship-series-182748","The Language of God":"the-language-of-god-262927","Given for You":"given-for-you-186943",
+"The Purpose Driven Life":"what-on-earth-am-i-here-for-the-purpose-driven-life-series-359741","The Purpose Driven Church":"the-purpose-driven-church-the-purpose-driven-church-series-93607"};
+const FREE={
+"Calvary Chapel Distinctives":[["Internet Archive (full text)","https://archive.org/details/2000BookCalvaryChapelDistinctivesDigEd"]],
+"Charisma vs. Charismania":[["Internet Archive (full text)","https://archive.org/details/1992BookCHARISMAVs.CHARISMANIADigEd"]],
+"Why Grace Changes Everything":[["Internet Archive (full text)","https://archive.org/details/1994BookWhyGraceChangesEverythingDigEd"]],
+"Don't Waste Your Life":[["Desiring God (free PDF/ePub)","https://www.desiringgod.org/books/dont-waste-your-life"]],
+"Recovering Biblical Manhood and Womanhood":[["Desiring God (free PDF)","https://www.desiringgod.org/books/recovering-biblical-manhood-and-womanhood"]],
+"Desiring God":[["Desiring God (free sample chapters)","https://www.desiringgod.org/books/desiring-god"]],
+"Let the Nations Be Glad!":[["Desiring God (free sample chapters)","https://www.desiringgod.org/books/let-the-nations-be-glad"]],
+"Jesus: The Only Way to God":[["Desiring God (free sample chapter)","https://www.desiringgod.org/books/jesus-the-only-way-to-god"]],
+"Unlocking the End-Book":[["Jack Hayford Ministries (free PDF)","https://www.jackhayford.org/wp-content/uploads/2019/02/Unlocking_The_End_Book.pdf"]],
+"Synopsis of the Books of the Bible":[["STEM Publishing (full text)","https://www.stempublishing.com/authors/darby/synopsis/"]],
+"Lectures on the Second Coming":[["Bible Truth Library: Darby, The Second Coming of Christ","https://bibletruthpublishers.com/the-second-coming-of-christ/john-nelson-darby-jnd/collected-writings-of-j-n-darby-prophetic-1/page-share/lxps-la-62219"]],
+"The Coming Prince":[["What Saith the Scripture (full text, public domain)","https://www.whatsaiththescripture.com/Voice/The.Coming.Prince.html"]],
+"The Seventy Weeks and the Great Tribulation":[["Internet Archive (1923 edition, public domain)","https://archive.org/details/seventyweeksgrea00maur"]]};
+const bookKey=t=>String(t).replace(/\s*\(.*?\)\s*$/,"").trim();
+function bookLinks(title,author){const k=bookKey(title),h=KOORONG[k],f=FREE[k]||[];
+  const buy=h?`<a class="blink au" href="https://koorong.com/products/${h}" target="_blank" title="Koorong, Australia">Koorong (AU)</a>`
+    :`<a class="blink us" href="https://www.christianbook.com/apps/search?Ntt=${encodeURIComponent(k+" "+(author||""))}" target="_blank" title="Not found at Koorong — search Christianbook, USA">Christianbook (US)</a>`;
+  return `<span class="blinks">${buy}${f.map(([l,u])=>`<a class="blink free" href="${u}" target="_blank">Free: ${esc(l)}</a>`).join("")}</span>`}
+
+function bookLine(str){ // "Title — Author; Title2 — Author2" -> each book with its links
+  return String(str).split(";").map(x=>x.trim()).filter(Boolean).map(x=>{const [t,a]=x.split(" — ");if(!a||t.startsWith("("))return `<div class="bk">${esc(x)}</div>`;
+    return `<div class="bk">${esc(t)} — ${esc(a)} ${bookLinks(t,a.replace(/\(.*?\)/g,"").split(/&| and /)[0].trim())}</div>`}).join("")}
+function tabReadPeople(vis){const P=target;
+  let h=`<p class="sub">Notable books by each person shown, tagged with the topics they cover. Tags are teal where the author agrees with ${esc(P.name)} on that topic and peach where they differ. "Koorong bestseller" marks books on Koorong's current bestseller list.</p><div class="rl">`;
+  vis.forEach(Q=>{const B=BOOKS[Q.name];if(!B)return;
+    h+=`<div class="rcard" id="rp-${PEOPLE.indexOf(Q)}"><div class="rt" style="display:flex;align-items:center;gap:8px">${dotH(Q)}${esc(Q.name)}<button class="lnk" data-goto="bio:${PEOPLE.indexOf(Q)}" style="margin-left:auto">Bio →</button></div>`+B.map(([ti,tp,k])=>`<div class="ro"><b>${esc(ti)}</b> ${bookLinks(ti,Q.name)}${k?' <span class="kbadge" title="On Koorong\'s current bestseller list">Koorong bestseller</span>':''}<div>${tp.map(i=>{const a=choice(Q,i),b=choice(P,i);const cls=a==null||b==null||Q===P?"con":a===b?"dec":"dif";return `<span class="rtag ${cls}" title="${esc(TOPICS[i].name)}${a!=null?": "+esc(TOPICS[i].opts[a].n):""}">${TSHORT[i]}</span>`}).join(" ")||'<span style="color:#9AA3AD">devotional / general</span>'}</div></div>`).join("")+`</div>`});
+  const none=vis.filter(Q=>!BOOKS[Q.name]&&!Q.user).map(Q=>esc(Q.name));
+  return h+`</div>${none.length?`<p class="sub" style="margin-top:10px">No book list for: ${none.join(", ")}.</p>`:""}`}
+function tabRead(vis){const mode=`<div class="tabs" style="margin-top:0"><button class="mini${readMode==="topic"?" on":""}" data-rm="topic">By topic</button><button class="mini${readMode==="person"?" on":""}" data-rm="person">By person</button></div>`;
+  return mode+(readMode==="person"?tabReadPeople(vis):tabReadTopic())}
+function tabReadTopic(){const P=target;let h=`<p class="sub">One overview (usually a multi-view book) and a book per option for each topic. Tags show ${esc(P.name)}'s decision, "also holds" and considered options. <label style="margin-left:8px"><input type="checkbox" id="readmine"${readMine?' checked':''}> Only show the options ${esc(P.name)} didn't choose</label></p><p class="sub" style="font-size:12px">Each book links to <b>Koorong (AU)</b> where Koorong stocks it, otherwise to a <b>Christianbook (US)</b> search. <b>Free</b> links go to legal, free-to-read copies (author/publisher downloads or public-domain texts) where one exists.</p><div class="rl">`;
+  TOPICS.forEach((T,i)=>{const R=READ[i],c=choice(P,i),al=alsoOf(P,i);
+    h+=`<div class="rcard"><div class="rt">${esc(T.name)}</div><div class="rov">📚 Overview: ${bookLine(R.ov)}</div>`+T.opts.map((o,k)=>{if(readMine&&k===c)return "";const tag=c==null?"":k===c?'<span class="rtag dec">Your view</span>':al.includes(k)?'<span class="rtag also">Also holds</span>':'<span class="rtag con">Considered</span>';
+      return `<div class="ro"><b>${esc(o.n)}</b> ${tag}<div>${R.o[k]?bookLine(R.o[k]):"—"}</div></div>`}).join("")+`</div>`});
+  return h+`</div>`}
+function tabLabels(vis){
+  let h=`<p class="sub">Describing terms come from each person's views. "Likely traditions" combines rules about which churches hold which views with the traditions of each person's closest matches (80%+ on 7+ topics), so it updates as people are added or views change. A rough guide only.</p><div style="overflow-x:auto"><table class="lbl"><tr><th style="width:160px">Person</th><th style="width:180px">Church attended / background</th><th>Describing terms</th><th style="width:22%">Likely traditions</th><th style="width:170px">Closest matches</th></tr>`;
+  vis.forEach(P=>{const Lb=labels(P),near=closest(P),fromNear=near.filter(x=>x.f>=.8&&x.n>=7&&!x.Q.user).flatMap(x=>x.Q.trad||[]),trad=[...new Set([...Lb.d,...fromNear])];
+    h+=`<tr><td><span style="display:inline-flex;align-items:center;gap:8px;font-weight:700">${dotH(P)}${esc(P.name)}</span><div style="font-size:11.5px;color:${MUTED};margin-top:4px">${esc(fam(P).n)}</div></td>
+      <td>${P.user?`<input class="chin" data-church="${PEOPLE.indexOf(P)}" value="${esc(P.church||"")}">`:esc(P.church||"—")}${P.src?`<div style="font-size:11px;color:${GREY};margin-top:4px">Source: ${esc(P.src)}</div>`:""}${LINKS[P.name]?`<div style="font-size:11px;margin-top:3px">${LINKS[P.name].map(([t,u])=>`<a href="${u}" target="_blank" style="color:${TEAL}">${esc(t)}</a>`).join(" · ")}</div>`:""}</td>
+      <td>${Lb.t.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</td><td>${trad.map(x=>`<span class="tag" style="background:#E3F1F2">${esc(x)}</span>`).join("")}</td>
+      <td style="font-size:12.5px">${near.map(x=>`${esc(x.Q.name)} <b>${Math.round(100*x.f)}%</b> <span style="color:${GREY}">${x.v}/${x.n}</span>`).join("<br>")}</td></tr>`});
+  return h+`</table></div>`}
+// ---- Wheel compare: Stage-1 geometry, every option fixed in place, highlighted by choice ----
+let cwMode="pair",cwOther=null;
+function tabCmpWheel(vis){
+  const T0=target,others=vis.filter(P=>P!==T0);
+  if(!cwOther||cwOther===T0||!PEOPLE.includes(cwOther))cwOther=(closest(T0,1)[0]||{}).Q||PEOPLE.find(P=>P!==T0);
+  const O=cwOther,pair=cwMode==="pair",grp=pair?[]:[T0,...others];
+  const N=NT,W=1560,H=1330,CX=780,CY=640,R0=92,LR=415,FORK=215,END=305;
+  const pt=(j,u,v)=>{const a=-Math.PI/2+2*Math.PI*j/N,dx=Math.cos(a),dy=Math.sin(a);return[CX+u*dx-v*dy,CY+u*dy+v*dx,dx,dy]};
+  const OC="#eb6834";let o=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:1250px" font-family="Helvetica,Arial,sans-serif"><rect width="${W}" height="${H}" fill="#fff"/><circle cx="${CX}" cy="${CY}" r="${END}" fill="none" stroke="#E4E7EB" stroke-dasharray="3 6"/>`;
+  let agree=0,both=0;
+  TOPICS.forEach((T,i)=>{const n=T.opts.length,v1=stage1V(n),a=choice(T0,i),b=pair?choice(O,i):null;
+    const [x0,y0]=pt(i,R0,0),[xf,yf]=pt(i,FORK,0);
+    if(pair&&a!=null&&b!=null){both++;if(a===b)agree++}
+    const st=pair?(a==null||b==null?"none":a===b?"same":"diff"):"grp";
+    const spokeCol=st==="same"?TEAL:st==="diff"?"#E9B8A0":INK;
+    o+=`<g><title>${esc(T.name)}</title><line x1="${f(x0)}" y1="${f(y0)}" x2="${f(xf)}" y2="${f(yf)}" stroke="${spokeCol}" stroke-width="${st==="same"?4:3}" stroke-linecap="round"/>`;
+    const counts=T.opts.map((_,k)=>grp.filter(P=>choice(P,i)===k).length),answered=grp.filter(P=>choice(P,i)!=null).length;
+    T.opts.forEach((opt,k)=>{const [x,y]=pt(i,END,v1[k]);
+      const isA=a===k,isB=pair&&b===k;
+      let lineCol="#C9CFD5",lw=2.5;if(isA||isB){lineCol=isA&&isB?TEAL:isA?TEAL:OC;lw=3.5}
+      if(!pair&&counts[k])lineCol=TEAL;
+      o+=`<line x1="${f(xf)}" y1="${f(yf)}" x2="${f(x)}" y2="${f(y)}" stroke="${lineCol}" stroke-width="${pair?lw:1.5+counts[k]*0.8}" stroke-linecap="round" opacity="${!pair&&!counts[k]?.5:1}"/>`;
+      if(pair){
+        o+=`<circle cx="${f(x)}" cy="${f(y)}" r="10" fill="${isA?TEAL:'#fff'}" stroke="${isA?TEAL:'#C9CFD5'}" stroke-width="2.5"/>`;
+        if(isB)o+=`<circle cx="${f(x)}" cy="${f(y)}" r="16" fill="none" stroke="${OC}" stroke-width="3.5"/>`;
+      }else{
+        const share0=answered?counts[k]/answered:0,r=counts[k]?8+share0*9:6,share=answered?counts[k]/answered:0;
+        o+=`<circle cx="${f(x)}" cy="${f(y)}" r="${f(r)}" fill="${counts[k]?`rgba(14,124,134,${(0.25+0.75*share).toFixed(2)})`:'#fff'}" stroke="${counts[k]?TEAL:'#C9CFD5'}" stroke-width="2"/>`;
+        if(counts[k])o+=`<text x="${f(x)}" y="${f(y+4)}" text-anchor="middle" font-size="11" font-weight="700" fill="${share>.45?'#fff':INK}">${counts[k]}</text>`;
+        if(isA)o+=`<circle cx="${f(x)}" cy="${f(y)}" r="${f(r+5)}" fill="none" stroke="${INK}" stroke-width="2.5"/>`;
+      }});
+    // label: topic name + options (stage-1 style), target's pick teal, other's pick orange
+    const [lx,ly,dx,dy]=pt(i,LR,0),anc=Math.abs(dx)<0.1?"middle":(dx>0?"start":"end");
+    let y=dy<-0.8?ly-52:dy>0.8?ly+18+(1-Math.abs(dx))*120:ly-20;
+    const tag=st==="same"?` <tspan fill="${TEAL}">✓</tspan>`:st==="diff"?` <tspan fill="${OC}">≠</tspan>`:"";
+    o+=`<text x="${f(lx)}" y="${f(y)}" text-anchor="${anc}" font-size="20" font-weight="700" fill="${INK}">${esc(T.name)}${tag}</text>`;
+    const parts=T.opts.map((op,k)=>{const isA=a===k,isB=pair&&b===k;const col=isA?TEAL:isB?OC:"#8A949E",wt=isA||isB?700:400;
+      return `<tspan fill="${col}" font-weight="${wt}"${isB&&isA?' text-decoration="underline"':''}>${esc(op.s)}${pair?"":counts[k]?` (${counts[k]})`:""}</tspan>`});
+    o+=`<text x="${f(lx)}" y="${f(y+23)}" text-anchor="${anc}" font-size="15">${parts.join('<tspan fill="#C9CFD5">  ·  </tspan>')}</text></g>`;
+  });
+  const pct=both?Math.round(100*agree/both):0;
+  o+=`<circle cx="${CX}" cy="${CY}" r="${R0}" fill="${INK}"/>`+(pair?`<text x="${CX}" y="${CY-8}" text-anchor="middle" fill="#fff" font-size="28" font-weight="700">${pct}%</text><text x="${CX}" y="${CY+14}" text-anchor="middle" fill="#fff" font-size="12.5">agree (${agree}/${both})</text>`:`<text x="${CX}" y="${CY-4}" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">${grp.length} people</text><text x="${CX}" y="${CY+16}" text-anchor="middle" fill="#fff" font-size="12.5">shown</text>`);
+  o+=`</svg>`;
+  const ctrl=`<div class="tbar">${(()=>{const opts=(sel,ex)=>{const u=PEOPLE.filter(P=>P.user&&P!==ex),t=PEOPLE.filter(P=>!P.user&&P!==ex);const o=P=>`<option value="${PEOPLE.indexOf(P)}"${P===sel?' selected':''}>${esc(P.name)}</option>`;return `<optgroup label="Survey users">${u.map(o).join("")}</optgroup><optgroup label="Theologians &amp; authors">${t.map(o).join("")}</optgroup>`};
+  return `<label><span style="color:${TEAL};font-weight:700">●</span> <select class="selref" id="selcwA">${opts(T0,O)}</select></label><button class="mini" id="cwswap" title="Swap">⇄</button><label><span style="color:#eb6834;font-weight:700">○</span> <select class="selref" id="selcw">${opts(O,T0)}</select></label>`})()}</div>`;
+  const key=pair?`<div class="key"><span><i style="background:${TEAL};border-radius:50%"></i>${esc(T0.name)}'s choice</span><span><i style="background:#fff;border:3px solid ${OC};border-radius:50%;box-sizing:border-box"></i>${esc(O.name)}'s choice</span><span><span style="color:${TEAL};font-weight:700">✓</span> same view (teal spoke)</span><span><span style="color:${OC};font-weight:700">≠</span> different view</span><span>no mark = no clear position</span></div>`
+    :`<div class="key"><span><i style="background:${TEAL};border-radius:50%"></i>Bigger, darker dot = more people chose it (number inside)</span><span><i style="background:#fff;border:3px solid ${INK};border-radius:50%;box-sizing:border-box"></i>${esc(T0.name)}'s choice</span></div>`;
+  return `<p class="sub">The Stage 1 wheel, with every option always in the same place. ${pair?`Compare two people topic by topic.`:`See how everyone currently shown spreads across the options.`}</p>`+ctrl+o+key}
+// Short bios: life, era, known for, controversies (well documented only). Beliefs/tags are generated from each person's answers.
+const BIO={
+ "Chuck Smith":{life:"1927–2013",era:"20th c.",known:"Founded the Calvary Chapel movement (Costa Mesa) and helped lead the 1960s–70s Jesus Movement.",contro:[["Taught the generation of 1948 would see the end by about 1981; later said date-setting was wrong.","https://en.wikipedia.org/wiki/Chuck_Smith_(pastor)"]]},
+ "John MacArthur":{life:"1939–2025",era:"20th–21st c.",known:"Pastor of Grace Community Church for 50+ years; Grace to You radio; MacArthur Study Bible; The Master's Seminary.",contro:[["Strange Fire (2013) conference and book sharply criticised the charismatic movement.",""],["Kept Grace Community Church meeting in 2020 despite Los Angeles COVID-19 orders.","https://religionnews.com/2025/07/14/john-macarthur-voice-of-grace-to-you-radio-ministry-and-controversial-megachurch-pastor-has-died/"]]},
+ "John Walvoord":{life:"1910–2002",era:"20th c.",known:"President of Dallas Theological Seminary (1952–86); leading dispensational, pre-trib writer.",contro:[]},
+ "Darrell Bock":{life:"b. 1953",era:"20th–21st c.",known:"Dallas Theological Seminary professor; co-architect of progressive dispensationalism; Luke–Acts scholar.",contro:[]},
+ "J.N. Darby":{life:"1800–1882",era:"19th c.",known:"Early leader of the Plymouth Brethren; systematised dispensationalism and the pre-tribulation rapture.",contro:[["Central figure in the 1848 split between 'Open' and 'Exclusive' Brethren.","https://en.wikipedia.org/wiki/Plymouth_Brethren"]]},
+ "Wayne Grudem":{life:"b. 1948",era:"20th–21st c.",known:"Systematic Theology (1994); co-founder of CBMW; ESV translation committee; continuationist Reformed theologian.",contro:[["Defended 'eternal submission' of the Son, debated heavily in 2016.",""]]},
+ "John Piper":{life:"b. 1946",era:"20th–21st c.",known:"Bethlehem Baptist Church; Desiring God ministry; 'Christian Hedonism'; leading voice of the New Calvinism.",contro:[["His 2012 remark that God gave Christianity a 'masculine feel' drew wide criticism.",""]]},
+ "Jack Hayford":{life:"1934–2023",era:"20th–21st c.",known:"Founding pastor of The Church On The Way; president of the Foursquare Church; wrote the hymn 'Majesty'.",contro:[]},
+ "N.T. Wright":{life:"b. 1948",era:"20th–21st c.",known:"New Testament scholar and former Bishop of Durham; 'Christian Origins' series; New Perspective on Paul.",contro:[["His view of justification was publicly debated by John Piper (The Future of Justification, 2007).",""]]},
+ "John Stott":{life:"1921–2011",era:"20th c.",known:"Rector of All Souls Langham Place; The Cross of Christ; chief architect of the Lausanne Covenant (1974).",contro:[["Tentatively proposed annihilationism (1988).","https://afterall.net/quotes/john-stott-on-annihilationism/"],["1966 public disagreement with Martyn Lloyd-Jones over evangelicals staying in the Church of England.",""]]},
+ "R.C. Sproul":{life:"1939–2017",era:"20th c.",known:"Founded Ligonier Ministries; The Holiness of God; popular Reformed teacher.",contro:[["Partial preterism (The Last Days According to Jesus) surprised many evangelicals.",""],["Opposed the 1994 'Evangelicals and Catholics Together' statement.",""]]},
+ "Kenneth Gentry":{life:"b. 1950",era:"20th–21st c.",known:"Leading postmillennial and partial-preterist author; argues Revelation was written before AD 70.",contro:[]},
+ "Tim Keller":{life:"1950–2023",era:"20th–21st c.",known:"Founding pastor of Redeemer Presbyterian, NYC; The Reason for God; co-founded The Gospel Coalition.",contro:[["Openness to evolutionary science (wrote for BioLogos) drew criticism from young-earth evangelicals.","https://en.wikipedia.org/wiki/Tim_Keller_(pastor)"]]},
+ "Sam Storms":{life:"b. 1951",era:"20th–21st c.",known:"Bridgeway Church, Oklahoma City; Reformed charismatic; former dispensationalist turned amillennialist.",contro:[]},
+ "Matt Chandler":{life:"b. 1974",era:"21st c.",known:"Lead pastor of The Village Church, Texas; president of Acts 29 (2012–2022).",contro:[["Took a leave of absence in 2022 over 'inappropriate' online messages; reinstated by elders later that year.","https://www.baptistpress.com/resource-library/news/chandler-returns-to-village-church-pulpit-following-months-long-leave-of-absence/"]]},
+ "David Jeremiah":{life:"b. 1941",era:"20th–21st c.",known:"Shadow Mountain Community Church; Turning Point broadcasts; prophecy books.",contro:[]},
+ "Greg Laurie":{life:"b. 1952",era:"20th–21st c.",known:"Harvest Christian Fellowship; Harvest Crusades; his story is told in the film Jesus Revolution (2023).",contro:[]},
+ "Amir Tsarfati":{life:"Israeli, active 21st c.",era:"21st c.",known:"Founder of Behold Israel; Bible-prophecy teacher and author.",contro:[]},
+ "C.S. Lewis":{life:"1898–1963",era:"20th c.",known:"Oxford/Cambridge scholar; Mere Christianity, The Screwtape Letters, the Narnia books; Anglican layman.",contro:[["Held views many evangelicals dispute (a purgatory of purification; inclusivist hope).","https://en.wikipedia.org/wiki/C._S._Lewis"]]},
+ "J.I. Packer":{life:"1926–2020",era:"20th c.",known:"Knowing God; Regent College; ESV general editor; evangelical Anglican.",contro:[["Signed 'Evangelicals and Catholics Together' (1994), criticised by some Reformed allies.",""],["Left the Anglican Church of Canada in 2008 over same-sex blessings.","https://en.wikipedia.org/wiki/J._I._Packer"]]},
+ "Kevin DeYoung":{life:"b. 1977",era:"21st c.",known:"Christ Covenant Church (PCA); Reformed Theological Seminary professor; Crossway author.",contro:[]},
+ "Rick Warren":{life:"b. 1954",era:"20th–21st c.",known:"Founding pastor of Saddleback Church; The Purpose Driven Life.",contro:[["Saddleback removed from the Southern Baptist Convention (2023) for having women pastors.","https://www.klove.com/faith/news/faith/saddleback-church-founded-by-rick-warren-expelled-by-sbc-over-ordaining-women-as-pastors-40694"]]},
+ "John Lennox":{life:"b. 1943",era:"20th–21st c.",known:"Oxford mathematician and apologist; debates with Richard Dawkins and others.",contro:[]},
+ "Rebecca McLaughlin":{life:"active 21st c.",era:"21st c.",known:"Apologist; Confronting Christianity; Cambridge PhD.",contro:[]},
+ "Jonathan Cahn":{life:"b. 1959",era:"21st c.",known:"Messianic rabbi (Beth Israel Worship Center); The Harbinger and prophecy-themed books.",contro:[["Critics say The Harbinger wrongly applies Israel's covenant warnings to the USA.","https://www.monergism.com/jonathan-cahn"]]},
+ "Alistair Begg":{life:"b. 1952",era:"20th–21st c.",known:"Parkside Church, Ohio; Truth For Life radio and podcast.",contro:[["2024: advised a grandmother she could attend a grandchild's LGBTQ wedding; American Family Radio dropped his program.","https://religionnews.com/2024/01/31/radio-preacher-alistair-begg-wont-back-down-from-advice-to-attend-lgbtq-wedding/"]]},
+ "John Mark Comer":{life:"b. 1980",era:"21st c.",known:"Former pastor of Bridgetown Church, Portland; Practicing the Way; The Ruthless Elimination of Hurry.",contro:[["Some critics object to his use of contemplative / spiritual-formation practices.",""]]},
+ "Paul David Tripp":{life:"b. 1950",era:"20th–21st c.",known:"Pastor, counsellor and author; New Morning Mercies; Paul Tripp Ministries.",contro:[["Resigned from Mars Hill Church's accountability board in 2014, calling it the 'most abusive' ministry culture he'd seen.","https://mycharisma.com/news/mars-hill-most-abusive-coercive-ministry-culture-i-ve-ever-been-involved-with-says-paul-tripp/"]]},
+ "Dane Ortlund":{life:"active 21st c.",era:"21st c.",known:"Pastor in Illinois; Gentle and Lowly (2020); Crossway author.",contro:[]}
+};
+function tabBios(vis){
+  let h=`<p class="sub">A short profile for each person shown. Beliefs and tags come from their placements in this app; hover the heat map for sources. Controversies are listed only where widely reported.</p><div class="rl">`;
+  vis.forEach(P=>{const B=BIO[P.name]||{},L=labels(P),k=PEOPLE.indexOf(P);
+    const held=TOPICS.map((T,i)=>{const c=choice(P,i);return c==null?null:`<span class="tag" title="${esc(T.name)}">${esc(TSHORT[i])}: ${esc(T.opts[c].s)}</span>`}).filter(Boolean);
+    h+=`<div class="rcard" id="bio-${k}"><div class="rt" style="display:flex;align-items:center;gap:8px">${dotH(P)}${esc(P.name)}${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}</div>
+      <div class="rov">${esc(B.life||(P.user?"Survey user":""))}${B.era?" · "+esc(B.era):""} · ${esc(fam(P).n)}${P.church?" · "+esc(P.church):""}</div>
+      ${B.known?`<div class="ro"><b>Known for</b><div>${esc(B.known)}</div></div>`:""}
+      <div class="ro"><b>Describing terms</b><div>${L.t.map(x=>`<span class="tag">${esc(x)}</span>`).join("")||'<span style="color:#9AA3AD">not enough data yet</span>'}</div></div>
+      <div class="ro"><b>Beliefs (${held.length} of ${NT} topics)</b><div>${held.join("")||'<span style="color:#9AA3AD">none recorded yet</span>'}</div></div>
+      ${(B.contro&&B.contro.length)?`<div class="ro"><b>Controversies</b>${B.contro.map(([t,u])=>`<div>• ${esc(t)}${u?` <a href="${u}" target="_blank" class="blink us">source</a>`:""}</div>`).join("")}</div>`:""}
+      <div class="ro">${BOOKS[P.name]?`<button class="lnk" data-goto="read:${k}">Reading list →</button>`:""} <button class="lnk" data-goto="heat:${k}">Compare on wheel →</button></div></div>`});
+  return h+`</div>`}
+function renderCompare(){const vis=visible();
+  let h=`<div class="cmp"><h2>Stage 3 — Where views overlap</h2><p class="sub">Choose a target person, then show or hide others. Colours group people by end-times family; initials identify them. The target always stays visible.</p>${chips()}`;
+  h+=`<div class="tabs">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`;
+  h+=({cwheel:tabCmpWheel,tend:tabTend,heat:tabHeat,grid:tabGrid,scatter:tabScatter,tree:tabTree,combo:tabCombos,read:tabRead,labels:tabLabels,bios:tabBios})[ctab](vis);
+  if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{const el=document.getElementById(id);if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
+  h+=`<div class="src">Theologian views are summarised from their own writings and statements where available — see the Labels & churches tab for source links, and hover cells for notes. "—" means a different view or no clear public position. Source dots show how many independent sources were found for a placement.</div></div>`;
+  s.innerHTML=h}
+// ================= survey =================
+let surveyFor=null;
+function renderSurvey(){const P=surveyFor;const isNew=!P;
+  const val=i=>P?choice(P,i):null,al=i=>P?alsoOf(P,i):[],cv=i=>P?(convOf(P,i)||3):3;
+  let h=`<div class="cmp sv"><h2>${isNew?"Take the survey":"Edit answers — "+esc(P.name)}</h2><p class="sub">Pick the view you hold on each topic, tick any other views you partly hold, and set how sure you are. Every change saves automatically in this browser. To keep your answers in the file itself — so any downloaded copy, on any computer, remembers them — click <b>Save app with my answers</b>. In Chrome or Edge you can also <b>link a save file</b>, which is then updated automatically on every change.</p>
+  <div class="svtop"><label>Edit <select class="selref" id="svwho"><option value="">— New person —</option>${PEOPLE.filter(Q=>Q.user).map(Q=>`<option value="${PEOPLE.indexOf(Q)}"${Q===P?' selected':''}>${esc(Q.name)}</option>`).join("")}</select></label>
+  <button class="mini primary" id="svdl">Save app with my answers (.html)</button><button class="mini" id="svlink">${fileHandle?(fileOK?"Linked: "+esc(fileHandle.name):"Reconnect "+esc(fileHandle.name)):"Link this file — auto-save into decision_wheel.html (Chrome/Edge)"}</button><button class="mini" id="svexport">Export answers (.json)</button><button class="mini" id="svpaste">Paste a response</button><label class="mini fbtn">Import file<input type="file" id="svimport" accept=".json,application/json" hidden></label>${P&&!P.self?'<button class="mini" id="svdelete">Delete this person</button>':''}</div>
+  <div id="pastebox" style="display:none;margin:0 0 14px"><p class="sub" style="margin:0 0 4px">Paste the email you received (or just the DW1: code inside it), then click Add.</p><textarea id="pastetxt" style="width:100%;height:80px;font:12px monospace;box-sizing:border-box"></textarea><div class="svrow"><button type="button" class="mini primary" id="pasteadd">Add this person</button></div></div>
+  <form id="svform"><div class="svrow"><label>Name <input name="name" required value="${esc(P?P.name:"")}" class="chin" style="width:200px"></label><label>Church attended / background <input name="church" value="${esc(P?P.church||"":"")}" class="chin" style="width:260px"></label></div>`;
+  TOPICS.forEach((T,i)=>{h+=`<fieldset class="svq"><legend>${i+1}. ${esc(T.name)} <span>${esc(T.q)}</span></legend><div class="svopts">`+
+    T.opts.map((o,k)=>`<label class="svo"><input type="radio" name="t${i}" value="${k}"${val(i)===k?' checked':''}><b>${esc(o.n)}</b><span>${esc(o.d)}</span></label>`).join("")+
+    `<label class="svo ns"><input type="radio" name="t${i}" value=""${val(i)==null?' checked':''}><b>Not sure / skip</b></label></div>
+    <div class="svmeta"><span>Also partly hold: ${T.opts.map((o,k)=>`<label><input type="checkbox" name="a${i}" value="${k}"${al(i).includes(k)?' checked':''}> ${esc(o.s)}</label>`).join(" ")}</span>
+    <label>Conviction <input type="range" name="c${i}" min="1" max="5" value="${cv(i)}" oninput="this.nextElementSibling.textContent=this.value"><output>${cv(i)}</output>/5</label></div></fieldset>`});
+  h+=`<div class="svrow"><button type="button" id="svsave" class="primary">Save and view wheel</button> <button type="button" class="mini" id="svcancel">Cancel</button></div></form></div>`;
+  s.innerHTML=h}
+function readSurvey(form){const fd=new FormData(form);const name=(fd.get("name")||"").trim()||"New person";
+  let P=surveyFor;if(!P){P={name,user:true,on:true,v:[],also:{},conv:{}};PEOPLE.splice(1,0,P)}
+  P.name=name;P.church=fd.get("church")||"";P.user=true;
+  P.v=TOPICS.map((_,i)=>{const x=fd.get("t"+i);return {c:x===""||x==null?null:+x}});
+  P.also={};P.conv={};TOPICS.forEach((_,i)=>{const a=fd.getAll("a"+i).map(Number).filter(k=>k!==P.v[i].c);if(a.length)P.also[i]=a;if(P.v[i].c!=null)P.conv[i]=+fd.get("c"+i)});
+  saveUsers(P);owner=P;if(!P.self){target=PEOPLE.find(Q=>Q.self)||target;cwOther=P;P.on=true}else target=P;return P}
+// ================= wiring =================
+let t=0,variant="branch",anim=null,looping=false,loopTimer=null;
+const s=document.getElementById("s"),tip=document.getElementById("tip"),bPlay=document.getElementById("play"),bLoop=document.getElementById("loop");
+function ownerSel(){const el=document.getElementById("selowner");el.innerHTML=PEOPLE.filter(P=>P.user).map(P=>`<option value="${PEOPLE.indexOf(P)}"${P===owner?' selected':''}>${esc(P.name)}</option>`).join("")}
+const draw=()=>{s.innerHTML=render(t,variant)};
+const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+function go(to,done){cancelAnimationFrame(anim);const from=t,st=performance.now(),dur=1200;
+  (function step(now){const p=Math.min(1,(now-st)/dur);t=from+(to-from)*ease(p);if(p===1)t=to;draw();if(p<1)anim=requestAnimationFrame(step);else{updateBtn();done&&done()}})(st)}
+function updateBtn(){bPlay.textContent=t>=0.5?"Reverse":"Play transition"}
+bPlay.onclick=()=>{stopLoop();go(t>=0.5?0:1)};
+function stopLoop(){looping=false;clearTimeout(loopTimer);bLoop.classList.remove("on");bLoop.textContent="Loop (2s each)"}
+function cycle(){if(!looping)return;loopTimer=setTimeout(()=>go(t>=0.5?0:1,cycle),2000)}
+bLoop.onclick=()=>{if(looping){stopLoop();return}looping=true;bLoop.classList.add("on");bLoop.textContent="Stop loop";cycle()};
+function setV(v){variant=v;document.getElementById("vBranch").classList.toggle("on",v==="branch");document.getElementById("vInline").classList.toggle("on",v==="inline");draw()}
+document.getElementById("vBranch").onclick=()=>setV("branch");document.getElementById("vInline").onclick=()=>setV("inline");
+document.getElementById("selset").onchange=e=>{wset=e.target.value;draw()};
+document.getElementById("selowner").onchange=e=>{owner=PEOPLE[+e.target.value];draw()};
+function tipHTML(i){const T=TOPICS[i],stage2=t>=0.5,pick=choice(owner,i),al=alsoOf(owner,i),cv=convOf(owner,i);
+  return `<h4>${esc(T.name)}</h4><p class="q">${esc(T.q)}</p>`+T.opts.map((o,k)=>{const d=stage2&&k===pick,a=stage2&&!d&&al.includes(k);return `<p class="o${d?' dec':a?' also':''}"><b>${esc(o.n)}</b>${d?' — decision':a?' — also holds':''}<br>${esc(o.d)}</p>`}).join("")+(stage2&&cv?`<p class="q" style="margin-top:8px">Conviction: ${cv}/5</p>`:"")+`<p class="q" style="margin-top:6px;font-size:12px">Further reading: ${esc(READ[i].ov)}</p>`}
+s.addEventListener("mousemove",e=>{if(view!=="wheel"){tip.style.display="none";return}const g=e.target.closest(".topic");if(!g){tip.style.display="none";return}
+  tip.innerHTML=tipHTML(+g.dataset.i);tip.style.display="block";const r=tip.getBoundingClientRect();let x=e.clientX+16,y=e.clientY+16;
+  if(x+r.width>innerWidth-8)x=e.clientX-r.width-16;if(y+r.height>innerHeight-8)y=Math.max(8,e.clientY-r.height-16);tip.style.left=x+"px";tip.style.top=y+"px"});
+s.addEventListener("mouseleave",()=>tip.style.display="none");
+function setView(v){view=v;stopLoop();["Wheel","Compare","Survey"].forEach(k=>document.getElementById("v"+k).classList.toggle("on",v===k.toLowerCase()));
+  document.getElementById("wheelBar").style.display=v==="wheel"?"":"none";document.getElementById("hint").style.display=v==="wheel"?"":"none";
+  s.style.maxWidth=v==="wheel"?"":"none";tip.style.display="none";if(v==="wheel"){ownerSel();draw()}else if(v==="compare")renderCompare();else renderSurvey()}
+document.getElementById("vWheel").onclick=()=>setView("wheel");document.getElementById("vCompare").onclick=()=>setView("compare");
+document.getElementById("vSurvey").onclick=()=>{surveyFor=PEOPLE.find(P=>P.self);setView("survey")};
+s.addEventListener("click",e=>{
+  if(view==="wheel"){const g=e.target.closest(".topic");if(g){const i=+g.dataset.i,n=TOPICS[i].opts.length,c=choice(owner,i);owner.v[i]={c:c==null?0:(c+1)%n};if(owner.also[i])owner.also[i]=owner.also[i].filter(k=>k!==owner.v[i].c);saveUsers(owner);draw()}return}
+  if(e.target.id==="svdl"){downloadApp();return}
+  if(e.target.id==="svlink"){fileHandle&&!fileOK?reconnectFile():linkFile();return}
+  if(view==="survey"&&e.target.id==="svpaste"){const b=document.getElementById("pastebox");b.style.display=b.style.display==="none"?"block":"none";return}
+  if(view==="survey"&&e.target.id==="pasteadd"){if(importResponse(document.getElementById("pastetxt").value)){setView("compare");ctab="cwheel";renderCompare()}return}
+  if(view==="survey"){if(e.target.id==="svsave"){saveSurvey();return}if(e.target.id==="svcancel"){setView("wheel");window.scrollTo({top:0})}
+    if(e.target.id==="svexport"){const data=JSON.stringify(serializeUsers(),null,2);
+      const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));a.download="decision-wheel-answers.json";a.click()}
+    if(e.target.id==="svdelete"&&surveyFor&&!surveyFor.self){const P=surveyFor;deleteUser(P);if(owner===P)owner=PEOPLE[0];if(target===P)target=PEOPLE[0];surveyFor=null;renderSurvey()}
+    return}
+  if(e.target.matches("input,select"))return;
+  const tb=e.target.closest("[data-tab]");if(tb){ctab=tb.dataset.tab;renderCompare();return}
+  if(e.target.id==="cwswap"&&cwOther){const a=target;target=cwOther;cwOther=a;target.on=true;renderCompare();return}
+  const go=e.target.closest("[data-goto]");if(go){const [w,k]=go.dataset.goto.split(":");const P=PEOPLE[+k];P.on=true;
+    if(w==="read"){ctab="read";readMode="person";pendingScroll="rp-"+k}else if(w==="bio"){ctab="bios";pendingScroll="bio-"+k}else{ctab="cwheel";if(P!==target)cwOther=P}
+    renderCompare();return}
+  const cw=e.target.closest("[data-cw]");if(cw){cwMode=cw.dataset.cw;renderCompare();return}
+  const rm=e.target.closest("[data-rm]");if(rm){readMode=rm.dataset.rm;renderCompare();return}
+  const qb=e.target.closest("[data-q]");if(qb){const q=qb.dataset.q;
+    if(q==="all")PEOPLE.forEach(P=>P.on=true);else if(q==="none")PEOPLE.forEach(P=>P.on=false);
+    else if(q==="modern")PEOPLE.forEach(P=>{if(P.modern)P.on=true});else closest(target,q==="two"?1:3).forEach(x=>x.Q.on=true);
+    renderCompare();return}
+  const fa=e.target.closest("[data-fa],[data-fn]");if(fa){const F=FAM[+(fa.dataset.fa??fa.dataset.fn)],on=fa.dataset.fa!=null;PEOPLE.forEach(P=>{if(fam(P)===F)P.on=on});renderCompare();return}
+  const chip=e.target.closest(".chip");if(chip){const P=PEOPLE[+chip.dataset.p];if(P!==target)P.on=!P.on;renderCompare();return}
+  const c=e.target.closest(".cell");if(!c)return;const P=PEOPLE[editor];if(!P||!P.user)return;const i=+c.dataset.i,k=+c.dataset.k;
+  P.v[i]={c:k};if(P.also&&P.also[i])P.also[i]=P.also[i].filter(x=>x!==k);if(P.user)saveUsers(P);renderCompare()});
+s.addEventListener("change",e=>{const el=e.target;
+  if(view==="survey"){if(el.id==="svwho"){surveyFor=el.value===""?null:PEOPLE[+el.value];renderSurvey()}
+    if(el.id==="svimport"&&el.files[0]){el.files[0].text().then(txt=>{try{importResponse(txt)}catch(err){el.parentElement.insertAdjacentHTML("afterend",'<span class="err"> That file could not be read.</span>')}})}
+    return}
+  if(el.id==="seltarget"){target=PEOPLE[+el.value];target.on=true;renderCompare()}
+  if(el.id==="selcw"){cwOther=PEOPLE[+el.value];cwOther.on=true;renderCompare()}
+  if(el.id==="selcwA"){target=PEOPLE[+el.value];target.on=true;renderCompare()}
+  if(el.id==="seled"){editor=+el.value;renderCompare()}
+  if(el.id==="readmine"){readMine=el.checked;renderCompare()}
+  if(el.dataset.church!==undefined){PEOPLE[+el.dataset.church].church=el.value;saveUsers(PEOPLE[+el.dataset.church]);renderCompare()}});
+function saveSurvey(){const form=document.getElementById("svform");if(!form)return;const P=readSurvey(form);t=1;setView("wheel");window.scrollTo({top:0});toast("Saved "+P.name+"'s answers")}
+function toast(msg){let el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";document.body.appendChild(el)}el.textContent=msg;el.className="show";clearTimeout(el._t);el._t=setTimeout(()=>el.className="",2500)}
+document.getElementById("savestat").addEventListener("click",e=>{if(e.target.id==="dlapp")downloadApp();if(e.target.id==="reconnect")reconnectFile()});
+s.addEventListener("submit",e=>{e.preventDefault();if(e.target.id==="svform")saveSurvey()});
+ownerSel();draw();setStatus();initLinked();
+
+</script></body></html>
