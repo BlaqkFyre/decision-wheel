@@ -6,13 +6,13 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 
 ## Next up — offline on PC and mobile (git repo)
 - [x] Repo cloned with GitHub Desktop to `Documents\GitHub\decision-wheel`; Claude writes files there, Luke commits & pushes
-- [x] Repo is public (BlaqkFyre/decision-wheel). Everyone's answers built into index.html are visible to anyone — ask respondents first
-- [x] Hosting: GitHub Pages (main / root) — live at https://blaqkfyre.github.io/decision-wheel/
+- [x] Repo is public → hosting on GitHub Pages (Settings → Pages → main / root). If public, everyone's answers built into index.html (Luke's, Sarah's, etc.) are visible to anyone — ask respondents first
+- [x] Decide hosting: GitHub Pages
+- [ ] Add the live site link here once Pages is on
 - [x] Move the master copy into the repo (`index.html`)
-- [x] In the app, linked to `index.html` (Survey → Link this file)
+- [ ] In the app (Survey → Link this file), re-link to `index.html` instead of the old Downloads copy
 - [x] Add offline support: `manifest.webmanifest` + `sw.js` + icons (works offline once opened from the website; PC file copy already works offline)
-- [x] Turn on hosting
-- [ ] Open the site on the phone once, sign in as admin, Add to Home Screen
+- [ ] Turn on hosting, open it on the phone once, Add to Home Screen
 - [ ] Test on desktop (Chrome/Edge) and on mobile, online and offline
 
 ## Syncing answers between devices
@@ -27,6 +27,12 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [ ] Research speciality and critics text for each person against sources (same rules as research)
 - [ ] Restyle pills (Luke to give direction)
 
+## Dark mode & topic pages
+- [x] Colour mode button (◐ Auto / ☀ Light / ☾ Dark): charcoal dark theme, remembered per device; Auto follows the phone/PC setting
+- [x] Topics tab: a page per topic (cards on PC, pills on phone) — overview, debates & controversies, and per view: who holds it here, churches & traditions, verses for, verses critics raise, often held with (worked out from people in the app); links to/from the reading list
+- [ ] Check topic summaries, verse lists and church lists against sources (currently general reference)
+- [ ] Restyle (Luke to give direction)
+
 ## Research still to do (agents stopped earlier)
 - [ ] Group 0: Chuck Smith, John MacArthur, John Walvoord, Darrell Bock
 - [ ] Group 3: Tim Keller, Sam Storms, Matt Chandler, David Jeremiah
@@ -37,8 +43,7 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 ## Admin & security
 - [x] Visitors: view everything, add/edit only their own answers (saved in their browser), send them to Luke by email/code
 - [x] Admin (Luke): edit anyone, paste/import responses, delete, link file, export — unlocked per device with a passphrase
-- [x] Admin passphrase set on the PC and saved into index.html
-- [ ] Confirm it's on the live site (Survey → "Admin sign-in" shows at the bottom)
+- [ ] Luke to set the admin passphrase on the PC (Survey → Set passphrase), then commit & push
 - [ ] Sync admin changes made on the phone back to the master (now: Export on phone → Import on PC; later: GitHub sync)
 - Note: the lock is on the app's screens; the real protection is that only Luke's PC / GitHub login can change the master file
 

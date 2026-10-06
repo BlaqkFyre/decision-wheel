@@ -1,148 +1,175 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Decision Wheel</title>
+<script>/* theme: "auto" follows the phone/PC setting; "light" or "dark" (charcoal) is remembered on this device */
+(function(){var m="auto";try{m=localStorage.getItem("decisionwheel_theme")||"auto"}catch(e){}
+  var d=m==="dark"||(m==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
+  document.documentElement.setAttribute("data-theme",d?"dark":"light");document.documentElement.setAttribute("data-mode",m)})();</script>
 <meta name="theme-color" content="#0E7C86"><meta name="referrer" content="no-referrer"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Decision Wheel">
-<script id="dw-saved" type="application/json">{"version":1,"people":[{"name":"Luke","self":true,"church":"Brethren / Baptist background","trad":["Brethren","Baptist"],"answers":{"Millennium":0,"Rapture timing":1,"Reading Revelation":0,"Israel & the Church":0,"Daniel's 70th week":0,"The Antichrist":0,"Final judgment":0,"After death":0,"New creation":0,"Election":1,"Spiritual gifts":1,"Baptism":0,"Missions & the unreached":0,"Eternal security":0,"Creation":0,"Women in ministry":1,"Lord's Supper":0},"alsoHolds":{"Israel & the Church":[1]},"conviction":{"Missions & the unreached":5,"Eternal security":5,"Creation":5,"Women in ministry":4,"Lord's Supper":5},"saved":1791269566300},{"name":"Sarah","self":false,"church":"Brethren","trad":[],"answers":{"Millennium":0,"Rapture timing":0,"Reading Revelation":0,"Israel & the Church":1,"Daniel's 70th week":null,"The Antichrist":0,"Final judgment":0,"After death":0,"New creation":0,"Election":2,"Spiritual gifts":0,"Baptism":0,"Missions & the unreached":0,"Eternal security":0,"Creation":0,"Women in ministry":1,"Lord's Supper":0},"alsoHolds":{"Rapture timing":[1],"New creation":[1],"Missions & the unreached":[1]},"conviction":{"Millennium":4,"Rapture timing":3,"Reading Revelation":4,"Israel & the Church":4,"The Antichrist":5,"Final judgment":5,"After death":5,"New creation":4,"Election":5,"Spiritual gifts":5,"Baptism":5,"Missions & the unreached":4,"Eternal security":5,"Creation":5,"Women in ministry":3,"Lord's Supper":5},"saved":1791192538872}],"deleted":{},"admin":{"salt":"6ada70a9ff1d3e072cdce08e8768f928","iter":310000,"check":"3ca1ed0b02eb1983d652129bb5e1c151a7d78cc48d896cc8afb9937cabfc9e2c"}}</script>
+<script id="dw-saved" type="application/json">{"version":1,"people":[{"name":"Luke","self":true,"church":"Brethren / Baptist background","trad":["Brethren","Baptist"],"answers":{"Millennium":0,"Rapture timing":0,"Reading Revelation":0,"Israel & the Church":0,"Daniel's 70th week":0,"The Antichrist":0,"Final judgment":0,"After death":0,"New creation":0,"Election":1,"Spiritual gifts":1,"Baptism":0,"Missions & the unreached":0,"Eternal security":0,"Creation":0,"Women in ministry":1,"Lord's Supper":0},"alsoHolds":{"Israel & the Church":[1]},"conviction":{"Missions & the unreached":5,"Eternal security":5,"Creation":5,"Women in ministry":4,"Lord's Supper":5},"saved":1791192904025},{"name":"Sarah","self":false,"church":"Brethren","trad":[],"answers":{"Millennium":0,"Rapture timing":0,"Reading Revelation":0,"Israel & the Church":1,"Daniel's 70th week":null,"The Antichrist":0,"Final judgment":0,"After death":0,"New creation":0,"Election":2,"Spiritual gifts":0,"Baptism":0,"Missions & the unreached":0,"Eternal security":0,"Creation":0,"Women in ministry":1,"Lord's Supper":0},"alsoHolds":{"Rapture timing":[1],"New creation":[1],"Missions & the unreached":[1]},"conviction":{"Millennium":4,"Rapture timing":3,"Reading Revelation":4,"Israel & the Church":4,"The Antichrist":5,"Final judgment":5,"After death":5,"New creation":4,"Election":5,"Spiritual gifts":5,"Baptism":5,"Missions & the unreached":4,"Eternal security":5,"Creation":5,"Women in ministry":3,"Lord's Supper":5},"saved":1791192538872}],"deleted":{},"admin":{"salt":"6ada70a9ff1d3e072cdce08e8768f928","iter":310000,"check":"3ca1ed0b02eb1983d652129bb5e1c151a7d78cc48d896cc8afb9937cabfc9e2c"}}</script>
 <style>
-body{margin:0;background:#fff;font-family:Helvetica,Arial,sans-serif;color:#1F2933;display:flex;flex-direction:column;align-items:center}
+:root{--bg:#fff;--surface:#fff;--soft:#F1F3F5;--line:#E4E7EB;--ink:#1F2933;--muted:#52606D;--grey:#9AA3AD;--teal:#0E7C86;--tealbg:#0E7C86;--tealsoft:#E3F1F2;--tealline:#CFE3E5;--tealdark:#0E5F66;
+  --amberbg:#FFF4D6;--amberfg:#7A5A00;--amberline:#E9C46A;--greenbg:#E7F6EC;--greenfg:#1E6B3A;--orangebg:#FBE3D7;--toastbg:#1F2933;color-scheme:light}
+/* charcoal dark mode */
+html[data-theme=dark]{--bg:#2A2C30;--surface:#33363B;--soft:#3A3D43;--line:#4A4E56;--ink:#ECEDEF;--muted:#BCC3CA;--grey:#8E969F;--teal:#5CC8D1;--tealbg:#0F7F89;--tealsoft:#21474B;--tealline:#2F6267;--tealdark:#A6E3E8;
+  --amberbg:#4A3E1E;--amberfg:#F3D27A;--amberline:#8A7230;--greenbg:#1F3B2A;--greenfg:#9EDDB2;--orangebg:#5A3A2C;--toastbg:#111214;color-scheme:dark}
+html,body{background:var(--bg)}
+html[data-theme=dark] #s svg,html[data-theme=dark] .cmp svg{filter:invert(.86) hue-rotate(180deg) saturate(1.15)}
+html[data-theme=dark] .dot{filter:none}
+html[data-theme=dark] input,html[data-theme=dark] select,html[data-theme=dark] textarea{background:var(--surface);color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] a{color:var(--teal)}
+/* colours written straight into the page by the app */
+html[data-theme=dark] [style*="color:#9AA3AD"],html[data-theme=dark] [style*="color:#52606D"]{color:var(--muted)!important}
+html[data-theme=dark] [style*="color:#1F2933"]{color:var(--ink)!important}
+html[data-theme=dark] [style*="color:#0E7C86"]{color:var(--teal)!important}
+html[data-theme=dark] [style*="background:#fff"]{background:var(--surface)!important}
+html[data-theme=dark] [style*="background:#F4F5F7"]{background:var(--soft)!important}
+html[data-theme=dark] [style*="background:#E3F1F2"]{background:var(--tealsoft)!important}
+html[data-theme=dark] [style*="background:#E4E7EB"],html[data-theme=dark] [style*="background:#EEF2F4"],html[data-theme=dark] [style*="background:#F1F3F5"]{background:var(--line)!important}
+html[data-theme=dark] [style*="background:#FBE3D7"]{background:var(--orangebg)!important}
+html[data-theme=dark] [style*="border:1px solid #D9DEE3"]{border-color:var(--line)!important}
+html[data-theme=dark] [style*="solid #1F2933"]{border-color:var(--ink)!important}
+#theme{padding:9px 12px;min-width:44px}
+
+body{margin:0;background:var(--bg);font-family:Helvetica,Arial,sans-serif;color:var(--ink);display:flex;flex-direction:column;align-items:center}
 .bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px 16px 4px}
-button{padding:9px 16px;font-size:15px;border:1px solid #0E7C86;border-radius:6px;background:#fff;color:#0E7C86;cursor:pointer}
-button.on,button.primary{background:#0E7C86;color:#fff}
-.hint{font-size:13px;color:#52606D;margin:2px 16px 0;text-align:center}
+button{padding:9px 16px;font-size:15px;border:1px solid var(--teal);border-radius:6px;background:var(--bg);color:var(--teal);cursor:pointer}
+button.on,button.primary{background:var(--tealbg);color:#fff}
+.hint{font-size:13px;color:var(--muted);margin:2px 16px 0;text-align:center}
 #s{width:100%;max-width:1150px}#s svg{width:100%;height:auto;display:block}
 .topic{cursor:pointer}
-#tip{position:fixed;pointer-events:none;max-width:320px;background:#fff;border:1px solid #D9DEE3;border-radius:8px;box-shadow:0 6px 24px rgba(31,41,51,.15);padding:12px 14px;font-size:13px;line-height:1.4;display:none;z-index:10}
+#tip{position:fixed;pointer-events:none;max-width:320px;background:var(--bg);border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 24px rgba(31,41,51,.15);padding:12px 14px;font-size:13px;line-height:1.4;display:none;z-index:10}
 #tip h4{margin:0 0 2px;font-size:15px}
-#tip .q{color:#52606D;margin:0 0 8px;font-style:italic}
-#tip .o{margin:6px 0 0;padding-left:16px;position:relative;color:#52606D}
-#tip .o:before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border-radius:50%;border:2px solid #9AA3AD;box-sizing:border-box}
-#tip .o.dec{color:#1F2933}
-#tip .o.dec:before{background:#0E7C86;border-color:#0E7C86}
-#tip .o b{color:#1F2933}
-#tip .o.dec b,#tip .o.also b{color:#0E7C86}
-#tip .o.also:before{border-color:#0E7C86}
+#tip .q{color:var(--muted);margin:0 0 8px;font-style:italic}
+#tip .o{margin:6px 0 0;padding-left:16px;position:relative;color:var(--muted)}
+#tip .o:before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border-radius:50%;border:2px solid var(--grey);box-sizing:border-box}
+#tip .o.dec{color:var(--ink)}
+#tip .o.dec:before{background:var(--tealbg);border-color:var(--teal)}
+#tip .o b{color:var(--ink)}
+#tip .o.dec b,#tip .o.also b{color:var(--teal)}
+#tip .o.also:before{border-color:var(--teal)}
 .cmp{width:100%;max-width:1060px;padding:8px 16px 32px;box-sizing:border-box}
 .cmp h2{font-size:22px;margin:10px 0 2px}
-.cmp .sub{color:#52606D;font-size:14px;margin:0 0 14px}
+.cmp .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
 .people{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.chip{display:flex;align-items:center;gap:6px;border:1.5px solid #D9DEE3;border-radius:999px;padding:4px 10px 4px 4px;cursor:pointer;background:#fff}
-.chip.active{border-color:#1F2933;box-shadow:0 0 0 2px #1F2933 inset}
+.chip{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px 4px 4px;cursor:pointer;background:var(--bg)}
+.chip.active{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink) inset}
 .chip.off{opacity:.4}
-.chip input[type=text]{border:0;font:600 14px Helvetica,Arial;width:80px;color:#1F2933;background:transparent}
+.chip input[type=text]{border:0;font:600 14px Helvetica,Arial;width:80px;color:var(--ink);background:transparent}
 .chip input[type=checkbox]{margin:0 2px 0 4px;cursor:pointer}
-.dot{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:700 11px Helvetica,Arial;flex:none;box-shadow:0 0 0 2px #fff}
-.grid{display:grid;grid-template-columns:minmax(130px,1.1fr) repeat(3,minmax(0,1fr)) 92px;border-top:1px solid #E4E7EB}
-.grid>div{border-bottom:1px solid #E4E7EB;padding:8px 8px;min-height:44px;box-sizing:border-box}
-.gh{font-size:12px;color:#52606D;text-transform:uppercase;letter-spacing:.04em;align-self:end;border-bottom:1px solid #9AA3AD!important}
+.dot{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:700 11px Helvetica,Arial;flex:none;box-shadow:0 0 0 2px var(--bg)}
+.grid{display:grid;grid-template-columns:minmax(130px,1.1fr) repeat(3,minmax(0,1fr)) 92px;border-top:1px solid var(--line)}
+.grid>div{border-bottom:1px solid var(--line);padding:8px 8px;min-height:44px;box-sizing:border-box}
+.gh{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;align-self:end;border-bottom:1px solid var(--grey)!important}
 .tn{font-weight:700;font-size:14px;display:flex;align-items:center}
 .cell{cursor:pointer;border-radius:4px;transition:background .15s}
-.cell:hover{outline:1.5px solid #9AA3AD;outline-offset:-3px}
-.cell .on{font-size:12.5px;font-weight:600;color:#1F2933;margin-bottom:5px}
+.cell:hover{outline:1.5px solid var(--grey);outline-offset:-3px}
+.cell .on{font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:5px}
 .cell .ds{display:flex;flex-wrap:wrap;gap:3px}
-.agree{font-size:12.5px;color:#52606D;display:flex;align-items:center}
-.agree b{color:#1F2933}
+.agree{font-size:12.5px;color:var(--muted);display:flex;align-items:center}
+.agree b{color:var(--ink)}
 .pair{margin-top:26px}
 .pair h3{font-size:16px;margin:0 0 2px}
 .pair table{border-collapse:separate;border-spacing:3px;margin-top:8px}
 .pair td,.pair th{width:64px;height:40px;text-align:center;font-size:13px;border-radius:4px}
-.pair th{font-weight:600;color:#1F2933}
+.pair th{font-weight:600;color:var(--ink)}
 .blank{display:none}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 16px}
 .tabs button{padding:6px 14px;font-size:14px}
 .hm{border-collapse:separate;border-spacing:3px;font-size:12.5px;width:100%}
 .hm th{font-weight:600;text-align:left;padding:4px 6px;white-space:nowrap}
 .hm td{border-radius:4px;padding:8px 6px;text-align:center;font-weight:600;min-width:90px}
-.hm td.n{color:#9AA3AD;background:#F4F5F7;font-weight:400}
-.key{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#52606D;margin:10px 0 0}
+.hm td.n{color:var(--grey);background:var(--soft);font-weight:400}
+.key{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:10px 0 0}
 .key span{display:inline-flex;align-items:center;gap:5px}
 .key i{width:14px;height:14px;border-radius:3px;display:inline-block}
 .lbl{border-collapse:collapse;width:100%;font-size:13.5px}
-.lbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#52606D;border-bottom:1px solid #9AA3AD;padding:8px}
-.lbl td{border-bottom:1px solid #E4E7EB;padding:10px 8px;vertical-align:top}
-.tag{display:inline-block;background:#EEF2F4;border-radius:999px;padding:2px 9px;margin:2px 3px 2px 0;font-size:12.5px}
-.src{font-size:12px;color:#52606D;margin-top:18px;line-height:1.5}
-.src a{color:#0E7C86}
+.lbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border-bottom:1px solid var(--grey);padding:8px}
+.lbl td{border-bottom:1px solid var(--line);padding:10px 8px;vertical-align:top}
+.tag{display:inline-block;background:var(--soft);border-radius:999px;padding:2px 9px;margin:2px 3px 2px 0;font-size:12.5px}
+.src{font-size:12px;color:var(--muted);margin-top:18px;line-height:1.5}
+.src a{color:var(--teal)}
 .selref{font:14px Helvetica,Arial;padding:4px 6px;margin-left:6px}
 .pbar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
 button.mini{padding:5px 11px;font-size:13px}
 .fams{display:flex;flex-wrap:wrap;gap:10px 22px;margin-bottom:16px}
-.fh{font-size:12px;font-weight:700;color:#52606D;text-transform:uppercase;letter-spacing:.04em;margin:0 0 5px;display:flex;align-items:center;gap:6px}
+.fh{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:0 0 5px;display:flex;align-items:center;gap:6px}
 .fh i{width:10px;height:10px;border-radius:50%;display:inline-block}
 .fam .people{margin:0;gap:6px}
-button.chip{font:600 13.5px Helvetica,Arial;color:#1F2933;padding:3px 10px 3px 3px;border:1.5px solid #D9DEE3}
+button.chip{font:600 13.5px Helvetica,Arial;color:var(--ink);padding:3px 10px 3px 3px;border:1.5px solid var(--line)}
 button.chip.off{opacity:.38}
 .hm th.ch{text-align:center;font-size:12px;white-space:normal;min-width:62px}
 .hm{table-layout:fixed}.hm td{min-width:0;font-size:11.5px;padding:7px 3px;overflow-wrap:anywhere;hyphens:auto}.hm th.ch{min-width:0;font-size:11.5px}.hm tr>th:first-child{width:140px}
 .vm{font-size:9px;margin-left:2px;letter-spacing:-1px;opacity:.85}
 .hmt{table-layout:auto;min-width:1480px}.hmt td{min-width:66px}.hmt th:first-child{width:170px;font-size:12.5px}.hmt td{font-size:11.5px;overflow-wrap:normal;hyphens:none}
-.new{font:600 9.5px Helvetica,Arial;background:#FFF4D6;color:#7A5A00;border-radius:4px;padding:1px 4px;margin-left:2px;text-transform:uppercase}
-.chin{font:13.5px Helvetica,Arial;border:1px solid #D9DEE3;border-radius:4px;padding:4px 6px;width:150px}
+.new{font:600 9.5px Helvetica,Arial;background:var(--amberbg);color:var(--amberfg);border-radius:4px;padding:1px 4px;margin-left:2px;text-transform:uppercase}
+.chin{font:13.5px Helvetica,Arial;border:1px solid var(--line);border-radius:4px;padding:4px 6px;width:150px}
 
 .tbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:0 0 12px;font-size:14px}
 .qb{display:flex;gap:6px;flex-wrap:wrap}
-button.lnk{border:0;background:none;color:#0E7C86;font:600 11px Helvetica,Arial;padding:0 2px;margin-left:4px;cursor:pointer;text-decoration:underline;text-transform:none;letter-spacing:0}
-button.chip.tgt{border-color:#1F2933;box-shadow:0 0 0 1.5px #1F2933 inset}
-.new.usr{background:#E3F1F2;color:#0E5F66}
+button.lnk{border:0;background:none;color:var(--teal);font:600 11px Helvetica,Arial;padding:0 2px;margin-left:4px;cursor:pointer;text-decoration:underline;text-transform:none;letter-spacing:0}
+button.chip.tgt{border-color:var(--ink);box-shadow:0 0 0 1.5px var(--ink) inset}
+.new.usr{background:var(--tealsoft);color:var(--tealdark)}
 .ch3{font-size:16px;margin:18px 0 6px}
-.clist{list-style:none;padding:0;margin:0}.clist li{padding:9px 0;border-bottom:1px solid #E4E7EB;font-size:14px}
-.cdet{font-size:12.5px;color:#52606D;margin-top:3px}
-.cbar{display:inline-block;width:90px;height:7px;background:#F1F3F5;border-radius:4px;margin-left:10px;vertical-align:middle;overflow:hidden}.cbar i{display:block;height:100%;background:#0E7C86}
+.clist{list-style:none;padding:0;margin:0}.clist li{padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.cdet{font-size:12.5px;color:var(--muted);margin-top:3px}
+.cbar{display:inline-block;width:90px;height:7px;background:var(--soft);border-radius:4px;margin-left:10px;vertical-align:middle;overflow:hidden}.cbar i{display:block;height:100%;background:var(--tealbg)}
 .rl{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-.rcard{border:1px solid #E4E7EB;border-radius:8px;padding:12px 14px}
-.rt{font-weight:700;font-size:15px;margin-bottom:4px}.rov{font-size:12.5px;color:#52606D;margin-bottom:6px}
-.ro{font-size:13px;padding:6px 0;border-top:1px dashed #E4E7EB}.ro div{color:#52606D;margin-top:2px}
-.rtag{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:4px}.rtag.dec{background:#0E7C86;color:#fff}.rtag.also{background:#fff;color:#0E7C86;border:1.5px solid #0E7C86}.rtag.con{background:#EEF2F4;color:#52606D}.rcard.flash{box-shadow:0 0 0 3px #0E7C86}.rcard{transition:box-shadow .3s}
+.rcard{border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.rt{font-weight:700;font-size:15px;margin-bottom:4px}.rov{font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.ro{font-size:13px;padding:6px 0;border-top:1px dashed var(--line)}.ro div{color:var(--muted);margin-top:2px}
+.rtag{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:4px}.rtag.dec{background:var(--tealbg);color:#fff}.rtag.also{background:var(--bg);color:var(--teal);border:1.5px solid var(--teal)}.rtag.con{background:var(--soft);color:var(--muted)}.rcard.flash{box-shadow:0 0 0 3px var(--teal)}.rcard{transition:box-shadow .3s}
 .blinks{display:inline-flex;flex-wrap:wrap;gap:4px;margin-left:4px;vertical-align:middle}
 .blink{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;text-decoration:none;white-space:nowrap}
-.blink.au{background:#E3F1F2;color:#0E5F66}.blink.us{background:#EEF2F4;color:#52606D}.blink.free{background:#E7F6EC;color:#1E6B3A}
+.blink.au{background:var(--tealsoft);color:var(--tealdark)}.blink.us{background:var(--soft);color:var(--muted)}.blink.free{background:var(--greenbg);color:var(--greenfg)}
 .bk{margin:3px 0}
-.kbadge{font-size:10px;font-weight:700;background:#FFF4D6;color:#7A5A00;border-radius:4px;padding:1px 5px;margin-left:4px}.rtag.dif{background:#FBE3D7;color:#1F2933}
+.kbadge{font-size:10px;font-weight:700;background:var(--amberbg);color:var(--amberfg);border-radius:4px;padding:1px 5px;margin-left:4px}.rtag.dif{background:var(--orangebg);color:var(--ink)}
 .sv .svtop{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;font-size:14px}
 .svrow{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0;font-size:14px;align-items:center}
-.svq{border:1px solid #E4E7EB;border-radius:8px;margin:10px 0;padding:10px 14px}
-.svq legend{font-weight:700;font-size:15px;padding:0 4px}.svq legend span{font-weight:400;color:#52606D;font-style:italic;font-size:13px;margin-left:6px}
+.svq{border:1px solid var(--line);border-radius:8px;margin:10px 0;padding:10px 14px}
+.svq legend{font-weight:700;font-size:15px;padding:0 4px}.svq legend span{font-weight:400;color:var(--muted);font-style:italic;font-size:13px;margin-left:6px}
 .svopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px}
-.svo{display:block;border:1px solid #E4E7EB;border-radius:6px;padding:7px 9px;font-size:13px;cursor:pointer}
-.svo:has(input:checked){border-color:#0E7C86;background:#EAF5F6}
-.svo b{margin-left:4px}.svo span{display:block;color:#52606D;font-size:12px;margin-top:2px}.svo.ns{display:flex;align-items:center}
-.svmeta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:8px;font-size:12.5px;color:#52606D}.svmeta label{margin-right:6px}
-.fbtn{display:inline-block;padding:5px 11px;font-size:13px;border:1px solid #0E7C86;border-radius:6px;color:#0E7C86;cursor:pointer}
+.svo{display:block;border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-size:13px;cursor:pointer}
+.svo:has(input:checked){border-color:var(--teal);background:var(--tealsoft)}
+.svo b{margin-left:4px}.svo span{display:block;color:var(--muted);font-size:12px;margin-top:2px}.svo.ns{display:flex;align-items:center}
+.svmeta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:8px;font-size:12.5px;color:var(--muted)}.svmeta label{margin-right:6px}
+.fbtn{display:inline-block;padding:5px 11px;font-size:13px;border:1px solid var(--teal);border-radius:6px;color:var(--teal);cursor:pointer}
 .err{color:#B42318;font-size:13px}
-.savestat{font-size:12.5px;color:#52606D;text-align:center;margin:2px 16px 0}.savestat .lnk{font-size:12.5px}
-button.mini.primary{background:#0E7C86;color:#fff}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#1F2933;color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.savestat{font-size:12.5px;color:var(--muted);text-align:center;margin:2px 16px 0}.savestat .lnk{font-size:12.5px}
+button.mini.primary{background:var(--tealbg);color:#fff}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--toastbg);color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 select.selref{font:14px Helvetica,Arial;padding:4px 6px}
 
 /* survey: admin tools, panels */
-.svtools{display:flex;flex-wrap:wrap;gap:10px 22px;margin:4px 0 14px;padding:10px 12px;background:#F5F7F8;border-radius:8px}
+.svtools{display:flex;flex-wrap:wrap;gap:10px 22px;margin:4px 0 14px;padding:10px 12px;background:var(--soft);border-radius:8px}
 .svtools>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.svlbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#52606D;margin-right:2px}
-.svpanel{border:1px solid #CFE3E5;background:#F2F9F9;border-radius:8px;padding:12px 14px;margin:0 0 14px}
-.svpanel.warn{border-color:#E9C46A;background:#FFF8E6}
+.svlbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-right:2px}
+.svpanel{border:1px solid var(--tealline);background:var(--tealsoft);border-radius:8px;padding:12px 14px;margin:0 0 14px}
+.svpanel.warn{border-color:var(--amberline);background:var(--amberbg)}
 .svpanel textarea{width:100%;height:80px;font:12px monospace;box-sizing:border-box;margin-top:6px}
 .svpanel .sub{margin:4px 0 8px}
-a.btnlink{display:inline-block;padding:5px 11px;font-size:13px;border:1px solid #0E7C86;border-radius:6px;color:#0E7C86;text-decoration:none}
-a.btnlink.primary{background:#0E7C86;color:#fff}
-.adm{background:#0E7C86;color:#fff;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:4px}
+a.btnlink{display:inline-block;padding:5px 11px;font-size:13px;border:1px solid var(--teal);border-radius:6px;color:var(--teal);text-decoration:none}
+a.btnlink.primary{background:var(--tealbg);color:#fff}
+.adm{background:var(--tealbg);color:#fff;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:4px}
 .err{color:#B8483A;font-size:13px}
 /* bios: cards on wide screens, tap-to-open pills on phones */
 .bio-mob{display:none}
-.bpill{border:1px solid #E4E7EB;border-radius:22px;margin:0 0 8px;background:#fff;overflow:hidden}
+.bpill{border:1px solid var(--line);border-radius:22px;margin:0 0 8px;background:var(--bg);overflow:hidden}
 .bpill summary{display:flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;cursor:pointer;list-style:none}
 .bpill summary::-webkit-details-marker{display:none}
 .bav{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
 .bpm{flex:1;min-width:0;display:flex;flex-direction:column}
 .bpn{font-weight:700;font-size:15px}
-.bps{font-size:12.5px;color:#52606D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bchev{color:#9AA3AD;font-size:20px;transition:transform .2s}
+.bps{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bchev{color:var(--grey);font-size:20px;transition:transform .2s}
 .bpill[open]{border-radius:18px}.bpill[open] .bchev{transform:rotate(90deg)}
 .bbody{padding:0 14px 14px}
-.ro.bspec{border-left:3px solid #0E7C86;padding-left:8px}.ro.bcrit{border-left:3px solid #B7791F;padding-left:8px}.ro.bcon{border-left:3px solid #B8483A;padding-left:8px}
+.ro.bspec{border-left:3px solid var(--teal);padding-left:8px}.ro.bcrit{border-left:3px solid #B7791F;padding-left:8px}.ro.bcon{border-left:3px solid #B8483A;padding-left:8px}
 .bbtns{display:flex;gap:8px;flex-wrap:wrap}
 @media (max-width:700px){
   .bio-desk{display:none}.bio-mob{display:block}
-  .bbtns .lnk{flex:1;border:1px solid #0E7C86;border-radius:999px;padding:8px;text-align:center}
+  .bbtns .lnk{flex:1;border:1px solid var(--teal);border-radius:999px;padding:8px;text-align:center}
   .cmp{padding:8px 12px 28px}
   .svtools{gap:10px}.svtools>div{width:100%}
   .sv .chin{width:100%!important;box-sizing:border-box}
@@ -151,12 +178,31 @@ a.btnlink.primary{background:#0E7C86;color:#fff}
   .tabs button{flex:none}
   button{padding:8px 12px;font-size:14px}
 }
+
+/* topic pages */
+.tnum{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--tealbg);color:#fff;font-size:12px;margin-right:8px;vertical-align:middle}
+.tnumbig{background:var(--tealbg);color:#fff}
+.topt{border-top:1px dashed var(--line);padding:9px 0 6px}
+.toh{font-size:14px}.tod{font-size:12.5px;color:var(--muted);margin:2px 0 6px}
+.trow{display:grid;grid-template-columns:150px 1fr;gap:8px;font-size:12.5px;padding:3px 0;align-items:start}
+.trow>div{color:var(--ink)}
+.tl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding-top:2px}
+.vfor .tl{color:var(--teal)}.vag .tl{color:#C0703C}
+.vlist{display:flex;flex-wrap:wrap;gap:4px}
+a.vref{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:1px 8px;text-decoration:none;color:var(--ink);background:var(--soft)}
+.vfor a.vref{border-color:var(--tealline);background:var(--tealsoft)}.vag a.vref{border-color:#E9B8A0;background:var(--orangebg)}
+.tdots{display:flex;flex-wrap:wrap;gap:3px}button.tdot{border:0;background:none;padding:0;cursor:pointer}
+.tmut{color:var(--grey)}
+.rl.tdesk{grid-template-columns:repeat(auto-fill,minmax(460px,1fr))}
+@media (max-width:700px){.tdesk{display:none}.trow{grid-template-columns:1fr;gap:2px}}
+html[data-theme=dark] a.vref{color:var(--ink)}html[data-theme=dark] .vag a.vref{border-color:#8A5A45}html[data-theme=dark] .vag .tl{color:#E8A27A}
 </style></head>
 <body>
 <div class="bar">
   <button id="vWheel" class="on">Wheel</button>
   <button id="vCompare">Compare people</button>
   <button id="vSurvey">Survey</button>
+  <button id="theme" title="Light / dark mode" aria-label="Light or dark mode">◐</button>
 </div>
 <div class="savestat" id="savestat"></div>
 <div class="bar" id="wheelBar">
@@ -886,7 +932,7 @@ function tabRead(vis){const mode=`<div class="tabs" style="margin-top:0"><button
   return mode+(readMode==="person"?tabReadPeople(vis):tabReadTopic())}
 function tabReadTopic(){const P=target;let h=`<p class="sub">One overview (usually a multi-view book) and a book per option for each topic. Tags show ${esc(P.name)}'s decision, "also holds" and considered options. <label style="margin-left:8px"><input type="checkbox" id="readmine"${readMine?' checked':''}> Only show the options ${esc(P.name)} didn't choose</label></p><p class="sub" style="font-size:12px">Each book links to <b>Koorong (AU)</b> where Koorong stocks it, otherwise to a <b>Christianbook (US)</b> search. <b>Free</b> links go to legal, free-to-read copies (author/publisher downloads or public-domain texts) where one exists.</p><div class="rl">`;
   TOPICS.forEach((T,i)=>{const R=READ[i],c=choice(P,i),al=alsoOf(P,i);
-    h+=`<div class="rcard"><div class="rt">${esc(T.name)}</div><div class="rov">📚 Overview: ${bookLine(R.ov)}</div>`+T.opts.map((o,k)=>{if(readMine&&k===c)return "";const tag=c==null?"":k===c?'<span class="rtag dec">Your view</span>':al.includes(k)?'<span class="rtag also">Also holds</span>':'<span class="rtag con">Considered</span>';
+    h+=`<div class="rcard" id="rt-${i}"><div class="rt" style="display:flex;align-items:center">${esc(T.name)}<button class="lnk" data-goto="topic:${i}" style="margin-left:auto">Topic page →</button></div><div class="rov">📚 Overview: ${bookLine(R.ov)}</div>`+T.opts.map((o,k)=>{if(readMine&&k===c)return "";const tag=c==null?"":k===c?'<span class="rtag dec">Your view</span>':al.includes(k)?'<span class="rtag also">Also holds</span>':'<span class="rtag con">Considered</span>';
       return `<div class="ro"><b>${esc(o.n)}</b> ${tag}<div>${R.o[k]?bookLine(R.o[k]):"—"}</div></div>`}).join("")+`</div>`});
   return h+`</div>`}
 function tabLabels(vis){
@@ -977,6 +1023,205 @@ const BIO={
  "Paul David Tripp":{life:"b. 1950",era:"20th–21st c.",known:"Pastor, counsellor and author; New Morning Mercies; Paul Tripp Ministries.",contro:[["Resigned from Mars Hill Church's accountability board in 2014, calling it the 'most abusive' ministry culture he'd seen.","https://mycharisma.com/news/mars-hill-most-abusive-coercive-ministry-culture-i-ve-ever-been-involved-with-says-paul-tripp/"]]},
  "Dane Ortlund":{life:"active 21st c.",era:"21st c.",known:"Pastor in Illinois; Gentle and Lowly (2020); Crossway author.",contro:[]}
 };
+// ---- Topic pages: overview, debates, and for each option the verses used for / against it and who typically holds it ----
+// General reference summaries (standard proof texts and denominational positions). Not yet individually source-checked.
+const TINFO=[
+ {about:"Revelation 20:1–6 describes Satan bound and the saints reigning with Christ for 1,000 years. The views differ on when that reign happens and how literally to read it.",
+  contro:["The early church had many 'chiliasts' (Papias, Justin Martyr, Irenaeus); Augustine's non-literal reading became the majority view from the 5th century.",
+   "Dispensational premillennialism (J.N. Darby, then the Scofield Reference Bible, 1909) spread widely in 20th-century evangelicalism; date-setting books (e.g. '88 Reasons Why the Rapture Will Be in 1988') drew criticism.",
+   "Postmillennial optimism fuelled 19th-century revival and reform but faded after the World Wars; its revival among Christian Reconstructionists (Rushdoony, Bahnsen) remains controversial."],
+  o:[{for:["Rev 20:1-6","Isa 65:20","Zech 14:4-9","Acts 1:6-7","1 Cor 15:23-24"],against:["John 5:28-29","2 Pet 3:10-13","Matt 13:30","2 Thess 1:7-10"],
+      who:"Dispensational churches, Calvary Chapel, Plymouth Brethren, many Baptist and Pentecostal churches (e.g. Assemblies of God), Dallas Theological Seminary; historic premillennialism among some Reformed Baptists and Presbyterians."},
+     {for:["Matt 12:29","Rev 20:1-6","John 5:24-29","Eph 2:6","Col 1:13","2 Pet 3:10-13"],against:["Rev 20:4-5","Isa 11:6-9","Isa 65:20"],
+      who:"Roman Catholic, Eastern Orthodox, Lutheran, Anglican, most Presbyterian and Reformed churches, Churches of Christ."},
+     {for:["Ps 2:8","Ps 110:1","Isa 2:2-4","Matt 13:31-33","Matt 28:18-20","1 Cor 15:25"],against:["Matt 24:12","Luke 18:8","2 Tim 3:1-5","2 Tim 3:13"],
+      who:"Puritans and Jonathan Edwards historically, Old Princeton (Hodge, Warfield); today some Presbyterian and Reformed churches, including Reconstructionist circles."}]},
+ {about:"1 Thessalonians 4:16–17 says living believers will be 'caught up' to meet the Lord. The debate is about when this happens in relation to a final period of tribulation.",
+  contro:["The pre-tribulation rapture is usually traced to J.N. Darby in the 1830s; critics call it a novelty, and claims that it came from Margaret MacDonald's 1830 vision are disputed.",
+   "The Left Behind novels (1995–2007) made pre-trib imagery mainstream; critics say it encourages escapism and speculation.",
+   "Repeated date-setting (e.g. 1988, 2011) has been widely criticised."],
+  o:[{for:["1 Thess 1:10","1 Thess 5:9","Rev 3:10","John 14:1-3","1 Cor 15:51-52","Titus 2:13"],against:["Matt 24:29-31","2 Thess 2:1-3","Matt 13:30","John 17:15"],
+      who:"Dispensational churches, Calvary Chapel, Plymouth Brethren, many Independent Baptist and Pentecostal churches; Dallas Theological Seminary, Moody Bible Institute."},
+     {for:["Matt 24:21-31","Rev 6:12-17","1 Thess 5:9","Dan 7:25","Rev 11:11-12"],against:["Rev 3:10","Matt 24:29"],
+      who:"No major denomination; held by some independent teachers (Marvin Rosenthal and Robert Van Kampen for pre-wrath; Gleason Archer for mid-trib)."},
+     {for:["Matt 24:29-31","2 Thess 2:1-8","1 Cor 15:52","Rev 20:4-5","1 Thess 4:17"],against:["1 Thess 5:9","Rev 3:10"],
+      who:"Historic premillennialists (George Eldon Ladd, Robert Gundry); also every amillennial and postmillennial church, which expects one return: Catholic, Orthodox, Lutheran, Reformed, Anglican."}]},
+ {about:"How much of Revelation is about the future, about the first century, or about timeless spiritual realities. (A fourth approach, historicism, reads it as church history; it was common among the Reformers.)",
+  contro:["Preterism depends heavily on dating Revelation before AD 70; most scholars follow Irenaeus' later date (c. AD 95).",
+   "'Full preterism', which says the Second Coming and resurrection already happened in AD 70, is rejected as heresy by nearly all churches; partial preterism is accepted as orthodox.",
+   "'Newspaper exegesis' — matching Revelation to current events — has a long record of failed predictions."],
+  o:[{for:["Rev 1:19","Rev 4:1","Rev 19:11-21","Dan 9:27","Matt 24:21"],against:["Rev 1:1","Rev 1:3","Rev 22:10","Matt 24:34"],
+      who:"Dispensational and most premillennial evangelicals: Calvary Chapel, Brethren, many Baptist and Pentecostal churches."},
+     {for:["Matt 24:34","Matt 16:28","Rev 1:1","Rev 1:3","Rev 22:10","Luke 21:20-24"],against:["Rev 20:11-15","Acts 1:11","2 Pet 3:10-13"],
+      who:"Some Presbyterian and Reformed teachers (R.C. Sproul, Kenneth Gentry, Gary DeMar), many postmillennialists; elements appear in Catholic and Orthodox commentary."},
+     {for:["Rev 1:20","Rev 5:6","Rev 13:1-2","Rev 17:9","Dan 7:17"],against:["Rev 1:19","Rev 1:1","Rev 19:11-16"],
+      who:"Common among amillennial and Reformed scholars (often mixed with other approaches, e.g. William Hendriksen, G.K. Beale), and in Anglican, Lutheran and Catholic scholarship."}]},
+ {about:"Whether God's promises to ethnic Israel will still be fulfilled to Israel as a distinct people, or are fulfilled in Christ and shared by one people of Jews and Gentiles.",
+  contro:["Covenant views are often labelled 'replacement theology' or 'supersessionism'; many who hold them reject those labels.",
+   "Christian Zionism and support for the modern State of Israel are closely tied to dispensational views and are politically charged.",
+   "'Dual covenant' theology (Jews saved apart from Christ) is rejected by most evangelicals of every view.",
+   "What Paul means by 'all Israel will be saved' (Romans 11:26) is disputed."],
+  o:[{for:["Gen 12:1-3","Gen 17:7-8","Jer 31:35-37","Rom 11:25-29","Acts 1:6","Ezek 37:21-28"],against:["Gal 3:16","Gal 3:29","Eph 2:14-16","Rom 2:28-29","Gal 6:16"],
+      who:"Classic dispensational churches: Plymouth Brethren, Calvary Chapel, many Independent Baptist and Bible churches; the Scofield Bible tradition; Christian Zionist ministries."},
+     {for:["Rom 11:25-29","Eph 2:11-22","Acts 15:14-17","Rom 9:4-5","Luke 1:32-33"],against:["Gal 3:28-29","Heb 8:13","Gen 17:8"],
+      who:"Much of Dallas Theological Seminary and Talbot today (Darrell Bock, Craig Blaising, Robert Saucy); many Evangelical Free and Bible churches."},
+     {for:["Gal 3:7","Gal 3:29","Gal 6:16","Eph 2:11-22","Rom 9:6-8","1 Pet 2:9-10","Heb 8:8-13"],against:["Rom 11:1-2","Rom 11:25-29","Jer 31:35-37","Acts 1:6-7"],
+      who:"Presbyterian and Reformed, Lutheran, Anglican, Reformed Baptist (1689 Confession), Roman Catholic and Orthodox churches."}]},
+ {about:"Daniel 9:24–27 speaks of 'seventy weeks' (sevens of years) until everlasting righteousness is brought in. The question is whether the last 'week' followed straight on, or is separated by a gap and still future.",
+  contro:["Whether 'he' who makes a strong covenant (9:27) is the Messiah or a future ruler.",
+   "Which decree starts the count (538, 458 or 445 BC); Sir Robert Anderson's 'The Coming Prince' (1881) made precise date calculations popular.",
+   "The 'gap' between the 69th and 70th week is central to dispensational timelines and rejected by critics as unwarranted."],
+  o:[{for:["Dan 9:26-27","Matt 24:15","2 Thess 2:3-4","Rev 11:2-3","Rev 13:5"],against:["Dan 9:24","Heb 9:26","Heb 10:18","Luke 21:20-24"],
+      who:"Dispensational and most futurist premillennial teachers: Calvary Chapel, Brethren, Dallas Theological Seminary."},
+     {for:["Dan 9:24","Dan 9:27","Matt 27:51","Heb 10:12-18","Gal 4:4","Luke 21:20-24"],against:["Matt 24:15","Dan 9:26","Rev 13:5"],
+      who:"Presbyterian and Reformed (E.J. Young), many amillennial and postmillennial writers (Philip Mauro), traditional Catholic and Orthodox readings."}]},
+ {about:"The word 'antichrist' appears only in John's letters, but it is usually linked with the 'man of lawlessness' (2 Thessalonians 2), the 'little horn' (Daniel 7) and the 'beast' (Revelation 13).",
+  contro:["The Reformers and the original Westminster Confession (25.6) named the Pope as Antichrist; several Presbyterian churches later removed that line.",
+   "Naming modern leaders as the Antichrist has a long history of embarrassment.",
+   "Readings of 666 (Rev 13:18) as Nero by number values (gematria) are debated."],
+  o:[{for:["2 Thess 2:3-4","2 Thess 2:8","Dan 7:24-25","Dan 11:36-45","Rev 13:1-8","Rev 19:20"],against:["1 John 2:18","1 John 4:3","2 John 7"],
+      who:"Dispensational and most futurist evangelicals: Calvary Chapel, many Baptist and Pentecostal churches. The Catholic Catechism (675) also expects a final deception."},
+     {for:["Rev 13:18","Rev 17:9-10","2 Thess 2:4","Dan 11:31"],against:["2 Thess 2:8","Rev 19:20"],
+      who:"Preterists (Nero or a first-century figure: Gentry, DeMar); historicists (the papacy: Luther, Calvin, the original Westminster Confession; Seventh-day Adventists)."},
+     {for:["1 John 2:18","1 John 2:22","1 John 4:3","2 John 7","Eph 6:12"],against:["2 Thess 2:3-4","2 Thess 2:8","Rev 19:20"],
+      who:"Idealist and many amillennial writers, mainline scholarship; often combined with expecting a final individual (Hendriksen, Riddlebarger)."}]},
+ {about:"What finally happens to those who reject Christ: unending conscious punishment, being destroyed, or eventually being reconciled to God.",
+  contro:["John Stott's tentative case for annihilationism (1988) opened the debate among evangelicals; a UK Evangelical Alliance report (2000) called it a significant minority view.",
+   "Rob Bell's 'Love Wins' (2011) sparked a public controversy over universalism.",
+   "Universal restoration is associated with Origen; forms of his teaching were condemned in the 6th century."],
+  o:[{for:["Matt 25:46","Mark 9:43-48","Rev 14:10-11","Rev 20:10","Rev 20:15","2 Thess 1:9","Luke 16:19-31","Dan 12:2"],against:["Matt 10:28","John 3:16","Rom 6:23","2 Pet 2:6","1 Cor 15:28"],
+      who:"The historic position of Catholic, Orthodox, Lutheran, Reformed, Baptist and Pentecostal churches and most evangelical statements of faith."},
+     {for:["Matt 10:28","John 3:16","Rom 6:23","2 Thess 1:9","Mal 4:1-3","2 Pet 2:6","Jude 7","1 Tim 6:16"],against:["Matt 25:46","Rev 14:11","Rev 20:10","Mark 9:48"],
+      who:"Seventh-day Adventists, Advent Christian Church, Christadelphians; a minority of evangelicals (John Stott, Edward Fudge, John Wenham, the Rethinking Hell project)."},
+     {for:["1 Cor 15:22","1 Cor 15:28","Col 1:19-20","Rom 5:18","Phil 2:10-11","1 Tim 2:4","1 Tim 4:10"],against:["Matt 25:46","Matt 7:13-14","John 3:36","2 Thess 1:9","Rev 20:15","Heb 9:27"],
+      who:"Historically the Universalist Church of America (now Unitarian Universalist); some Orthodox voices (David Bentley Hart); Karl Barth (hopeful); Robin Parry ('The Evangelical Universalist')."}]},
+ {about:"Whether believers who die are consciously with Christ while they wait for the resurrection of the body, or 'sleep' unconsciously until then.",
+  contro:["Calvin's first theological work, 'Psychopannychia' (1542), argued against soul sleep.",
+   "Catholic purgatory is a separate debate about the same period; Protestants reject it.",
+   "Some modern scholars question the body–soul distinction that the conscious view assumes."],
+  o:[{for:["Phil 1:21-23","2 Cor 5:6-8","Luke 23:43","Luke 16:19-31","Rev 6:9-11","Matt 17:3"],against:["1 Thess 4:13-15","Eccl 9:5","Eccl 9:10","Ps 146:4","John 11:11-14"],
+      who:"Nearly all churches: Catholic, Orthodox, Lutheran, Reformed (Westminster 32), Anglican, Baptist, Pentecostal."},
+     {for:["Eccl 9:5","Eccl 9:10","Ps 6:5","Ps 115:17","Ps 146:4","John 11:11-14","1 Thess 4:13-16","Dan 12:2"],against:["Phil 1:23","2 Cor 5:8","Luke 23:43","Rev 6:9-10"],
+      who:"Seventh-day Adventists, Christadelphians, Advent Christian Church; also Jehovah's Witnesses (outside historic Christianity)."}]},
+ {about:"Whether eternity is lived on a renewed, physical creation, on a brand-new one after this one is destroyed, or in a non-physical heaven.",
+  contro:["A text difference in 2 Peter 3:10 ('burned up' or 'laid bare / exposed') changes how strongly it supports destruction.",
+   "N.T. Wright and others criticise popular 'going to heaven when you die' teaching as missing the resurrection and new earth.",
+   "The view taken affects how Christians think about creation care."],
+  o:[{for:["Rom 8:19-23","Acts 3:21","Matt 19:28","Rev 21:1-5","Isa 65:17","Col 1:20"],against:["2 Pet 3:10-12","Rev 21:1","Rev 20:11","Isa 51:6"],
+      who:"Reformed tradition (Kuyper, Bavinck), Anglican, Catholic and Orthodox; many modern evangelicals (N.T. Wright, Randy Alcorn, J. Richard Middleton)."},
+     {for:["2 Pet 3:10-13","Rev 21:1","Rev 20:11","Isa 51:6","Heb 1:10-12","Matt 24:35"],against:["Rom 8:21","Acts 3:21","Rev 21:5"],
+      who:"Many dispensational writers (John Walvoord), John MacArthur, some older Lutheran theologians; common in popular evangelical teaching."},
+     {for:["John 14:2","Phil 3:20","Col 3:1-2","1 Pet 1:4","Heb 11:16","2 Cor 5:1"],against:["Rev 21:1-3","Rom 8:21","Matt 5:5","1 Cor 15:42-44"],
+      who:"Popular piety across traditions; emphasis on the beatific vision in medieval and some Catholic thought."}]},
+ {about:"How God's choosing (election) relates to human choice in salvation.",
+  contro:["The Synod of Dort (1618–19) condemned the Remonstrants (Arminians) and set out the 'five points' of Calvinism.",
+   "The Calvinism–Arminianism debate continues within the Southern Baptist Convention (e.g. the 2012 'Traditional Statement').",
+   "The 'Young, Restless, Reformed' movement (2000s) revived Calvinism among younger evangelicals.",
+   "Open theism, which goes beyond Arminianism, was challenged within the Evangelical Theological Society (2003)."],
+  o:[{for:["Eph 1:4-5","Eph 1:11","Rom 8:29-30","Rom 9:11-23","John 6:37","John 6:44","Acts 13:48","John 10:26-29"],against:["1 Tim 2:4","2 Pet 3:9","John 3:16","Matt 23:37","Ezek 18:23"],
+      who:"Presbyterian and Reformed churches, Reformed Baptists (1689 Confession), many Southern Baptists, Acts 29, Sovereign Grace Churches."},
+     {for:["John 3:16","1 Tim 2:4","2 Pet 3:9","Matt 23:37","Acts 7:51","1 John 2:2","Titus 2:11"],against:["Rom 9:16","John 6:44","Acts 13:48","Eph 1:11","Eph 2:8-9"],
+      who:"Methodist and Wesleyan churches, Church of the Nazarene, Free Will Baptists, Salvation Army, Assemblies of God and most Pentecostals, many Baptist and Calvary Chapel churches."},
+     {for:["1 Sam 23:9-13","Matt 11:21-23","Acts 2:23","Acts 4:27-28","Acts 17:26-27","1 Cor 2:8"],against:["Rom 9:16-21","Eph 1:11"],
+      who:"No denomination by name. From the Jesuit Luis de Molina (16th century); today William Lane Craig, Kenneth Keathley and many apologists, including some Southern Baptists."}]},
+ {about:"Whether the miraculous gifts in the New Testament — tongues, prophecy, healing — continue today or ended with the apostles.",
+  contro:["The Azusa Street revival (1906) began modern Pentecostalism; the charismatic renewal (1960s) brought it into older churches.",
+   "John MacArthur's 'Strange Fire' conference and book (2013) sharply criticised the charismatic movement.",
+   "Modern 'apostles and prophets' (the New Apostolic Reformation), failed public prophecies, and scandals involving faith healers."],
+  o:[{for:["1 Cor 12:7-11","1 Cor 14:1","1 Cor 14:39","Acts 2:17-18","Acts 2:39","Joel 2:28","Eph 4:11-13"],against:["1 Cor 13:8-10","Eph 2:20","Heb 2:3-4","2 Cor 12:12"],
+      who:"Pentecostal churches (Assemblies of God, Foursquare, Church of God), charismatic movements (Vineyard, Hillsong, Newfrontiers), Sovereign Grace, many charismatic Anglicans."},
+     {for:["1 Thess 5:19-21","1 Cor 14:39-40","1 John 4:1","1 Cor 12:11"],against:["1 Cor 14:1","1 Cor 13:8-10"],
+      who:"Calvary Chapel, Christian and Missionary Alliance ('seek not, forbid not'), Evangelical Free Church, many Baptist and Bible churches."},
+     {for:["1 Cor 13:8-10","Eph 2:20","Heb 2:3-4","2 Cor 12:12","Heb 1:1-2","Jude 3"],against:["1 Cor 14:39","Acts 2:39","1 Cor 1:7","1 Cor 13:12"],
+      who:"Many Presbyterian and Reformed churches, Reformed Baptists, many Independent Baptist churches, Grace Community Church (MacArthur), Churches of Christ, many Brethren, confessional Lutherans."}]},
+ {about:"Whether baptism is only for those who personally profess faith, or also for the children of believers.",
+  contro:["Anabaptists were persecuted in the 16th century for 'rebaptising' adults.",
+   "Whether baptism itself regenerates (Catholic, Lutheran) or signifies faith (Baptist); whether it is required for salvation (Churches of Christ).",
+   "Mode: immersion versus pouring or sprinkling.",
+   "Whether churches should accept members baptised as infants (e.g. Bethlehem Baptist's 2005 debate)."],
+  o:[{for:["Matt 28:19","Acts 2:38","Acts 2:41","Acts 8:12","Acts 8:36-38","Rom 6:3-4","Col 2:12"],against:["Acts 2:39","Acts 16:15","Acts 16:33","1 Cor 1:16","Col 2:11-12","1 Cor 7:14"],
+      who:"Baptists, Pentecostals, Plymouth Brethren, Calvary Chapel, Churches of Christ, Mennonites and other Anabaptists, most non-denominational evangelical churches."},
+     {for:["Gen 17:7-12","Col 2:11-12","Acts 2:39","Acts 16:15","Acts 16:33","1 Cor 1:16","1 Cor 7:14","Mark 10:14"],against:["Acts 2:41","Acts 8:12","Mark 16:16","Rom 6:3-4","Col 2:12"],
+      who:"Roman Catholic, Eastern Orthodox, Lutheran, Anglican, Presbyterian and Reformed, Methodist churches."}]},
+ {about:"Whether people who never hear the gospel can be saved, and what that means for missions.",
+  contro:["Vatican II (Lumen Gentium 16) and Karl Rahner's idea of 'anonymous Christians' opened wider hope in Catholic teaching.",
+   "Clark Pinnock's 'A Wideness in God's Mercy' (1992) made inclusivism a live evangelical debate.",
+   "Critics argue that wider hope weakens the urgency of missions; supporters deny this."],
+  o:[{for:["John 14:6","Acts 4:12","Rom 10:13-17","1 Tim 2:5","John 3:18","1 John 5:12"],against:["Rom 2:14-16","Acts 10:34-35","Acts 17:27","1 Tim 4:10"],
+      who:"Historic evangelical and Reformed confessions (Westminster 10.4), Southern Baptists (Baptist Faith & Message), the Lausanne Covenant (1974), most Baptist and Pentecostal churches."},
+     {for:["Acts 10:34-35","Acts 14:16-17","Acts 17:26-27","Rom 2:14-16","1 Tim 4:10","John 1:9"],against:["Acts 4:12","Rom 10:14-17","John 14:6","Acts 10:43"],
+      who:"Roman Catholic teaching since Vatican II, many mainline Protestants, some evangelicals (Clark Pinnock, John Sanders)."},
+     {for:["Gen 18:25","Deut 29:29","Rom 11:33","Luke 12:47-48","Acts 4:12"],against:["Rom 10:14-17","Rom 1:18-20"],
+      who:"No denomination; individuals such as John Stott ('Essentials', 1988)."}]},
+ {about:"Whether a person who truly believes can lose their salvation.",
+  contro:["The 'Lordship salvation' debate: John MacArthur's 'The Gospel According to Jesus' (1988) against Free Grace teachers (Zane Hodges, Charles Ryrie).",
+   "How to read the warning passages in Hebrews (6:4–6; 10:26–29).",
+   "The idea of a 'carnal Christian' who believes but never changes."],
+  o:[{for:["John 10:27-29","John 5:24","Rom 8:38-39","Eph 1:13-14","Eph 4:30","John 6:37-40","1 John 5:13"],against:["Heb 6:4-6","Heb 10:26-29","Matt 7:21-23","Gal 5:4","Col 1:23"],
+      who:"Many Southern and Independent Baptists, Free Grace Alliance, many Brethren and Bible churches."},
+     {for:["Phil 1:6","John 10:27-29","Rom 8:29-30","1 John 2:19","Heb 3:14","Jude 24","1 Pet 1:5"],against:["Heb 6:4-6","Heb 10:26-29","2 Pet 2:20-22","1 Cor 9:27"],
+      who:"Presbyterian and Reformed churches (Westminster 17), Reformed Baptists, Sovereign Grace, many Southern Baptists."},
+     {for:["Heb 6:4-6","Heb 10:26-29","John 15:1-6","Gal 5:4","Col 1:22-23","Rom 11:22","1 Cor 15:2"],against:["John 10:28-29","Rom 8:38-39","Phil 1:6","1 John 2:19"],
+      who:"Methodist and Wesleyan churches, Nazarene, Free Will Baptists, Assemblies of God and many Pentecostals, Lutheran, Catholic, Orthodox, Churches of Christ."}]},
+ {about:"How to read Genesis 1–2 alongside science: six recent days, long ages, or God creating through evolution.",
+  contro:["The Scopes trial (1925) set the tone for public conflict.",
+   "Whitcomb and Morris' 'The Genesis Flood' (1961) launched the modern young-earth movement; Ken Ham debated Bill Nye in 2014.",
+   "BioLogos (founded 2007 by Francis Collins) promotes evolutionary creation; whether Adam was a historical individual is a live debate.",
+   "Bruce Waltke left Reformed Theological Seminary in 2010 after comments supporting evolution."],
+  o:[{for:["Gen 1:5","Exod 20:11","Mark 10:6","Gen 5:3-32","Rom 5:12","Gen 7:19-20"],against:["Gen 2:4","Ps 90:4","2 Pet 3:8","Gen 1:14-19","Heb 4:3-11"],
+      who:"Answers in Genesis, Institute for Creation Research, Creation Ministries International, many Independent Baptist churches, Seventh-day Adventists, Lutheran Church–Missouri Synod, Grace Community Church."},
+     {for:["Gen 2:4","Ps 90:2-4","2 Pet 3:8","Gen 1:14-19","Heb 4:3-11","Job 38:4-7","Ps 19:1-4"],against:["Exod 20:11","Mark 10:6","Rom 5:12","Rom 8:20-22"],
+      who:"Reasons to Believe (Hugh Ross), Old Princeton (Hodge, Warfield), many Presbyterian Church in America teachers, many evangelical seminaries."},
+     {for:["Ps 19:1","Rom 1:20","Job 38:4-7","Col 1:16-17","Ps 139:13"],against:["Gen 2:7","Gen 2:21-22","Rom 5:12-19","1 Cor 15:21-22","Acts 17:26"],
+      who:"BioLogos (Francis Collins); Roman Catholic teaching allows it (with God creating each soul); Church of England and most mainline churches."}]},
+ {about:"Whether women can serve as pastors and elders, or whether those roles are reserved for qualified men.",
+  contro:["The Danvers Statement (CBMW, 1987) and 'Men, Women and Biblical Equality' (CBE, 1989) set out the two main positions.",
+   "The Southern Baptist Convention removed Saddleback Church in 2023 over women pastors.",
+   "The Church of England ordained women priests (1994) and bishops (2014).",
+   "How to translate Junia 'among the apostles' (Rom 16:7); the 2016 debate over the eternal subordination of the Son."],
+  o:[{for:["1 Tim 2:11-14","1 Tim 3:1-7","Titus 1:5-9","1 Cor 11:3","1 Cor 14:33-35","Eph 5:22-33"],against:["Gal 3:28","Acts 2:17-18","Rom 16:1-7","Judg 4:4-5","Acts 18:26"],
+      who:"Southern Baptists (Baptist Faith & Message 2000), Presbyterian Church in America, OPC, Sydney Anglicans, Lutheran Church–Missouri Synod, many Brethren; Catholic and Orthodox (male priesthood, on different grounds)."},
+     {for:["1 Tim 3:1-7","Acts 18:26","Rom 16:1-7","1 Cor 11:5","Acts 2:17-18"],against:["1 Tim 2:11-12","1 Cor 14:34","Gal 3:28"],
+      who:"Some non-denominational, Evangelical Free and Southern Baptist congregations; Sam Storms."},
+     {for:["Gal 3:28","Gen 1:26-28","Acts 2:17-18","Rom 16:1-7","Judg 4:4-5","Acts 21:9","Eph 5:21"],against:["1 Tim 2:11-14","1 Cor 14:33-35","1 Tim 3:2","Titus 1:6"],
+      who:"Assemblies of God, Foursquare, Salvation Army, Methodist and Wesleyan churches, Nazarene, Church of England and most mainline churches, Christians for Biblical Equality."}]},
+ {about:"What the bread and wine are, and how Christ is present when the church shares them.",
+  contro:["The Marburg Colloquy (1529): Luther and Zwingli could not agree on 'This is my body', splitting the Reformation.",
+   "The Council of Trent defined transubstantiation and the Mass as a sacrifice; Protestants rejected both.",
+   "Open or closed communion, how often to share it, and whether children may take part."],
+  o:[{for:["Luke 22:19","1 Cor 11:24-26","John 6:63"],against:["Matt 26:26","John 6:53-56","1 Cor 10:16","1 Cor 11:27-29"],
+      who:"Most Baptists, Plymouth Brethren (weekly breaking of bread), Churches of Christ, Calvary Chapel, many Pentecostals, Anabaptists."},
+     {for:["1 Cor 10:16-17","John 6:35","John 6:63","1 Cor 11:29"],against:["Matt 26:26","Luke 22:19"],
+      who:"Presbyterian and Reformed (Calvin; Westminster 29.7), Anglican (Article 28), Methodist, many Reformed Baptists."},
+     {for:["Matt 26:26-28","John 6:51-58","1 Cor 10:16","1 Cor 11:27-29"],against:["John 6:63","Luke 22:19","Heb 10:10-14"],
+      who:"Roman Catholic (transubstantiation), Eastern Orthodox, Lutheran (sacramental union), Anglo-Catholic Anglicans."}]}
+];
+const BIBLE_VERSION="ESV";
+const verseLink=r=>`<a class="vref" href="https://www.biblegateway.com/passage/?search=${encodeURIComponent(r)}&version=${BIBLE_VERSION}" target="_blank" rel="noopener">${esc(r.replace("-","–"))}</a>`;
+// "Often held with": among everyone in the app who holds option k on topic i, which other choices do most of them share?
+function heldWith(i,k){const H=PEOPLE.filter(P=>choice(P,i)===k);if(H.length<2)return [];
+  const out=[];TOPICS.forEach((T,j)=>{if(j===i)return;const ans=H.filter(P=>choice(P,j)!=null);if(ans.length<2)return;
+    T.opts.forEach((o,m)=>{const n=ans.filter(P=>choice(P,j)===m).length,f=n/ans.length;if(f>=0.75&&n>=2)out.push({j,m,f,n,of:ans.length})})});
+  return out.sort((a,b)=>b.f-a.f||b.n-a.n).slice(0,6)}
+function tabTopics(vis){const P=target;
+  let h=`<p class="sub">A page for each topic: what it's about, the main debates, and for each view the verses its supporters use, the verses critics raise, which churches typically hold it, who in this app holds it, and which other views usually go with it. Tags show ${esc(P.name)}'s view. Verse links open on Bible Gateway (${BIBLE_VERSION}).</p><p class="sub" style="font-size:12px">Summaries are general reference and haven't yet been individually checked against sources. "Often held with" is worked out from the people in this app, so it changes as people are added.</p>`;
+  let desk=`<div class="rl tdesk">`,mob=`<div class="bio-mob">`;
+  TOPICS.forEach((T,i)=>{const I=TINFO[i]||{o:[]},c=choice(P,i),al=alsoOf(P,i);
+    const opts=T.opts.map((o,k)=>{const X=I.o[k]||{},tag=c==null?"":k===c?`<span class="rtag dec">${esc(P.name)}'s view</span>`:al.includes(k)?'<span class="rtag also">Also holds</span>':"";
+      const holders=PEOPLE.filter(Q=>choice(Q,i)===k),hw=heldWith(i,k);
+      return `<div class="topt"><div class="toh"><b>${esc(o.n)}</b> ${tag}</div><div class="tod">${esc(o.d)}</div>
+        <div class="trow"><span class="tl">Held by here (${holders.length})</span><div class="tdots">${holders.map(Q=>`<button class="tdot" data-goto="bio:${PEOPLE.indexOf(Q)}" title="${esc(Q.name)} — open bio">${dotH(Q,20)}</button>`).join("")||'<span class="tmut">no one yet</span>'}</div></div>
+        ${X.who?`<div class="trow"><span class="tl">Churches &amp; traditions</span><div>${esc(X.who)}</div></div>`:""}
+        ${X.for?`<div class="trow vfor"><span class="tl">Verses used to support it</span><div class="vlist">${X.for.map(verseLink).join("")}</div></div>`:""}
+        ${X.against?`<div class="trow vag"><span class="tl">Verses critics raise</span><div class="vlist">${X.against.map(verseLink).join("")}</div></div>`:""}
+        <div class="trow"><span class="tl">Often held with</span><div>${hw.map(x=>`<span class="tag" title="${x.n} of ${x.of} who hold this and answered ${esc(TOPICS[x.j].name)}">${esc(TSHORT[x.j])}: ${esc(TOPICS[x.j].opts[x.m].s)} · ${Math.round(100*x.f)}%</span>`).join("")||'<span class="tmut">not enough people yet</span>'}</div></div></div>`}).join("");
+    const body=`${I.about?`<div class="ro"><b>What it's about</b><div>${esc(I.about)}</div></div>`:""}${opts}
+      ${(I.contro&&I.contro.length)?`<div class="ro bcon"><b>Debates &amp; controversies</b>${I.contro.map(t=>`<div>• ${esc(t)}</div>`).join("")}</div>`:""}
+      <div class="ro bbtns"><button class="lnk" data-goto="tread:${i}">Reading list →</button></div>`;
+    const yours=c==null?"":` · ${esc(P.name)}: ${esc(T.opts[c].s)}`;
+    desk+=`<div class="rcard" id="top-${i}"><div class="rt"><span class="tnum">${i+1}</span>${esc(T.name)}</div><div class="rov">${esc(T.q)}</div>${body}</div>`;
+    mob+=`<details class="bpill" id="topm-${i}"><summary><span class="bav tnumbig">${i+1}</span><span class="bpm"><span class="bpn">${esc(T.name)}</span><span class="bps">${esc(T.opts.map(o=>o.s).join(" · "))}${yours}</span></span><span class="bchev">›</span></summary><div class="bbody"><div class="rov">${esc(T.q)}</div>${body}</div></details>`});
+  return h+desk+`</div>`+mob+`</div>`}
 function tabBios(vis){
   let h=`<p class="sub">A short profile for each person shown. Beliefs and tags come from their placements in this app; hover the heat map for sources. Controversies are listed only where widely reported.</p>`;
   let desk=`<div class="rl bio-desk">`,mob=`<div class="bio-mob">`;
@@ -998,9 +1243,9 @@ function tabBios(vis){
   return h+desk+`</div>`+mob+`</div>`}
 function renderCompare(){const vis=visible();
   let h=`<div class="cmp"><h2>Stage 3 — Where views overlap</h2><p class="sub">Choose a target person, then show or hide others. Colours group people by end-times family; initials identify them. The target always stays visible.</p>${chips()}`;
-  h+=`<div class="tabs">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`;
-  h+=({cwheel:tabCmpWheel,tend:tabTend,heat:tabHeat,grid:tabGrid,scatter:tabScatter,tree:tabTree,combo:tabCombos,read:tabRead,labels:tabLabels,bios:tabBios})[ctab](vis);
-  if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{let el=document.getElementById(id);if(el&&!el.offsetParent&&id.startsWith("bio-")){el=document.getElementById("biom-"+id.slice(4));if(el)el.open=true}if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
+  h+=`<div class="tabs">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["topics","Topics"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`;
+  h+=({cwheel:tabCmpWheel,tend:tabTend,heat:tabHeat,grid:tabGrid,scatter:tabScatter,tree:tabTree,combo:tabCombos,read:tabRead,labels:tabLabels,topics:tabTopics,bios:tabBios})[ctab](vis);
+  if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{let el=document.getElementById(id);if(el&&!el.offsetParent&&/^(bio|top)-/.test(id)){el=document.getElementById(id.replace("-","m-"));if(el)el.open=true}if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
   h+=`<div class="src">Theologian views are summarised from their own writings and statements where available — see the Labels & churches tab for source links, and hover cells for notes. "—" means a different view or no clear public position. Source dots show how many independent sources were found for a placement.</div></div>`;
   s.innerHTML=h}
 // ================= survey =================
@@ -1108,7 +1353,10 @@ s.addEventListener("click",e=>{
   if(e.target.matches("input,select"))return;
   const tb=e.target.closest("[data-tab]");if(tb){ctab=tb.dataset.tab;renderCompare();return}
   if(e.target.id==="cwswap"&&cwOther){const a=target;target=cwOther;cwOther=a;target.on=true;renderCompare();return}
-  const go=e.target.closest("[data-goto]");if(go){const [w,k]=go.dataset.goto.split(":");const P=PEOPLE[+k];P.on=true;
+  const go=e.target.closest("[data-goto]");if(go){const [w,k]=go.dataset.goto.split(":");
+    if(w==="topic"){ctab="topics";pendingScroll="top-"+k;renderCompare();return}
+    if(w==="tread"){ctab="read";readMode="topic";pendingScroll="rt-"+k;renderCompare();return}
+    const P=PEOPLE[+k];P.on=true;
     if(w==="read"){ctab="read";readMode="person";pendingScroll="rp-"+k}else if(w==="bio"){ctab="bios";pendingScroll="bio-"+k}else{ctab="cwheel";if(P!==target)cwOther=P}
     renderCompare();return}
   const cw=e.target.closest("[data-cw]");if(cw){cwMode=cw.dataset.cw;renderCompare();return}
@@ -1140,6 +1388,17 @@ function toast(msg){let el=document.getElementById("toast");if(!el){el=document.
 document.getElementById("savestat").addEventListener("click",e=>{if(e.target.id==="dlapp")downloadApp();if(e.target.id==="reconnect")reconnectFile()});
 s.addEventListener("submit",e=>{e.preventDefault();if(e.target.id==="svform")saveSurvey()});
 ownerSel();draw();setStatus();initRoles();
+// ---- light / dark (charcoal) switch ----
+const THEME_KEY="decisionwheel_theme",MODES=["auto","light","dark"],MODE_LABEL={auto:"◐ Auto",light:"☀ Light",dark:"☾ Dark"};
+function applyTheme(){const m=document.documentElement.getAttribute("data-mode")||"auto";
+  const dark=m==="dark"||(m==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);
+  document.documentElement.setAttribute("data-theme",dark?"dark":"light");
+  const b=document.getElementById("theme");b.textContent=MODE_LABEL[m];b.title="Colour mode: "+m+" (tap to change)";
+  const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=dark?"#2A2C30":"#0E7C86"}
+document.getElementById("theme").onclick=()=>{const m=document.documentElement.getAttribute("data-mode")||"auto";
+  const n=MODES[(MODES.indexOf(m)+1)%MODES.length];document.documentElement.setAttribute("data-mode",n);lsSet(THEME_KEY,n);applyTheme();toast("Colour mode: "+n)};
+try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyTheme)}catch(e){}
+applyTheme();
 // offline: once the app is opened from the website, it keeps working with no internet (phone or PC)
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 
