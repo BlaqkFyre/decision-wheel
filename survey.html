@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beliefs Survey</title>
+<style>
+body{margin:0;background:#fff;font-family:Helvetica,Arial,sans-serif;color:#1F2933;display:flex;flex-direction:column;align-items:center}
+.bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px 16px 4px}
+button{padding:9px 16px;font-size:15px;border:1px solid #0E7C86;border-radius:6px;background:#fff;color:#0E7C86;cursor:pointer}
+button.on,button.primary{background:#0E7C86;color:#fff}
+.hint{font-size:13px;color:#52606D;margin:2px 16px 0;text-align:center}
+#s{width:100%;max-width:1150px}#s svg{width:100%;height:auto;display:block}
+.topic{cursor:pointer}
+#tip{position:fixed;pointer-events:none;max-width:320px;background:#fff;border:1px solid #D9DEE3;border-radius:8px;box-shadow:0 6px 24px rgba(31,41,51,.15);padding:12px 14px;font-size:13px;line-height:1.4;display:none;z-index:10}
+#tip h4{margin:0 0 2px;font-size:15px}
+#tip .q{color:#52606D;margin:0 0 8px;font-style:italic}
+#tip .o{margin:6px 0 0;padding-left:16px;position:relative;color:#52606D}
+#tip .o:before{content:"";position:absolute;left:0;top:4px;width:8px;height:8px;border-radius:50%;border:2px solid #9AA3AD;box-sizing:border-box}
+#tip .o.dec{color:#1F2933}
+#tip .o.dec:before{background:#0E7C86;border-color:#0E7C86}
+#tip .o b{color:#1F2933}
+#tip .o.dec b,#tip .o.also b{color:#0E7C86}
+#tip .o.also:before{border-color:#0E7C86}
+.cmp{width:100%;max-width:1060px;padding:8px 16px 32px;box-sizing:border-box}
+.cmp h2{font-size:22px;margin:10px 0 2px}
+.cmp .sub{color:#52606D;font-size:14px;margin:0 0 14px}
+.people{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{display:flex;align-items:center;gap:6px;border:1.5px solid #D9DEE3;border-radius:999px;padding:4px 10px 4px 4px;cursor:pointer;background:#fff}
+.chip.active{border-color:#1F2933;box-shadow:0 0 0 2px #1F2933 inset}
+.chip.off{opacity:.4}
+.chip input[type=text]{border:0;font:600 14px Helvetica,Arial;width:80px;color:#1F2933;background:transparent}
+.chip input[type=checkbox]{margin:0 2px 0 4px;cursor:pointer}
+.dot{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:700 11px Helvetica,Arial;flex:none;box-shadow:0 0 0 2px #fff}
+.grid{display:grid;grid-template-columns:minmax(130px,1.1fr) repeat(3,minmax(0,1fr)) 92px;border-top:1px solid #E4E7EB}
+.grid>div{border-bottom:1px solid #E4E7EB;padding:8px 8px;min-height:44px;box-sizing:border-box}
+.gh{font-size:12px;color:#52606D;text-transform:uppercase;letter-spacing:.04em;align-self:end;border-bottom:1px solid #9AA3AD!important}
+.tn{font-weight:700;font-size:14px;display:flex;align-items:center}
+.cell{cursor:pointer;border-radius:4px;transition:background .15s}
+.cell:hover{outline:1.5px solid #9AA3AD;outline-offset:-3px}
+.cell .on{font-size:12.5px;font-weight:600;color:#1F2933;margin-bottom:5px}
+.cell .ds{display:flex;flex-wrap:wrap;gap:3px}
+.agree{font-size:12.5px;color:#52606D;display:flex;align-items:center}
+.agree b{color:#1F2933}
+.pair{margin-top:26px}
+.pair h3{font-size:16px;margin:0 0 2px}
+.pair table{border-collapse:separate;border-spacing:3px;margin-top:8px}
+.pair td,.pair th{width:64px;height:40px;text-align:center;font-size:13px;border-radius:4px}
+.pair th{font-weight:600;color:#1F2933}
+.blank{display:none}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 16px}
+.tabs button{padding:6px 14px;font-size:14px}
+.hm{border-collapse:separate;border-spacing:3px;font-size:12.5px;width:100%}
+.hm th{font-weight:600;text-align:left;padding:4px 6px;white-space:nowrap}
+.hm td{border-radius:4px;padding:8px 6px;text-align:center;font-weight:600;min-width:90px}
+.hm td.n{color:#9AA3AD;background:#F4F5F7;font-weight:400}
+.key{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:#52606D;margin:10px 0 0}
+.key span{display:inline-flex;align-items:center;gap:5px}
+.key i{width:14px;height:14px;border-radius:3px;display:inline-block}
+.lbl{border-collapse:collapse;width:100%;font-size:13.5px}
+.lbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#52606D;border-bottom:1px solid #9AA3AD;padding:8px}
+.lbl td{border-bottom:1px solid #E4E7EB;padding:10px 8px;vertical-align:top}
+.tag{display:inline-block;background:#EEF2F4;border-radius:999px;padding:2px 9px;margin:2px 3px 2px 0;font-size:12.5px}
+.src{font-size:12px;color:#52606D;margin-top:18px;line-height:1.5}
+.src a{color:#0E7C86}
+.selref{font:14px Helvetica,Arial;padding:4px 6px;margin-left:6px}
+.pbar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+button.mini{padding:5px 11px;font-size:13px}
+.fams{display:flex;flex-wrap:wrap;gap:10px 22px;margin-bottom:16px}
+.fh{font-size:12px;font-weight:700;color:#52606D;text-transform:uppercase;letter-spacing:.04em;margin:0 0 5px;display:flex;align-items:center;gap:6px}
+.fh i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.fam .people{margin:0;gap:6px}
+button.chip{font:600 13.5px Helvetica,Arial;color:#1F2933;padding:3px 10px 3px 3px;border:1.5px solid #D9DEE3}
+button.chip.off{opacity:.38}
+.hm th.ch{text-align:center;font-size:12px;white-space:normal;min-width:62px}
+.hm{table-layout:fixed}.hm td{min-width:0;font-size:11.5px;padding:7px 3px;overflow-wrap:anywhere;hyphens:auto}.hm th.ch{min-width:0;font-size:11.5px}.hm tr>th:first-child{width:140px}
+.vm{font-size:9px;margin-left:2px;letter-spacing:-1px;opacity:.85}
+.hmt{table-layout:auto;min-width:1480px}.hmt td{min-width:66px}.hmt th:first-child{width:170px;font-size:12.5px}.hmt td{font-size:11.5px;overflow-wrap:normal;hyphens:none}
+.new{font:600 9.5px Helvetica,Arial;background:#FFF4D6;color:#7A5A00;border-radius:4px;padding:1px 4px;margin-left:2px;text-transform:uppercase}
+.chin{font:13.5px Helvetica,Arial;border:1px solid #D9DEE3;border-radius:4px;padding:4px 6px;width:150px}
+
+.tbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:0 0 12px;font-size:14px}
+.qb{display:flex;gap:6px;flex-wrap:wrap}
+button.lnk{border:0;background:none;color:#0E7C86;font:600 11px Helvetica,Arial;padding:0 2px;margin-left:4px;cursor:pointer;text-decoration:underline;text-transform:none;letter-spacing:0}
+button.chip.tgt{border-color:#1F2933;box-shadow:0 0 0 1.5px #1F2933 inset}
+.new.usr{background:#E3F1F2;color:#0E5F66}
+.ch3{font-size:16px;margin:18px 0 6px}
+.clist{list-style:none;padding:0;margin:0}.clist li{padding:9px 0;border-bottom:1px solid #E4E7EB;font-size:14px}
+.cdet{font-size:12.5px;color:#52606D;margin-top:3px}
+.cbar{display:inline-block;width:90px;height:7px;background:#F1F3F5;border-radius:4px;margin-left:10px;vertical-align:middle;overflow:hidden}.cbar i{display:block;height:100%;background:#0E7C86}
+.rl{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.rcard{border:1px solid #E4E7EB;border-radius:8px;padding:12px 14px}
+.rt{font-weight:700;font-size:15px;margin-bottom:4px}.rov{font-size:12.5px;color:#52606D;margin-bottom:6px}
+.ro{font-size:13px;padding:6px 0;border-top:1px dashed #E4E7EB}.ro div{color:#52606D;margin-top:2px}
+.rtag{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:4px}.rtag.dec{background:#0E7C86;color:#fff}.rtag.also{background:#fff;color:#0E7C86;border:1.5px solid #0E7C86}.rtag.con{background:#EEF2F4;color:#52606D}.kbadge{font-size:10px;font-weight:700;background:#FFF4D6;color:#7A5A00;border-radius:4px;padding:1px 5px;margin-left:4px}.rtag.dif{background:#FBE3D7;color:#1F2933}
+.sv .svtop{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;font-size:14px}
+.svrow{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0;font-size:14px;align-items:center}
+.svq{border:1px solid #E4E7EB;border-radius:8px;margin:10px 0;padding:10px 14px}
+.svq legend{font-weight:700;font-size:15px;padding:0 4px}.svq legend span{font-weight:400;color:#52606D;font-style:italic;font-size:13px;margin-left:6px}
+.svopts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px}
+.svo{display:block;border:1px solid #E4E7EB;border-radius:6px;padding:7px 9px;font-size:13px;cursor:pointer}
+.svo:has(input:checked){border-color:#0E7C86;background:#EAF5F6}
+.svo b{margin-left:4px}.svo span{display:block;color:#52606D;font-size:12px;margin-top:2px}.svo.ns{display:flex;align-items:center}
+.svmeta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:8px;font-size:12.5px;color:#52606D}.svmeta label{margin-right:6px}
+.fbtn{display:inline-block;padding:5px 11px;font-size:13px;border:1px solid #0E7C86;border-radius:6px;color:#0E7C86;cursor:pointer}
+.err{color:#B42318;font-size:13px}
+.savestat{font-size:12.5px;color:#52606D;text-align:center;margin:2px 16px 0}.savestat .lnk{font-size:12.5px}
+button.mini.primary{background:#0E7C86;color:#fff}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#1F2933;color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+select.selref{font:14px Helvetica,Arial;padding:4px 6px}
+
+.wrap{width:100%;max-width:1000px;padding:12px 16px 40px;box-sizing:border-box}
+h1{font-size:24px;margin:14px 0 4px}.lead{color:#52606D;font-size:14.5px;line-height:1.5;margin:0 0 12px}
+.done{border:2px solid #0E7C86;border-radius:10px;padding:16px 18px;margin:18px 0;background:#F3FAFA}
+.done h2{margin:0 0 6px;font-size:19px}.done ol{margin:6px 0 0 18px;padding:0;font-size:14px;line-height:1.7}
+.done textarea{width:100%;height:90px;font:12px monospace;margin-top:8px;box-sizing:border-box}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btns button,.btns a{padding:9px 16px;font-size:15px;border:1px solid #0E7C86;border-radius:6px;background:#fff;color:#0E7C86;cursor:pointer;text-decoration:none}
+.btns .primary{background:#0E7C86;color:#fff}
+.req{color:#B42318;font-size:13px;margin-left:8px}
+.prog{position:sticky;top:0;background:#fff;padding:8px 0;border-bottom:1px solid #E4E7EB;font-size:13px;color:#52606D;z-index:5}
+.prog i{display:inline-block;height:6px;background:#0E7C86;border-radius:3px;vertical-align:middle;margin-left:8px;transition:width .2s}
+</style></head><body><div class="wrap">
+<h1>Beliefs survey: end times, salvation & church life</h1>
+<p class="lead">For each of the 18 topics, pick the view you hold most. If you also partly hold another view, tick it. Then set how sure you are (1 = not sure, 5 = very sure). If you're unsure, choose <b>Not sure / skip</b>. It takes about 10 minutes, and your answers are kept on this device until you send them.</p>
+<div class="prog" id="prog"></div>
+<form id="svform" onsubmit="return false"><div class="svrow"><label>Your name <input name="name" class="chin" style="width:220px"></label><span class="req" id="nameReq"></span><label>Church attended / background <input name="church" class="chin" style="width:260px"></label></div>
+<div id="qs"></div>
+<div class="svrow"><button type="button" class="primary" id="finish" style="padding:10px 20px;font-size:16px;border:0;border-radius:6px;background:#0E7C86;color:#fff;cursor:pointer">Finish and get my answers</button></div></form>
+<div id="out"></div></div>
+<script>
+const RECIPIENT="lsm.web.contact@gmail.com"; // where "Email my answers" sends to
+const TOPICS=[
+ {name:"Millennium",q:"When is Christ's 1,000-year reign (Rev\u00a020)?",pick:0,opts:[
+   {s:"Premil",n:"Premillennial",d:"Christ returns before a literal 1,000-year reign on earth."},
+   {s:"Amil",n:"Amillennial",d:"The millennium symbolises Christ's present reign, now."},
+   {s:"Postmil",n:"Postmillennial",d:"The gospel's spread brings a golden age before Christ returns."}]},
+ {name:"Rapture timing",q:"When are believers caught up (1\u00a0Thess\u00a04)?",pick:0,opts:[
+   {s:"Pre-trib",n:"Pre-tribulation",d:"The Church is raptured before the seven-year tribulation."},
+   {s:"Mid / Pre-wrath",n:"Mid-trib / Pre-wrath",d:"Raptured partway through, before God's wrath is poured out."},
+   {s:"Post-trib",n:"Post-tribulation",d:"The Church goes through it; rapture and return are one event."}]},
+ {name:"Reading Revelation",q:"How do Revelation's prophecies map onto history?",pick:0,opts:[
+   {s:"Futurist",n:"Futurist",d:"Most of Revelation (ch. 4–22) is still to come."},
+   {s:"Preterist",n:"Preterist",d:"Much was fulfilled in the first century (AD 70); Christ's return is still future."},
+   {s:"Idealist",n:"Idealist",d:"Timeless symbols of the conflict between God and evil."}]},
+ {name:"Israel & the Church",q:"How do Israel and the Church relate in God's plan?",pick:0,also:[1],opts:[
+   {s:"Distinct",n:"Distinct (Dispensational)",d:"Separate peoples; God's promises to Israel are fulfilled to Israel."},
+   {s:"Progressive",n:"Progressive dispensational",d:"Distinct but closely joined in one unfolding kingdom plan."},
+   {s:"One people",n:"One people (Covenant)",d:"The Church continues Israel as the one people of God."}]},
+ {name:"Daniel's 70th week",q:"Is the final 'week' of Daniel\u00a09:24–27 fulfilled?",pick:0,opts:[
+   {s:"Still future",n:"Still future",d:"A gap follows week 69; the 70th is the coming tribulation."},
+   {s:"Fulfilled",n:"Fulfilled in Christ",d:"Fulfilled in Christ's ministry, death and the first century."}]},
+ {name:"The Antichrist",q:"Who or what is the Antichrist?",pick:0,opts:[
+   {s:"Future individual",n:"Future individual",d:"A single world ruler who rises in the last days."},
+   {s:"Historical",n:"Historical figure",d:"A past figure or institution (e.g. Nero, the papacy)."},
+   {s:"Spirit / system",n:"Recurring spirit",d:"A spirit of opposition to Christ present in every age."}]},
+ {name:"Final judgment",q:"What is the fate of those who reject Christ?",pick:0,opts:[
+   {s:"Eternal",n:"Eternal conscious punishment",d:"Unending, conscious separation from God."},
+   {s:"Annihilation",n:"Annihilationism",d:"The unsaved are finally destroyed and cease to exist."},
+   {s:"Universalism",n:"Universal reconciliation",d:"All are eventually reconciled to God."}]},
+ {name:"After death",q:"Where are believers between death and resurrection?",pick:0,opts:[
+   {s:"Conscious",n:"Conscious with Christ",d:"The soul is immediately and consciously with the Lord."},
+   {s:"Soul sleep",n:"Soul sleep",d:"The dead are unconscious until the resurrection."}]},
+ {name:"New creation",q:"What becomes of this creation in eternity?",pick:0,opts:[
+   {s:"Renewal",n:"Renewal: new heavens & earth",d:"This creation is purified and transformed, not discarded; the redeemed live bodily on a renewed earth."},
+   {s:"Re-creation",n:"Annihilation & re-creation",d:"The present universe is burned up entirely and God creates a new one from nothing (2 Pet 3:10)."},
+   {s:"Spiritual heaven",n:"Spiritual heaven",d:"Eternity is a non-earthly, heavenly existence centred on the vision of God."}]},
+ {name:"Election",q:"How do God's choice and ours relate in salvation?",pick:1,opts:[
+   {s:"Calvinist",n:"Calvinist",d:"God unconditionally chooses who will be saved."},
+   {s:"Arminian",n:"Arminian",d:"God elects based on foreseen faith; grace can be resisted."},
+   {s:"Molinist",n:"Molinist",d:"God's 'middle knowledge' reconciles sovereignty and free will."}]},
+ {name:"Spiritual gifts",q:"Do tongues, prophecy and healing continue today?",pick:1,opts:[
+   {s:"Continuationist",n:"Continuationist",d:"All gifts of the Spirit continue in the Church today."},
+   {s:"Open but cautious",n:"Open but cautious",d:"Open to miraculous gifts, but wary of excesses."},
+   {s:"Cessationist",n:"Cessationist",d:"Miraculous sign gifts ceased with the apostles."}]},
+ {name:"Baptism",q:"Who should be baptised?",pick:0,opts:[
+   {s:"Believer's",n:"Believer's baptism",d:"Only those who personally profess faith."},
+   {s:"Infant",n:"Infant baptism",d:"Children of believers are baptised as covenant members."}]},
+ {name:"Missions & the unreached",q:"Can those who never hear the gospel be saved?",pick:null,opts:[
+   {s:"Exclusivist",n:"Exclusivism",d:"Salvation needs conscious faith in Christ — which makes reaching the unreached urgent."},
+   {s:"Inclusivist",n:"Inclusivism",d:"Some may be saved through Christ's work by responding to the light they have."},
+   {s:"Hopeful agnostic",n:"Hopeful agnosticism",d:"Scripture doesn't say; trust God's justice and keep sending."}]},
+ {name:"Eternal security",q:"Can a true believer lose their salvation?",pick:null,opts:[
+   {s:"OSAS",n:"Once saved, always saved",d:"Salvation can never be lost, whatever happens later in life."},
+   {s:"Perseverance",n:"Perseverance of the saints",d:"True believers are kept by God and will persevere in faith."},
+   {s:"Conditional",n:"Conditional security",d:"A believer can fall away and forfeit salvation."}]},
+ {name:"Creation",q:"How, and how long ago, did God create?",pick:null,opts:[
+   {s:"Young earth",n:"Young-earth creation",d:"Six 24-hour days, roughly 6,000–10,000 years ago."},
+   {s:"Old earth",n:"Old-earth creation",d:"God created over long ages; the days are ages or a literary framework."},
+   {s:"Evolutionary",n:"Evolutionary creation",d:"God created life through evolutionary processes."}]},
+ {name:"Women in ministry",q:"Can women serve as pastors or elders?",pick:null,opts:[
+   {s:"Complementarian",n:"Complementarian",d:"Pastor/elder roles are for qualified men; women serve in many other ministries."},
+   {s:"Soft comp.",n:"Soft complementarian",d:"Elders are men, but women may preach, teach or hold 'pastor' titles."},
+   {s:"Egalitarian",n:"Egalitarian",d:"All roles, including pastor and elder, are open to women."}]},
+ {name:"Lord's Supper",q:"What happens at the Lord's Supper?",pick:null,opts:[
+   {s:"Memorial",n:"Memorial",d:"A remembrance and proclamation of Christ's death (e.g. the Brethren 'breaking of bread')."},
+   {s:"Spiritual presence",n:"Spiritual presence",d:"Christ is spiritually present, nourishing believers by faith (Calvin)."},
+   {s:"Real presence",n:"Real presence",d:"Christ's body and blood are truly present in, with and under the bread and wine (Lutheran)."}]},
+ {name:"Atonement",q:"What did Christ's death achieve, and how?",pick:null,opts:[
+   {s:"Penal substitution",n:"Penal substitution",d:"Christ bore the penalty for sin in our place, satisfying God's justice."},
+   {s:"Victory & restoration",n:"Christus Victor & restoration",d:"Christ defeats sin, death and the devil; his offered life cleanses and restores people and creation to God."},
+   {s:"Moral influence",n:"Moral influence",d:"Christ's self-giving love shows God's heart and moves people to repent and love."}]}
+];
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const DRAFT="beliefsurvey_draft_v1";
+document.getElementById("qs").innerHTML=TOPICS.map((T,i)=>`<fieldset class="svq"><legend>${i+1}. ${esc(T.name)} <span>${esc(T.q)}</span></legend><div class="svopts">`+
+  T.opts.map((o,k)=>`<label class="svo"><input type="radio" name="t${i}" value="${k}"><b>${esc(o.n)}</b><span>${esc(o.d)}</span></label>`).join("")+
+  `<label class="svo ns"><input type="radio" name="t${i}" value=""><b>Not sure / skip</b></label></div>
+  <div class="svmeta"><span>Also partly hold: ${T.opts.map((o,k)=>`<label><input type="checkbox" name="a${i}" value="${k}"> ${esc(o.s)}</label>`).join(" ")}</span>
+  <label>Conviction <input type="range" name="c${i}" min="1" max="5" value="3" oninput="this.nextElementSibling.textContent=this.value"><output>3</output>/5</label></div></fieldset>`).join("");
+const form=document.getElementById("svform");
+function collect(){const fd=new FormData(form);const answers={},alsoHolds={},conviction={};
+  TOPICS.forEach((T,i)=>{const x=fd.get("t"+i);const c=x===null||x===""?null:+x;answers[T.name]=c;
+    const a=fd.getAll("a"+i).map(Number).filter(k=>k!==c);if(a.length)alsoHolds[T.name]=a;if(c!=null)conviction[T.name]=+fd.get("c"+i)});
+  return {name:(fd.get("name")||"").trim(),church:(fd.get("church")||"").trim(),answers,alsoHolds,conviction}}
+function progress(){const r=collect(),n=Object.values(r.answers).filter(v=>v!=null).length+[...form.querySelectorAll('input[type=radio][value=""]:checked')].length;
+  document.getElementById("prog").innerHTML=`${n} of ${TOPICS.length} topics answered <i style="width:${Math.round(240*n/TOPICS.length)}px"></i>`}
+function saveDraft(){try{const fd=new FormData(form);localStorage.setItem(DRAFT,JSON.stringify([...fd.entries()]))}catch(e){}}
+function loadDraft(){try{const d=JSON.parse(localStorage.getItem(DRAFT)||"null");if(!d)return;d.forEach(([k,v])=>{const els=form.querySelectorAll(`[name="${k}"]`);els.forEach(el=>{if(el.type==="radio"||el.type==="checkbox"){if(el.value===v)el.checked=true}else{el.value=v;if(el.type==="range")el.nextElementSibling.textContent=v}})})}catch(e){}}
+form.addEventListener("input",()=>{saveDraft();progress()});form.addEventListener("change",()=>{saveDraft();progress()});
+loadDraft();progress();
+function b64(s){return btoa(unescape(encodeURIComponent(s)))}
+document.getElementById("finish").onclick=()=>{const r=collect();const req=document.getElementById("nameReq");
+  if(!r.name){req.textContent="Please enter your name";form.querySelector("[name=name]").focus();return}req.textContent="";
+  const record={name:r.name,self:false,church:r.church,answers:r.answers,alsoHolds:r.alsoHolds,conviction:r.conviction,saved:Date.now(),source:"survey-response"};
+  const json=JSON.stringify({version:1,type:"decision-wheel-response",people:[record]},null,1);
+  const code="DW1:"+b64(JSON.stringify({version:1,type:"decision-wheel-response",people:[record]}))+":END";
+  const file=new Blob([json],{type:"application/json"}),fname="survey-response-"+r.name.replace(/[^a-z0-9]+/gi,"-").toLowerCase()+".json";
+  const subj="Beliefs survey answers — "+r.name,body="Hi Luke,\n\nHere are my survey answers. Paste the code below into the app (Survey → Paste a response).\n\n"+code+"\n\n"+r.name;
+  const mail=`mailto:${RECIPIENT}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+  const answered=Object.values(r.answers).filter(v=>v!=null).length;
+  document.getElementById("out").innerHTML=`<div class="done"><h2>Thanks, ${esc(r.name)}! You answered ${answered} of ${TOPICS.length} topics.</h2>
+   Send your answers back to Luke in either of these ways:
+   <ol><li><b>Email them:</b> click <i>Email my answers</i>. Your email app opens with everything filled in, so just press Send.</li>
+   <li><b>Or attach a file:</b> click <i>Download my answers</i>, then attach that file to an email to ${esc(RECIPIENT)}.</li></ol>
+   <div class="btns"><a class="primary" href="${mail}">Email my answers</a><a href="${URL.createObjectURL(file)}" download="${fname}">Download my answers (.json)</a><button id="copy">Copy answer code</button></div>
+   <p class="lead" style="margin-top:12px;font-size:13px">If the email button doesn't open anything, copy this code into an email to ${esc(RECIPIENT)}:</p><textarea readonly id="code">${esc(code)}</textarea></div>`;
+  document.getElementById("copy").onclick=()=>{const t=document.getElementById("code");t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand("copy")}document.getElementById("copy").textContent="Copied ✓"};
+  document.getElementById("out").scrollIntoView({behavior:"smooth"})};
+</script></body></html>

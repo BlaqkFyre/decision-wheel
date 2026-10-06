@@ -1,18 +1,18 @@
 # Decision Wheel — To do
 
-Master file: `Documents\GitHub\decision-wheel\index.html` (git repo; Claude always starts from this file, keeps the answers saved in it, and writes back to the same place; Luke commits & pushes in GitHub Desktop)
+Master file: `Documents\GitHub\decision-wheel\index.html` (git repo; Claude always starts from this file, keeps the answers saved in it, and writes back to the same place; Luke commits & pushes in GitHub Desktop; Claude gives a commit title + short summary each time)
 This list: `Documents\GitHub\decision-wheel\TODO.md` (Claude reads and updates it as work happens)
 Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no longer used
 
 ## Next up — offline on PC and mobile (git repo)
 - [x] Repo cloned with GitHub Desktop to `Documents\GitHub\decision-wheel`; Claude writes files there, Luke commits & pushes
-- [x] Repo is public → hosting on GitHub Pages (Settings → Pages → main / root). If public, everyone's answers built into index.html (Luke's, Sarah's, etc.) are visible to anyone — ask respondents first
-- [x] Decide hosting: GitHub Pages
-- [ ] Add the live site link here once Pages is on
+- [x] Repo is public (BlaqkFyre/decision-wheel). Everyone's answers built into index.html are visible to anyone — ask respondents first
+- [x] Hosting: GitHub Pages (main / root) — live at https://blaqkfyre.github.io/decision-wheel/
 - [x] Move the master copy into the repo (`index.html`)
-- [ ] In the app (Survey → Link this file), re-link to `index.html` instead of the old Downloads copy
+- [x] In the app, linked to `index.html` (Survey → Link this file)
 - [x] Add offline support: `manifest.webmanifest` + `sw.js` + icons (works offline once opened from the website; PC file copy already works offline)
-- [ ] Turn on hosting, open it on the phone once, Add to Home Screen
+- [x] Turn on hosting
+- [ ] Open the site on the phone once, sign in as admin, Add to Home Screen
 - [ ] Test on desktop (Chrome/Edge) and on mobile, online and offline
 
 ## Syncing answers between devices
@@ -27,11 +27,21 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [ ] Research speciality and critics text for each person against sources (same rules as research)
 - [ ] Restyle pills (Luke to give direction)
 
-## Dark mode & topic pages
+## Dark mode, topic pages & verse links
 - [x] Colour mode button (◐ Auto / ☀ Light / ☾ Dark): charcoal dark theme, remembered per device; Auto follows the phone/PC setting
 - [x] Topics tab: a page per topic (cards on PC, pills on phone) — overview, debates & controversies, and per view: who holds it here, churches & traditions, verses for, verses critics raise, often held with (worked out from people in the app); links to/from the reading list
+- [x] Verse links open in STEP Bible by default; can switch to Bible Gateway or YouVersion (opens the Bible app on phones) — choice remembered per device
+- [x] Era filter (Compare people): Ancient history (pre-1900) / Modern history (1900–2005) / Modern (2005+). Filters people in every tab, plus topic debates, "held by" and "often held with". People count in every era they were active in; survey users always show
+- [x] Wheel: tapping a spoke only shows details; changing answers on the wheel needs "✎ Edit on wheel" switched on (admin, or a visitor on their own wheel)
+- [x] Topic 18: Atonement (Penal substitution / Christus Victor & restoration / Moral influence) — wheel, survey, emailed survey, topic page, tendencies, reading list
+- [ ] Research atonement views for everyone else (placed so far: Stott, Packer, Grudem, Piper, Sproul, MacArthur, Keller, Wright, Bray)
+- [x] Added Phil Bray (Sydney; Leviticus on the Butcher's Block, 2025): Atonement (stated), Lord's Supper + New creation (inferred)
+- [ ] Find a second source / clearer statements for Phil Bray's inferred views
+- [x] Emailed survey now lives in the repo as `survey.html` (18 topics) — once pushed: https://blaqkfyre.github.io/decision-wheel/survey.html
+- [ ] Add more pre-1900 voices so that era isn't just Darby (e.g. Augustine, Luther, Calvin, Wesley, Spurgeon) — needs research
 - [ ] Check topic summaries, verse lists and church lists against sources (currently general reference)
 - [ ] Restyle (Luke to give direction)
+- Note: "Link this file" now only updates the answers inside index.html and never its code, so an old open tab can't undo an update. After any update from Claude, reload every open Decision Wheel tab once.
 
 ## Research still to do (agents stopped earlier)
 - [ ] Group 0: Chuck Smith, John MacArthur, John Walvoord, Darrell Bock
@@ -43,7 +53,8 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 ## Admin & security
 - [x] Visitors: view everything, add/edit only their own answers (saved in their browser), send them to Luke by email/code
 - [x] Admin (Luke): edit anyone, paste/import responses, delete, link file, export — unlocked per device with a passphrase
-- [ ] Luke to set the admin passphrase on the PC (Survey → Set passphrase), then commit & push
+- [x] Admin passphrase set on the PC and saved into index.html
+- [x] Passphrase is on the live site
 - [ ] Sync admin changes made on the phone back to the master (now: Export on phone → Import on PC; later: GitHub sync)
 - Note: the lock is on the app's screens; the real protection is that only Luke's PC / GitHub login can change the master file
 
