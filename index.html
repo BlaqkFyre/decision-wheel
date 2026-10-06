@@ -485,7 +485,7 @@ let DELETED={};
 // ---- roles: ADMIN (Luke, unlocked on a device with his passphrase) vs VISITOR (can only add/edit their own answers) ----
 // Note: this is a lock on the app's screens. The real protection of Luke's data is that only Luke can change the
 // master file (his PC / his GitHub login). A visitor's changes stay in their own browser and never reach Luke's copy.
-const ADMIN_TOKEN="decisionwheel_admin_token",MINE_KEY="decisionwheel_mine_v1";
+const ADMIN_TOKEN="decisionwheel_admin_token",MINE_KEY="decisionwheel_mine_v1",ADMIN_CFG_KEY="decisionwheel_admin_cfg";
 let ADMIN_CFG=null,isAdmin=false,setupMode=false,rolesReady=false;
 const canEdit=P=>!!P&&!!P.user&&(isAdmin||(!!P.mine&&!P.self));
 const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
@@ -498,6 +498,7 @@ function lsSet(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(
 async function tokenValid(){const tok=lsGet(ADMIN_TOKEN);if(!tok||!ADMIN_CFG||!window.crypto||!crypto.subtle)return false;
   try{return (await checkOf(tok))===ADMIN_CFG.check}catch(e){return false}}
 async function initRoles(){
+  if(!ADMIN_CFG&&location.protocol==="file:"){try{const c=JSON.parse(lsGet(ADMIN_CFG_KEY)||"null");if(c&&c.check&&c.salt)ADMIN_CFG=c}catch(e){}}
   if(ADMIN_CFG)isAdmin=await tokenValid();
   else{isAdmin=location.protocol==="file:";setupMode=isAdmin} // no passphrase yet: only Luke's own local copy may manage it
   if(isAdmin){try{DELETED=JSON.parse(lsGet(TOMB)||"{}")||{}}catch(e){}
@@ -514,7 +515,7 @@ async function unlockAdmin(pass){if(!ADMIN_CFG||!crypto.subtle)return false;
   const tok=await deriveToken(pass,ADMIN_CFG);if((await checkOf(tok))!==ADMIN_CFG.check)return false;
   lsSet(ADMIN_TOKEN,tok);location.reload();return true}
 async function setPassphrase(pass){const salt=hex(crypto.getRandomValues(new Uint8Array(16))),cfg={salt,iter:310000};
-  const tok=await deriveToken(pass,cfg);cfg.check=await checkOf(tok);ADMIN_CFG=cfg;lsSet(ADMIN_TOKEN,tok);setupMode=false;isAdmin=true;saveUsers()}
+  const tok=await deriveToken(pass,cfg);cfg.check=await checkOf(tok);ADMIN_CFG=cfg;lsSet(ADMIN_TOKEN,tok);lsSet(ADMIN_CFG_KEY,JSON.stringify(cfg));setupMode=false;isAdmin=true;saveUsers()}
 function lockAdmin(){lsSet(ADMIN_TOKEN,null);location.reload()}
 // clean anything that arrives from outside (survey responses, imported files)
 function cleanRecord(u){const T=TOPICS,str=(x,n)=>String(x==null?"":x).replace(/[\u0000-\u001f]/g,"").slice(0,n);
@@ -1026,6 +1027,8 @@ function renderSurvey(){if(!isAdmin)surveyFor=PEOPLE.find(p=>p.mine)||null;
   if(isAdmin){
     h+=`<h2>${isNew?"Add a person":"Edit answers — "+esc(P.name)}</h2>
     <p class="sub">Admin mode on this device. Changes save in this browser${fileOK?` and straight into <b>${esc(fileHandle.name)}</b>`:""}.</p>
+    ${fileHandle&&!fileOK?`<div class="svpanel warn"><b>Not saving into ${esc(fileHandle.name)} right now.</b> The browser needs your OK again after a restart. <button type="button" class="mini primary" id="svlink">Reconnect ${esc(fileHandle.name)}</button></div>`:""}
+    ${location.protocol==="file:"&&ADMIN_CFG&&!fileOK&&!fileHandle?`<div class="svpanel warn"><b>Changes are only in this browser.</b> Link this file so they go into index.html. <button type="button" class="mini primary" id="svlink">Link this file</button></div>`:""}
     ${setupMode?`<div class="svpanel warn"><b>Protect your data:</b> set an admin passphrase. Until you do, anyone who opens a copy of this file can edit everyone's answers. <button type="button" class="mini primary" data-sv="pass">Set passphrase</button></div>`:""}
     <div class="svtools">
       <div><span class="svlbl">Person</span><select class="selref" id="svwho"><option value="">+ Add a new person</option>${PEOPLE.filter(Q=>Q.user).map(Q=>`<option value="${PEOPLE.indexOf(Q)}"${Q===P?' selected':''}>${esc(Q.name)}${Q.self?" (you)":""}</option>`).join("")}</select>${P&&!P.self?' <button type="button" class="mini" id="svdelete">Delete</button>':''}</div>
@@ -1091,7 +1094,7 @@ s.addEventListener("click",e=>{
     if(e.target.id==="ppset"&&isAdmin){const a=document.getElementById("pp1").value,b=document.getElementById("pp2").value,m=document.getElementById("ppmsg");
       if(a.length<10){m.textContent="Use at least 10 characters";return}if(a!==b){m.textContent="The two don't match";return}
       if(!window.crypto||!crypto.subtle){m.textContent="This browser can't do this here";return}
-      m.textContent="Saving…";setPassphrase(a).then(()=>{svPanel=null;renderSurvey();toast(fileOK?"Passphrase saved into "+fileHandle.name+" — now commit & push":"Passphrase saved — link this file or download a copy to keep it")});return}
+      m.textContent="Saving…";const rc=(fileHandle&&!fileOK)?reconnectFile():Promise.resolve();rc.then(()=>setPassphrase(a)).then(()=>{svPanel=null;renderSurvey();toast(fileOK?"Passphrase saved into "+fileHandle.name+" — now commit & push":"Passphrase saved on this device only — link the file to put it in index.html")});return}
     if(e.target.id==="svlock"&&isAdmin){lockAdmin();return}}
   if(view==="survey"&&!isAdmin&&/^(svdl|svlink|pasteadd|svexport|svdelete)$/.test(e.target.id))return;
   if(e.target.id==="svdl"){downloadApp();return}
