@@ -6,13 +6,13 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 
 ## Next up — offline on PC and mobile (git repo)
 - [x] Repo cloned with GitHub Desktop to `Documents\GitHub\decision-wheel`; Claude writes files there, Luke commits & pushes
-- [x] Repo is public → hosting on GitHub Pages (Settings → Pages → main / root). If public, everyone's answers built into index.html (Luke's, Sarah's, etc.) are visible to anyone — ask respondents first
-- [x] Decide hosting: GitHub Pages
-- [ ] Add the live site link here once Pages is on
+- [x] Repo is public (BlaqkFyre/decision-wheel). Everyone's answers built into index.html are visible to anyone — ask respondents first
+- [x] Hosting: GitHub Pages (main / root) — live at https://blaqkfyre.github.io/decision-wheel/
 - [x] Move the master copy into the repo (`index.html`)
-- [ ] In the app (Survey → Link this file), re-link to `index.html` instead of the old Downloads copy
+- [x] In the app, linked to `index.html` (Survey → Link this file)
 - [x] Add offline support: `manifest.webmanifest` + `sw.js` + icons (works offline once opened from the website; PC file copy already works offline)
-- [ ] Turn on hosting, open it on the phone once, Add to Home Screen
+- [x] Turn on hosting
+- [ ] Open the site on the phone once, sign in as admin, Add to Home Screen
 - [ ] Test on desktop (Chrome/Edge) and on mobile, online and offline
 
 ## Syncing answers between devices
@@ -37,7 +37,8 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 ## Admin & security
 - [x] Visitors: view everything, add/edit only their own answers (saved in their browser), send them to Luke by email/code
 - [x] Admin (Luke): edit anyone, paste/import responses, delete, link file, export — unlocked per device with a passphrase
-- [ ] Luke to set the admin passphrase on the PC (Survey → Set passphrase), then commit & push
+- [x] Admin passphrase set on the PC and saved into index.html
+- [ ] Confirm it's on the live site (Survey → "Admin sign-in" shows at the bottom)
 - [ ] Sync admin changes made on the phone back to the master (now: Export on phone → Import on PC; later: GitHub sync)
 - Note: the lock is on the app's screens; the real protection is that only Luke's PC / GitHub login can change the master file
 
