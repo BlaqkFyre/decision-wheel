@@ -220,6 +220,15 @@ html[data-theme=dark] .etag.eA{background:#4A3E2C;color:#EBD3A8}html[data-theme=
 .topt{border:2px solid #C9A227;border-radius:14px;padding:10px 12px 8px;margin:10px 0;background:var(--bg)}
 html[data-theme=dark] .topt{border-color:#B8962E}
 .topt+.topt{border-top:2px solid #C9A227}
+
+/* compare: people list in a collapsible box */
+.pbox{border:1px solid var(--line);border-radius:12px;margin:0 0 16px;background:var(--bg)}
+.pbox summary{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;list-style:none;flex-wrap:wrap}
+.pbox summary::-webkit-details-marker{display:none}
+.pbt{font-weight:700;font-size:14px}.pbn{font-size:12.5px;color:var(--muted)}
+.pbd{display:inline-flex;gap:2px;flex-wrap:wrap;flex:1;min-width:0}
+.pbox[open] .bchev{transform:rotate(90deg)}
+.pbox .fams{padding:4px 12px 10px;margin:0;border-top:1px dashed var(--line)}
 </style></head>
 <body>
 <div class="bar">
@@ -835,10 +844,11 @@ function labels(P){const c=i=>choice(P,i),also=alsoOf(P,3);const t=[],d=[];const
 let pendingScroll=null;let view="wheel",ctab="tend",editor=0,readMine=false,readMode="topic"; // editor = index of a survey user (Luke by default)
 function chips(){const tg=PEOPLE.indexOf(target);
   let h=`<div class="tbar"><label>Target person <select class="selref" id="seltarget">${PEOPLE.map((P,k)=>`<option value="${k}"${P===target?' selected':''}>${esc(P.name)}${P.user&&!P.self?' (survey)':''}</option>`).join("")}</select></label>
-  <span class="qb"><button class="mini" data-q="all">Select all</button><button class="mini" data-q="none">Deselect all</button><button class="mini" data-q="two">+ closest</button><button class="mini" data-q="near">+ 3 closest</button><button class="mini" data-q="modern">+ modern authors</button></span></div>${eraBar()}<div class="fams">`;
+  <span class="qb"><button class="mini" data-q="all">Select all</button><button class="mini" data-q="none">Deselect all</button><button class="mini" data-q="two">+ closest</button><button class="mini" data-q="near">+ 3 closest</button><button class="mini" data-q="modern">+ modern authors</button></span></div>${eraBar()}<details class="pbox" id="pbox"${peopleOpen?" open":""}><summary><span class="pbt">People shown</span> <span class="pbn">${visible().length} of ${PEOPLE.filter(eraOK).length}</span> <span class="pbd">${visible().slice(0,14).map(P=>dotH(P,18)).join("")}${visible().length>14?" …":""}</span><span class="bchev">›</span></summary><div class="fams">`;
   FAM.forEach((F,fi)=>{const ps=PEOPLE.filter(P=>fam(P)===F&&eraOK(P));if(!ps.length)return;
     h+=`<div class="fam"><div class="fh"><i style="background:${F.col}"></i>${F.n}<button class="lnk" data-fa="${fi}">all</button><button class="lnk" data-fn="${fi}">none</button></div><div class="people">`+ps.map(P=>{const k=PEOPLE.indexOf(P);return `<button class="chip${P.on||P===target?'':' off'}${P===target?' tgt':''}" data-p="${k}">${dotH(P,20)}<span>${esc(P.name)}</span>${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}</button>`}).join("")+`</div></div>`});
-  return h+`</div>`}
+  return h+`</div></details>`}
+let peopleOpen=false;
 // eras: A = ancient history (before 1900), H = modern history (1900–2005), M = modern (2005+). A person counts in every era they were active in.
 const ERA_NAMES={A:"Ancient history (pre-1900)",H:"Modern history (1900–2005)",M:"Modern (2005+)"},ERA_SHORT={A:"Pre-1900",H:"1900–2005",M:"2005+"};
 const ERA_OF={"J.N. Darby":["A"],"John Walvoord":["H"],"C.S. Lewis":["H"],"John Stott":["H"],
@@ -1325,8 +1335,8 @@ function tabBios(vis){
     mob+=`<details class="bpill" id="biom-${k}"><summary><span class="bav" style="background:${F.col};color:${F.fg}">${esc(ini(P.name))}</span><span class="bpm"><span class="bpn">${esc(P.name)}${badges}</span><span class="bps">${esc(B.life||"")}${B.life&&line?" · ":""}${esc(line)}</span></span><span class="bchev">›</span></summary><div class="bbody"><div class="rov">${sub}</div>${body}</div></details>`});
   return h+desk+`</div>`+mob+`</div>`}
 function renderCompare(){const vis=visible();
-  let h=`<div class="cmp"><h2>Stage 3 — Where views overlap</h2><p class="sub">Choose a target person, then show or hide others. Colours group people by end-times family; initials identify them. The target always stays visible.</p>${chips()}`;
-  h+=`<div class="tabs">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["topics","Topics"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`;
+  let h=`<div class="cmp"><h2>Stage 3 — Where views overlap</h2><p class="sub">Pick a view, choose a target person, then open <b>People shown</b> to show or hide others. Colours group people by end-times family; initials identify them. The target always stays visible.</p>`;
+  h+=`<div class="tabs">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["topics","Topics"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`+chips();
   h+=({cwheel:tabCmpWheel,tend:tabTend,heat:tabHeat,grid:tabGrid,scatter:tabScatter,tree:tabTree,combo:tabCombos,read:tabRead,labels:tabLabels,topics:tabTopics,bios:tabBios})[ctab](vis);
   if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{let el=document.getElementById(id);if(el&&!el.offsetParent&&/^(bio|top)-/.test(id)){el=document.getElementById(id.replace("-","m-"));if(el)el.open=true}if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
   h+=`<div class="src">Theologian views are summarised from their own writings and statements where available — see the Labels & churches tab for source links, and hover cells for notes. "—" means a different view or no clear public position. Source dots show how many independent sources were found for a placement.</div></div>`;
@@ -1456,6 +1466,7 @@ s.addEventListener("click",e=>{
   const chip=e.target.closest(".chip");if(chip){const P=PEOPLE[+chip.dataset.p];if(P!==target)P.on=!P.on;renderCompare();return}
   const c=e.target.closest(".cell");if(!c)return;const P=PEOPLE[editor];if(!P||!canEdit(P))return;const i=+c.dataset.i,k=+c.dataset.k;
   P.v[i]={c:k};if(P.also&&P.also[i])P.also[i]=P.also[i].filter(x=>x!==k);if(P.user)saveUsers(P);renderCompare()});
+s.addEventListener("toggle",e=>{if(e.target.id==="pbox")peopleOpen=e.target.open},true);
 s.addEventListener("change",e=>{const el=e.target;
   if(view==="survey"){if(el.id==="svwho"){surveyFor=el.value===""?null:PEOPLE[+el.value];renderSurvey()}
     if(el.id==="svimport"&&isAdmin&&el.files[0]){el.files[0].text().then(txt=>{try{importResponse(txt)}catch(err){el.parentElement.insertAdjacentHTML("afterend",'<span class="err"> That file could not be read.</span>')}})}
