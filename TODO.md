@@ -38,6 +38,9 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [x] Added Phil Bray (Sydney; Leviticus on the Butcher's Block, 2025): Atonement (stated), Lord's Supper + New creation (inferred)
 - [ ] Find a second source / clearer statements for Phil Bray's inferred views
 - [x] Emailed survey now lives in the repo as `survey.html` (18 topics) — once pushed: https://blaqkfyre.github.io/decision-wheel/survey.html
+- [x] Inferred placements shown in italics (dashed outline) in bios, heat map, topic pages, reading list and wheel tooltips
+- [x] Topic pages: "Commonly held by" section listing churches, denominations & organisations for each view
+- [ ] Rotating research on little-known people (pairs: Cahn+Begg, Comer+Tripp, Ortlund+McLaughlin, Lennox+Bray, Chandler+Jeremiah) — round 1 done. Round 2 on other low-info people (Bock+DeYoung, Warren+Stott, Lewis+Walvoord, Keller+Packer, Storms+Tsarfati) done. Round 3 (Hayford+Gentry, Darby+Wright, Smith+Laurie, Sproul+MacArthur, Grudem+Piper) and round 4 (round 1 again) done. Research PAUSED: see the method at the top of RESEARCH_LOG.md; ask Luke before resuming
 - [ ] Add more pre-1900 voices so that era isn't just Darby (e.g. Augustine, Luther, Calvin, Wesley, Spurgeon) — needs research
 - [ ] Check topic summaries, verse lists and church lists against sources (currently general reference)
 - [ ] Restyle (Luke to give direction)
