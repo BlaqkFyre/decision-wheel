@@ -6,8 +6,9 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 
 ## Next up — offline on PC and mobile (git repo)
 - [x] Repo cloned with GitHub Desktop to `Documents\GitHub\decision-wheel`; Claude writes files there, Luke commits & pushes
-- [ ] Luke to confirm: repo public or private (decides hosting below). If public, everyone's answers built into index.html (Luke's, Sarah's, etc.) are visible to anyone — ask respondents first
-- [ ] Decide hosting: GitHub Pages (needs a public repo on the free plan) or Netlify / Cloudflare Pages (works with a private repo)
+- [x] Repo is public → hosting on GitHub Pages (Settings → Pages → main / root). If public, everyone's answers built into index.html (Luke's, Sarah's, etc.) are visible to anyone — ask respondents first
+- [x] Decide hosting: GitHub Pages
+- [ ] Add the live site link here once Pages is on
 - [x] Move the master copy into the repo (`index.html`)
 - [ ] In the app (Survey → Link this file), re-link to `index.html` instead of the old Downloads copy
 - [x] Add offline support: `manifest.webmanifest` + `sw.js` + icons (works offline once opened from the website; PC file copy already works offline)
