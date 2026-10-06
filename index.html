@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Decision Wheel</title>
-<script id="dw-saved" type="application/json">{"version": 1, "people": [{"name": "Luke", "self": true, "church": "Brethren / Baptist background", "trad": ["Brethren", "Baptist"], "answers": {"Millennium": 0, "Rapture timing": 0, "Reading Revelation": 0, "Israel & the Church": 0, "Daniel's 70th week": 0, "The Antichrist": 0, "Final judgment": 0, "After death": 0, "New creation": 0, "Election": 1, "Spiritual gifts": 1, "Baptism": 0, "Missions & the unreached": 0, "Eternal security": 0, "Creation": 0, "Women in ministry": 1, "Lord's Supper": 0}, "alsoHolds": {"Israel & the Church": [1]}, "conviction": {"Missions & the unreached": 5, "Eternal security": 5, "Creation": 5, "Women in ministry": 4, "Lord's Supper": 5}, "saved": 1791192904025}, {"name": "Sarah", "self": false, "church": "Brethren", "trad": [], "answers": {"Millennium": 0, "Rapture timing": 0, "Reading Revelation": 0, "Israel & the Church": 1, "Daniel's 70th week": null, "The Antichrist": 0, "Final judgment": 0, "After death": 0, "New creation": 0, "Election": 2, "Spiritual gifts": 0, "Baptism": 0, "Missions & the unreached": 0, "Eternal security": 0, "Creation": 0, "Women in ministry": 1, "Lord's Supper": 0}, "alsoHolds": {"Rapture timing": [1], "New creation": [1], "Missions & the unreached": [1]}, "conviction": {"Millennium": 4, "Rapture timing": 3, "Reading Revelation": 4, "Israel & the Church": 4, "The Antichrist": 5, "Final judgment": 5, "After death": 5, "New creation": 4, "Election": 5, "Spiritual gifts": 5, "Baptism": 5, "Missions & the unreached": 4, "Eternal security": 5, "Creation": 5, "Women in ministry": 3, "Lord's Supper": 5}, "saved": 1791192538872}], "deleted": {}}</script>
+<meta name="theme-color" content="#0E7C86"><meta name="referrer" content="no-referrer"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Decision Wheel">
+<script id="dw-saved" type="application/json">{"version":1,"people":[{"name":"Luke","self":true,"church":"Brethren / Baptist background","trad":["Brethren","Baptist"],"answers":{"Millennium":0,"Rapture timing":0,"Reading Revelation":0,"Israel & the Church":0,"Daniel's 70th week":0,"The Antichrist":0,"Final judgment":0,"After death":0,"New creation":0,"Election":1,"Spiritual gifts":1,"Baptism":0,"Missions & the unreached":0,"Eternal security":0,"Creation":0,"Women in ministry":1,"Lord's Supper":0},"alsoHolds":{"Israel & the Church":[1]},"conviction":{"Missions & the unreached":5,"Eternal security":5,"Creation":5,"Women in ministry":4,"Lord's Supper":5},"saved":1791192904025},{"name":"Sarah","self":false,"church":"Brethren","trad":[],"answers":{"Millennium":0,"Rapture timing":0,"Reading Revelation":0,"Israel & the Church":1,"Daniel's 70th week":null,"The Antichrist":0,"Final judgment":0,"After death":0,"New creation":0,"Election":2,"Spiritual gifts":0,"Baptism":0,"Missions & the unreached":0,"Eternal security":0,"Creation":0,"Women in ministry":1,"Lord's Supper":0},"alsoHolds":{"Rapture timing":[1],"New creation":[1],"Missions & the unreached":[1]},"conviction":{"Millennium":4,"Rapture timing":3,"Reading Revelation":4,"Israel & the Church":4,"The Antichrist":5,"Final judgment":5,"After death":5,"New creation":4,"Election":5,"Spiritual gifts":5,"Baptism":5,"Missions & the unreached":4,"Eternal security":5,"Creation":5,"Women in ministry":3,"Lord's Supper":5},"saved":1791192538872}],"deleted":{}}</script>
 <style>
 body{margin:0;background:#fff;font-family:Helvetica,Arial,sans-serif;color:#1F2933;display:flex;flex-direction:column;align-items:center}
 .bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px 16px 4px}
@@ -112,6 +113,44 @@ button.mini.primary{background:#0E7C86;color:#fff}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#1F2933;color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 select.selref{font:14px Helvetica,Arial;padding:4px 6px}
+
+/* survey: admin tools, panels */
+.svtools{display:flex;flex-wrap:wrap;gap:10px 22px;margin:4px 0 14px;padding:10px 12px;background:#F5F7F8;border-radius:8px}
+.svtools>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.svlbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#52606D;margin-right:2px}
+.svpanel{border:1px solid #CFE3E5;background:#F2F9F9;border-radius:8px;padding:12px 14px;margin:0 0 14px}
+.svpanel.warn{border-color:#E9C46A;background:#FFF8E6}
+.svpanel textarea{width:100%;height:80px;font:12px monospace;box-sizing:border-box;margin-top:6px}
+.svpanel .sub{margin:4px 0 8px}
+a.btnlink{display:inline-block;padding:5px 11px;font-size:13px;border:1px solid #0E7C86;border-radius:6px;color:#0E7C86;text-decoration:none}
+a.btnlink.primary{background:#0E7C86;color:#fff}
+.adm{background:#0E7C86;color:#fff;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:700;margin-right:4px}
+.err{color:#B8483A;font-size:13px}
+/* bios: cards on wide screens, tap-to-open pills on phones */
+.bio-mob{display:none}
+.bpill{border:1px solid #E4E7EB;border-radius:22px;margin:0 0 8px;background:#fff;overflow:hidden}
+.bpill summary{display:flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;cursor:pointer;list-style:none}
+.bpill summary::-webkit-details-marker{display:none}
+.bav{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.bpm{flex:1;min-width:0;display:flex;flex-direction:column}
+.bpn{font-weight:700;font-size:15px}
+.bps{font-size:12.5px;color:#52606D;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bchev{color:#9AA3AD;font-size:20px;transition:transform .2s}
+.bpill[open]{border-radius:18px}.bpill[open] .bchev{transform:rotate(90deg)}
+.bbody{padding:0 14px 14px}
+.ro.bspec{border-left:3px solid #0E7C86;padding-left:8px}.ro.bcrit{border-left:3px solid #B7791F;padding-left:8px}.ro.bcon{border-left:3px solid #B8483A;padding-left:8px}
+.bbtns{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:700px){
+  .bio-desk{display:none}.bio-mob{display:block}
+  .bbtns .lnk{flex:1;border:1px solid #0E7C86;border-radius:999px;padding:8px;text-align:center}
+  .cmp{padding:8px 12px 28px}
+  .svtools{gap:10px}.svtools>div{width:100%}
+  .sv .chin{width:100%!important;box-sizing:border-box}
+  .sv .svrow label{display:block;width:100%;margin-bottom:6px}
+  .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tabs button{flex:none}
+  button{padding:8px 12px;font-size:14px}
+}
 </style></head>
 <body>
 <div class="bar">
@@ -440,16 +479,59 @@ const RESEARCH={"J.N. Darby": {"0": {"c": 0, "n": "Saw 1 Thess 4:17 rapture endi
 // ---- saved users: browser storage + answers built into the file + optional linked save file ----
 const STORE="decisionwheel_users_v1",TOMB="decisionwheel_deleted_v1";
 const keyOf=r=>r.self?"__self__":"u:"+r.name;
-function serializeUsers(){return PEOPLE.filter(P=>P.user).map(P=>{const byName={},al={},cv={};TOPICS.forEach((T,i)=>{byName[T.name]=P.v[i]?P.v[i].c:null;if((P.also||{})[i])al[T.name]=P.also[i];if((P.conv||{})[i])cv[T.name]=P.conv[i]});
+function serializeUsers(){return PEOPLE.filter(P=>P.user&&!P.mine).map(P=>{const byName={},al={},cv={};TOPICS.forEach((T,i)=>{byName[T.name]=P.v[i]?P.v[i].c:null;if((P.also||{})[i])al[T.name]=P.also[i];if((P.conv||{})[i])cv[T.name]=P.conv[i]});
   return {name:P.name,self:!!P.self,church:P.church||"",trad:P.trad||[],answers:byName,alsoHolds:al,conviction:cv,saved:P.saved||0}})}
-let DELETED={};try{DELETED=JSON.parse(localStorage.getItem(TOMB)||"{}")||{}}catch(e){}
-function bundle(){return {version:1,people:serializeUsers(),deleted:DELETED}}
+let DELETED={};
+// ---- roles: ADMIN (Luke, unlocked on a device with his passphrase) vs VISITOR (can only add/edit their own answers) ----
+// Note: this is a lock on the app's screens. The real protection of Luke's data is that only Luke can change the
+// master file (his PC / his GitHub login). A visitor's changes stay in their own browser and never reach Luke's copy.
+const ADMIN_TOKEN="decisionwheel_admin_token",MINE_KEY="decisionwheel_mine_v1";
+let ADMIN_CFG=null,isAdmin=false,setupMode=false,rolesReady=false;
+const canEdit=P=>!!P&&!!P.user&&(isAdmin||(!!P.mine&&!P.self));
+const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
+const unhex=h=>new Uint8Array((h.match(/../g)||[]).map(x=>parseInt(x,16)));
+async function deriveToken(pass,cfg){const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(pass),"PBKDF2",false,["deriveBits"]);
+  return hex(await crypto.subtle.deriveBits({name:"PBKDF2",salt:unhex(cfg.salt),iterations:cfg.iter,hash:"SHA-256"},k,256))}
+async function checkOf(token){return hex(await crypto.subtle.digest("SHA-256",new TextEncoder().encode("dw-admin:"+token)))}
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
+async function tokenValid(){const tok=lsGet(ADMIN_TOKEN);if(!tok||!ADMIN_CFG||!window.crypto||!crypto.subtle)return false;
+  try{return (await checkOf(tok))===ADMIN_CFG.check}catch(e){return false}}
+async function initRoles(){
+  if(ADMIN_CFG)isAdmin=await tokenValid();
+  else{isAdmin=location.protocol==="file:";setupMode=isAdmin} // no passphrase yet: only Luke's own local copy may manage it
+  if(isAdmin){try{DELETED=JSON.parse(lsGet(TOMB)||"{}")||{}}catch(e){}
+    try{const people=JSON.parse(lsGet(STORE)||"null");if(people)mergeBundle({people,deleted:DELETED})}catch(e){}}
+  else loadMine();
+  rolesReady=true;if(isAdmin)await initLinked();rerender()}
+function loadMine(){try{const u=JSON.parse(lsGet(MINE_KEY)||"null");if(!u||!u.name)return;u.self=false;
+  u.name=uniqueName(u.name,null);applyUsers([u]);const P=PEOPLE.find(p=>p.user&&!p.self&&p.name===u.name);
+  if(P){P.mine=true;P.on=true;P.saved=u.saved||0}}catch(e){}}
+// a visitor's name must never match someone already in the app (so they can't overwrite them)
+function uniqueName(n,me){n=String(n||"").trim().slice(0,60)||"Me";let x=n,i=2;
+  while(PEOPLE.find(p=>p!==me&&p.name.toLowerCase()===x.toLowerCase()))x=n+(i===2?" (you)":` (you ${i-1})`),i++;return x}
+async function unlockAdmin(pass){if(!ADMIN_CFG||!crypto.subtle)return false;
+  const tok=await deriveToken(pass,ADMIN_CFG);if((await checkOf(tok))!==ADMIN_CFG.check)return false;
+  lsSet(ADMIN_TOKEN,tok);location.reload();return true}
+async function setPassphrase(pass){const salt=hex(crypto.getRandomValues(new Uint8Array(16))),cfg={salt,iter:310000};
+  const tok=await deriveToken(pass,cfg);cfg.check=await checkOf(tok);ADMIN_CFG=cfg;lsSet(ADMIN_TOKEN,tok);setupMode=false;isAdmin=true;saveUsers()}
+function lockAdmin(){lsSet(ADMIN_TOKEN,null);location.reload()}
+// clean anything that arrives from outside (survey responses, imported files)
+function cleanRecord(u){const T=TOPICS,str=(x,n)=>String(x==null?"":x).replace(/[\u0000-\u001f]/g,"").slice(0,n);
+  const answers={},alsoHolds={},conviction={};T.forEach(t=>{const a=u.answers||{},x=a[t.name];
+    if(Number.isInteger(x)&&x>=0&&x<t.opts.length)answers[t.name]=x;else answers[t.name]=null;
+    const al=(u.alsoHolds||{})[t.name];if(Array.isArray(al)){const v=al.filter(k=>Number.isInteger(k)&&k>=0&&k<t.opts.length);if(v.length)alsoHolds[t.name]=v}
+    const cv=(u.conviction||{})[t.name];if(Number.isInteger(cv)&&cv>=1&&cv<=5)conviction[t.name]=cv});
+  return {name:str(u.name,60).trim()||"Survey respondent",self:false,church:str(u.church,80),trad:[],answers,alsoHolds,conviction,saved:Date.now()}}
+function bundle(){const b={version:1,people:serializeUsers(),deleted:DELETED};if(ADMIN_CFG)b.admin=ADMIN_CFG;return b}
 function storageOK(){try{localStorage.setItem("dw_t","1");localStorage.removeItem("dw_t");return true}catch(e){return false}}
-function saveUsers(...changed){const now=Date.now();changed.forEach(P=>{if(P)P.saved=now});
+function saveUsers(...changed){const now=Date.now();changed.forEach(P=>{if(P&&canEdit(P))P.saved=now});
+  if(!isAdmin){const P=PEOPLE.find(p=>p.mine);if(P){const r=serializeOne(P);lsSet(MINE_KEY,JSON.stringify(r))}setStatus();return}
   try{localStorage.setItem(STORE,JSON.stringify(serializeUsers()));localStorage.setItem(TOMB,JSON.stringify(DELETED))}catch(e){}
   writeLinked();markUnsaved();setStatus()}
+function serializeOne(P){const m=P.mine;P.mine=false;const r=serializeUsers().find(x=>x.name===P.name&&!x.self);P.mine=m;return r}
 // merge records from any source: newest version of each person wins; deletions win if newer
-function mergeBundle(b){if(!b)return;const people=Array.isArray(b)?b:(b.people||[]),del=Array.isArray(b)?{}:(b.deleted||{});
+function mergeBundle(b){if(!b)return;if(!Array.isArray(b)&&b.admin&&b.admin.check&&b.admin.salt)ADMIN_CFG=b.admin;const people=Array.isArray(b)?b:(b.people||[]),del=Array.isArray(b)?{}:(b.deleted||{});
   Object.entries(del).forEach(([k,t])=>{if(!DELETED[k]||DELETED[k]<t)DELETED[k]=t});
   people.forEach(u=>{const k=keyOf(u),cur=u.self?PEOPLE.find(p=>p.self):PEOPLE.find(p=>p.user&&p.name===u.name);
     if(DELETED[k]&&DELETED[k]>=(u.saved||0))return;
@@ -458,16 +540,18 @@ function mergeBundle(b){if(!b)return;const people=Array.isArray(b)?b:(b.people||
   Object.entries(DELETED).forEach(([k,t])=>{const i=PEOPLE.findIndex(p=>p.user&&!p.self&&keyOf(p)===k&&(p.saved||0)<=t);if(i>=0)PEOPLE.splice(i,1)})}
 function loadUsers(){
   try{const el=document.getElementById("dw-saved");if(el)mergeBundle(JSON.parse(el.textContent||"null"))}catch(e){}
-  try{const people=JSON.parse(localStorage.getItem(STORE)||"null");if(people)mergeBundle({people,deleted:DELETED})}catch(e){}}
-function deleteUser(P){DELETED[keyOf({name:P.name})]=Date.now();PEOPLE.splice(PEOPLE.indexOf(P),1);saveUsers()}
+}
+function deleteUser(P){if(!isAdmin)return;DELETED[keyOf({name:P.name})]=Date.now();PEOPLE.splice(PEOPLE.indexOf(P),1);saveUsers()}
 // ---- add people from an emailed survey response (code "DW1:..." or JSON file) ----
 function parseResponse(txt){txt=String(txt||"").trim();const m=txt.match(/DW1:([\s\S]*?):END/)||txt.match(/DW1:([A-Za-z0-9+\/=]+)/);
   if(m){const b=m[1].replace(/[^A-Za-z0-9+\/=]/g,"");return JSON.parse(decodeURIComponent(escape(atob(b))))}
   const j=txt.indexOf("{"),k=txt.indexOf("[");const st=j<0?k:k<0?j:Math.min(j,k);return JSON.parse(txt.slice(st))}
-function importResponse(txt){let d;try{d=parseResponse(txt)}catch(e){toast("Couldn't read that response — paste the whole DW1: code or choose the .json file");return false}
+function importResponse(txt){if(!isAdmin){toast("Only Luke can add responses");return false}if(String(txt||"").length>200000){toast("That response is too large");return false}let d;try{d=parseResponse(txt)}catch(e){toast("Couldn't read that response — paste the whole DW1: code or choose the .json file");return false}
   const arr=Array.isArray(d)?d:(d.people||[]);if(!arr.length){toast("No answers found in that response");return false}
   const isResp=d.type==="decision-wheel-response";const now=Date.now();
-  arr.forEach(u=>{u.saved=now;if(isResp)u.self=false;if(isResp&&u.name&&PEOPLE.find(p=>!p.user&&p.name===u.name))u.name+=" (survey)";if(!u.self)delete DELETED["u:"+u.name]});
+  const clean=arr.slice(0,50).map(u=>{const r=cleanRecord(u);r.saved=now;r.name=r.name.replace(/ \(you( \d+)?\)$/,"");
+    if(PEOPLE.find(p=>(!p.user||p.self)&&p.name===r.name))r.name+=" (survey)";delete DELETED["u:"+r.name];return r});
+  arr.length=0;arr.push(...clean);
   mergeBundle({people:arr,deleted:{}});
   const added=arr.filter(u=>!u.self).map(u=>PEOPLE.find(p=>p.user&&p.name===u.name)).filter(Boolean);added.forEach(P=>P.on=true);
   if(added.length)cwOther=added[added.length-1];
@@ -479,24 +563,26 @@ function buildHTML(){const json=JSON.stringify(bundle()).replace(/</g,"\\u003c")
 function readBundleText(txt){txt=String(txt||"");if(!txt.trim())return null;
   const m=txt.match(/<script id="dw-saved" type="application\/json">([\s\S]*?)<\/script>/);
   return JSON.parse(m?(m[1].trim()||"null"):txt)}
-function downloadApp(){const html=buildHTML();
+function downloadApp(){if(!isAdmin)return;const html=buildHTML();
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([html],{type:"text/html"}));a.download="decision_wheel.html";a.click();unsaved=false;setStatus();toast("Downloaded decision_wheel.html with your answers built in")}
 // ---- 2) link a save file on this computer (Chrome / Edge): written automatically on every change ----
 let fileHandle=null,fileOK=false;
 const idb=(mode,fn)=>new Promise((res,rej)=>{const r=indexedDB.open("decisionwheel",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onerror=()=>rej(r.error);r.onsuccess=()=>{const tx=r.result.transaction("kv",mode),st=tx.objectStore("kv");const q=fn(st);tx.oncomplete=()=>res(q&&q.result);tx.onerror=()=>rej(tx.error)}});
-async function linkFile(){if(!window.showSaveFilePicker){toast("Linking a file needs Chrome or Edge — use 'Save app with my answers' instead");return}
+async function linkFile(){if(!isAdmin)return;if(!window.showSaveFilePicker){toast("Linking a file needs Chrome or Edge — use 'Save app with my answers' instead");return}
   try{[fileHandle]=await showOpenFilePicker({types:[{description:"Decision Wheel app (decision_wheel.html)",accept:{"text/html":[".html",".htm"],"application/json":[".json"]}}]});
     if((await fileHandle.requestPermission({mode:"readwrite"}))!=="granted"){fileHandle=null;return}
     try{const b=readBundleText(await (await fileHandle.getFile()).text());if(b)mergeBundle(b)}catch(e){}
     fileOK=true;await idb("readwrite",st=>st.put(fileHandle,"handle"));await writeLinked(true);rerender();toast("Linked — every change now saves into "+fileHandle.name+" on your computer");unsaved=false;setStatus()}catch(e){}}
 async function reconnectFile(){if(!fileHandle)return;try{if(await fileHandle.requestPermission({mode:"readwrite"})==="granted"){fileOK=true;const b=readBundleText(await (await fileHandle.getFile()).text());if(b)mergeBundle(b);await writeLinked(true);rerender();toast("Reconnected to "+fileHandle.name)}}catch(e){}}
-async function writeLinked(force){if(!fileHandle||!fileOK)return;try{const w=await fileHandle.createWritable();await w.write(/\.html?$/i.test(fileHandle.name)?buildHTML():JSON.stringify(bundle(),null,2));await w.close()}catch(e){fileOK=false;setStatus()}}
+async function writeLinked(force){if(!isAdmin||!fileHandle||!fileOK)return;try{const w=await fileHandle.createWritable();await w.write(/\.html?$/i.test(fileHandle.name)?buildHTML():JSON.stringify(bundle(),null,2));await w.close()}catch(e){fileOK=false;setStatus()}}
 async function initLinked(){try{fileHandle=await idb("readonly",st=>st.get("handle"));if(!fileHandle)return;
   if(await fileHandle.queryPermission({mode:"readwrite"})==="granted"){fileOK=true;const b=readBundleText(await (await fileHandle.getFile()).text());if(b){mergeBundle(b);rerender()}}setStatus()}catch(e){fileHandle=null}}
 function setStatus(){const el=document.getElementById("savestat");if(!el)return;
+  if(!rolesReady){el.innerHTML="";return}
+  if(!isAdmin){const P=PEOPLE.find(p=>p.mine);el.innerHTML=P?`✓ Your answers (${esc(P.name)}) are saved in this browser`:"Viewing · take the survey to add your own answers";return}
   const parts=[];parts.push(storageOK()?"saved in this browser":"browser storage blocked");
   if(fileHandle)parts.push(fileOK?"and to "+esc(fileHandle.name):`<button class="lnk" id="reconnect">reconnect ${esc(fileHandle.name)}</button>`);
-  el.innerHTML=`✓ Answers ${parts.join(" ")}${unsaved&&!(fileOK&&/\.html?$/i.test(fileHandle.name))?' · <button class="lnk" id="dlapp">save app copy</button>':''}`}
+  el.innerHTML=`<span class="adm">Admin</span> ✓ Answers ${parts.join(" ")}${unsaved&&!(fileOK&&/\.html?$/i.test(fileHandle.name))?' · <button class="lnk" id="dlapp">save app copy</button>':''}`}
 function rerender(){if(typeof view==="undefined")return;if(view==="wheel"){ownerSel();draw()}else if(view==="compare")renderCompare();else renderSurvey();setStatus()}
 window.addEventListener("beforeunload",e=>{if(unsaved&&!fileOK&&!storageOK()){e.preventDefault();e.returnValue=""}});
 function applyUsers(arr){arr.forEach(u=>{let P=u.self?PEOPLE.find(p=>p.self):PEOPLE.find(p=>p.user&&p.name===u.name);
@@ -678,7 +764,8 @@ function tabHeat(vis){const R=target;
     const sm=sim(R,P);t+=`<td style="background:#fff;color:${INK}">${P===R?"—":sm.n?Math.round(100*sm.f)+"%":"–"}${P===R?"":`<br><span style="font-weight:400;color:${GREY};font-size:10.5px">${sm.v}/${sm.n}</span>`}</td></tr>`});
   return t+`</table></div>`+heatLegend()}
 function tabGrid(vis){const nv=vis.length;
-  let h=`<p class="sub">Editing: <select class="selref" id="seled">${PEOPLE.map((P,k)=>P.user?`<option value="${k}"${k===editor?' selected':''}>${esc(P.name)}</option>`:"").join("")}</select> — click a cell to set their view (saved). Theologians' researched views are fixed and can't be edited.</p><div class="grid"><div class="gh">Topic</div><div class="gh">Option 1</div><div class="gh">Option 2</div><div class="gh">Option 3</div><div class="gh">Agreement</div>`;
+  if(!canEdit(PEOPLE[editor])){const k=PEOPLE.findIndex(canEdit);editor=k}
+  let h=!canEdit(PEOPLE[editor])?`<p class="sub">Read-only. ${isAdmin?"":"Take the survey to add your own row."}</p>`:`<p class="sub">Editing: <select class="selref" id="seled">${PEOPLE.map((P,k)=>canEdit(P)?`<option value="${k}"${k===editor?' selected':''}>${esc(P.name)}</option>`:"").join("")}</select> — click a cell to set their view (saved). Theologians' researched views are fixed and can't be edited.</p>`;h+=`<div class="grid"><div class="gh">Topic</div><div class="gh">Option 1</div><div class="gh">Option 2</div><div class="gh">Option 3</div><div class="gh">Agreement</div>`;
   TOPICS.forEach((T,i)=>{h+=`<div class="tn">${esc(T.name)}</div>`;
     const ans=vis.filter(P=>choice(P,i)!=null),counts=T.opts.map((_,k)=>vis.filter(P=>choice(P,i)===k).length);
     for(let k=0;k<3;k++){if(k>=T.opts.length){h+=`<div></div>`;continue}
@@ -805,7 +892,7 @@ function tabLabels(vis){
   let h=`<p class="sub">Describing terms come from each person's views. "Likely traditions" combines rules about which churches hold which views with the traditions of each person's closest matches (80%+ on 7+ topics), so it updates as people are added or views change. A rough guide only.</p><div style="overflow-x:auto"><table class="lbl"><tr><th style="width:160px">Person</th><th style="width:180px">Church attended / background</th><th>Describing terms</th><th style="width:22%">Likely traditions</th><th style="width:170px">Closest matches</th></tr>`;
   vis.forEach(P=>{const Lb=labels(P),near=closest(P),fromNear=near.filter(x=>x.f>=.8&&x.n>=7&&!x.Q.user).flatMap(x=>x.Q.trad||[]),trad=[...new Set([...Lb.d,...fromNear])];
     h+=`<tr><td><span style="display:inline-flex;align-items:center;gap:8px;font-weight:700">${dotH(P)}${esc(P.name)}</span><div style="font-size:11.5px;color:${MUTED};margin-top:4px">${esc(fam(P).n)}</div></td>
-      <td>${P.user?`<input class="chin" data-church="${PEOPLE.indexOf(P)}" value="${esc(P.church||"")}">`:esc(P.church||"—")}${P.src?`<div style="font-size:11px;color:${GREY};margin-top:4px">Source: ${esc(P.src)}</div>`:""}${LINKS[P.name]?`<div style="font-size:11px;margin-top:3px">${LINKS[P.name].map(([t,u])=>`<a href="${u}" target="_blank" style="color:${TEAL}">${esc(t)}</a>`).join(" · ")}</div>`:""}</td>
+      <td>${canEdit(P)?`<input class="chin" data-church="${PEOPLE.indexOf(P)}" value="${esc(P.church||"")}">`:esc(P.church||"—")}${P.src?`<div style="font-size:11px;color:${GREY};margin-top:4px">Source: ${esc(P.src)}</div>`:""}${LINKS[P.name]?`<div style="font-size:11px;margin-top:3px">${LINKS[P.name].map(([t,u])=>`<a href="${u}" target="_blank" style="color:${TEAL}">${esc(t)}</a>`).join(" · ")}</div>`:""}</td>
       <td>${Lb.t.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</td><td>${trad.map(x=>`<span class="tag" style="background:#E3F1F2">${esc(x)}</span>`).join("")}</td>
       <td style="font-size:12.5px">${near.map(x=>`${esc(x.Q.name)} <b>${Math.round(100*x.f)}%</b> <span style="color:${GREY}">${x.v}/${x.n}</span>`).join("<br>")}</td></tr>`});
   return h+`</table></div>`}
@@ -890,43 +977,81 @@ const BIO={
  "Dane Ortlund":{life:"active 21st c.",era:"21st c.",known:"Pastor in Illinois; Gentle and Lowly (2020); Crossway author.",contro:[]}
 };
 function tabBios(vis){
-  let h=`<p class="sub">A short profile for each person shown. Beliefs and tags come from their placements in this app; hover the heat map for sources. Controversies are listed only where widely reported.</p><div class="rl">`;
-  vis.forEach(P=>{const B=BIO[P.name]||{},L=labels(P),k=PEOPLE.indexOf(P);
+  let h=`<p class="sub">A short profile for each person shown. Beliefs and tags come from their placements in this app; hover the heat map for sources. Controversies are listed only where widely reported.</p>`;
+  let desk=`<div class="rl bio-desk">`,mob=`<div class="bio-mob">`;
+  vis.forEach(P=>{const B=BIO[P.name]||{},L=labels(P),k=PEOPLE.indexOf(P),F=fam(P);
     const held=TOPICS.map((T,i)=>{const c=choice(P,i);return c==null?null:`<span class="tag" title="${esc(T.name)}">${esc(TSHORT[i])}: ${esc(T.opts[c].s)}</span>`}).filter(Boolean);
-    h+=`<div class="rcard" id="bio-${k}"><div class="rt" style="display:flex;align-items:center;gap:8px">${dotH(P)}${esc(P.name)}${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}</div>
-      <div class="rov">${esc(B.life||(P.user?"Survey user":""))}${B.era?" · "+esc(B.era):""} · ${esc(fam(P).n)}${P.church?" · "+esc(P.church):""}</div>
-      ${B.known?`<div class="ro"><b>Known for</b><div>${esc(B.known)}</div></div>`:""}
+    const sub=`${esc(B.life||(P.user?"Survey user":""))}${B.era?" · "+esc(B.era):""} · ${esc(F.n)}${P.church?" · "+esc(P.church):""}`;
+    const list=(arr)=>arr.map(([t,u])=>`<div>• ${esc(t)}${u?` <a href="${esc(u)}" target="_blank" rel="noopener" class="blink us">source</a>`:""}</div>`).join("");
+    const body=`${B.known?`<div class="ro"><b>Known for</b><div>${esc(B.known)}</div></div>`:""}
+      ${B.spec?`<div class="ro bspec"><b>Speciality</b><div>${esc(B.spec)}</div></div>`:""}
+      ${(B.crit&&B.crit.length)?`<div class="ro bcrit"><b>Critics say</b>${list(B.crit)}</div>`:""}
+      ${(B.contro&&B.contro.length)?`<div class="ro bcon"><b>Controversies</b>${list(B.contro)}</div>`:""}
       <div class="ro"><b>Describing terms</b><div>${L.t.map(x=>`<span class="tag">${esc(x)}</span>`).join("")||'<span style="color:#9AA3AD">not enough data yet</span>'}</div></div>
       <div class="ro"><b>Beliefs (${held.length} of ${NT} topics)</b><div>${held.join("")||'<span style="color:#9AA3AD">none recorded yet</span>'}</div></div>
-      ${(B.contro&&B.contro.length)?`<div class="ro"><b>Controversies</b>${B.contro.map(([t,u])=>`<div>• ${esc(t)}${u?` <a href="${u}" target="_blank" class="blink us">source</a>`:""}</div>`).join("")}</div>`:""}
-      <div class="ro">${BOOKS[P.name]?`<button class="lnk" data-goto="read:${k}">Reading list →</button>`:""} <button class="lnk" data-goto="heat:${k}">Compare on wheel →</button></div></div>`});
-  return h+`</div>`}
+      <div class="ro bbtns">${BOOKS[P.name]?`<button class="lnk" data-goto="read:${k}">Reading list →</button>`:""} <button class="lnk" data-goto="heat:${k}">Compare on wheel →</button></div>`;
+    const badges=`${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}`;
+    desk+=`<div class="rcard" id="bio-${k}"><div class="rt" style="display:flex;align-items:center;gap:8px">${dotH(P)}${esc(P.name)}${badges}</div><div class="rov">${sub}</div>${body}</div>`;
+    const line=B.spec||B.known||(P.user?(P.church||"Survey user"):"");
+    mob+=`<details class="bpill" id="biom-${k}"><summary><span class="bav" style="background:${F.col};color:${F.fg}">${esc(ini(P.name))}</span><span class="bpm"><span class="bpn">${esc(P.name)}${badges}</span><span class="bps">${esc(B.life||"")}${B.life&&line?" · ":""}${esc(line)}</span></span><span class="bchev">›</span></summary><div class="bbody"><div class="rov">${sub}</div>${body}</div></details>`});
+  return h+desk+`</div>`+mob+`</div>`}
 function renderCompare(){const vis=visible();
   let h=`<div class="cmp"><h2>Stage 3 — Where views overlap</h2><p class="sub">Choose a target person, then show or hide others. Colours group people by end-times family; initials identify them. The target always stays visible.</p>${chips()}`;
   h+=`<div class="tabs">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`;
   h+=({cwheel:tabCmpWheel,tend:tabTend,heat:tabHeat,grid:tabGrid,scatter:tabScatter,tree:tabTree,combo:tabCombos,read:tabRead,labels:tabLabels,bios:tabBios})[ctab](vis);
-  if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{const el=document.getElementById(id);if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
+  if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{let el=document.getElementById(id);if(el&&!el.offsetParent&&id.startsWith("bio-")){el=document.getElementById("biom-"+id.slice(4));if(el)el.open=true}if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
   h+=`<div class="src">Theologian views are summarised from their own writings and statements where available — see the Labels & churches tab for source links, and hover cells for notes. "—" means a different view or no clear public position. Source dots show how many independent sources were found for a placement.</div></div>`;
   s.innerHTML=h}
 // ================= survey =================
-let surveyFor=null;
-function renderSurvey(){const P=surveyFor;const isNew=!P;
+let surveyFor=null,svPanel=null; // svPanel: "paste" | "pass" | "login" | "send"
+const RECIPIENT="lsm.web.contact@gmail.com"; // where visitors' "Email my answers" goes
+const b64=x=>btoa(unescape(encodeURIComponent(x)));
+function responseCode(P){const r=serializeOne(P);r.self=false;r.source="survey-response";return "DW1:"+b64(JSON.stringify({version:1,type:"decision-wheel-response",people:[r]}))+":END"}
+function panelHTML(){
+  if(svPanel==="paste"&&isAdmin)return `<div class="svpanel"><b>Add someone's emailed answers</b><p class="sub">Paste the email you received (or just the DW1: code inside it), then click Add.</p><textarea id="pastetxt"></textarea><div class="svrow"><button type="button" class="mini primary" id="pasteadd">Add this person</button> <button type="button" class="mini" data-sv="">Close</button></div></div>`;
+  if(svPanel==="pass"&&isAdmin)return `<div class="svpanel"><b>${ADMIN_CFG?"Change":"Set"} your admin passphrase</b><p class="sub">Use at least 10 characters, ideally a few unrelated words. It's never stored: the app keeps only a scrambled check value, and each device you sign in on remembers a key made from it. Changing it signs out every other device. After setting it, commit &amp; push in GitHub Desktop so your phone and the website get it.</p>
+    <div class="svrow"><input type="password" id="pp1" class="chin" placeholder="New passphrase" autocomplete="new-password"> <input type="password" id="pp2" class="chin" placeholder="Type it again" autocomplete="new-password"> <button type="button" class="mini primary" id="ppset">Save passphrase</button> <button type="button" class="mini" data-sv="">Cancel</button> <span id="ppmsg" class="err"></span></div></div>`;
+  if(svPanel==="login"&&!isAdmin)return `<div class="svpanel"><b>Admin sign-in (Luke)</b><p class="sub">Unlocks editing and importing on this device until you lock it again.</p>
+    <div class="svrow"><input type="password" id="pp0" class="chin" placeholder="Passphrase" autocomplete="current-password"> <button type="button" class="mini primary" id="pplogin">Sign in</button> <button type="button" class="mini" data-sv="">Cancel</button> <span id="ppmsg" class="err"></span></div></div>`;
+  if(svPanel==="send"&&!isAdmin){const P=PEOPLE.find(p=>p.mine);if(!P)return "";const code=responseCode(P);
+    const body="Hi Luke,\n\nHere are my Decision Wheel answers. Paste the code below into the app (Survey → Paste a response).\n\n"+code+"\n\n"+P.name;
+    const mail=`mailto:${RECIPIENT}?subject=${encodeURIComponent("Decision Wheel answers — "+P.name)}&body=${encodeURIComponent(body)}`;
+    return `<div class="svpanel"><b>Send your answers to Luke</b><p class="sub">Click <i>Email my answers</i>: your email app opens with everything filled in, so just press Send. If nothing opens, copy the code and email it to ${esc(RECIPIENT)}.</p>
+    <div class="svrow"><a class="btnlink primary" href="${mail}">Email my answers</a> <button type="button" class="mini" id="svcopy">Copy answer code</button> <button type="button" class="mini" data-sv="">Close</button></div><textarea id="svcode" readonly>${esc(code)}</textarea></div>`}
+  return ""}
+function renderSurvey(){if(!isAdmin)surveyFor=PEOPLE.find(p=>p.mine)||null;
+  const P=surveyFor,isNew=!P;
   const val=i=>P?choice(P,i):null,al=i=>P?alsoOf(P,i):[],cv=i=>P?(convOf(P,i)||3):3;
-  let h=`<div class="cmp sv"><h2>${isNew?"Take the survey":"Edit answers — "+esc(P.name)}</h2><p class="sub">Pick the view you hold on each topic, tick any other views you partly hold, and set how sure you are. Every change saves automatically in this browser. To keep your answers in the file itself — so any downloaded copy, on any computer, remembers them — click <b>Save app with my answers</b>. In Chrome or Edge you can also <b>link a save file</b>, which is then updated automatically on every change.</p>
-  <div class="svtop"><label>Edit <select class="selref" id="svwho"><option value="">— New person —</option>${PEOPLE.filter(Q=>Q.user).map(Q=>`<option value="${PEOPLE.indexOf(Q)}"${Q===P?' selected':''}>${esc(Q.name)}</option>`).join("")}</select></label>
-  <button class="mini primary" id="svdl">Save app with my answers (.html)</button><button class="mini" id="svlink">${fileHandle?(fileOK?"Linked: "+esc(fileHandle.name):"Reconnect "+esc(fileHandle.name)):"Link this file — auto-save into decision_wheel.html (Chrome/Edge)"}</button><button class="mini" id="svexport">Export answers (.json)</button><button class="mini" id="svpaste">Paste a response</button><label class="mini fbtn">Import file<input type="file" id="svimport" accept=".json,application/json" hidden></label>${P&&!P.self?'<button class="mini" id="svdelete">Delete this person</button>':''}</div>
-  <div id="pastebox" style="display:none;margin:0 0 14px"><p class="sub" style="margin:0 0 4px">Paste the email you received (or just the DW1: code inside it), then click Add.</p><textarea id="pastetxt" style="width:100%;height:80px;font:12px monospace;box-sizing:border-box"></textarea><div class="svrow"><button type="button" class="mini primary" id="pasteadd">Add this person</button></div></div>
-  <form id="svform"><div class="svrow"><label>Name <input name="name" required value="${esc(P?P.name:"")}" class="chin" style="width:200px"></label><label>Church attended / background <input name="church" value="${esc(P?P.church||"":"")}" class="chin" style="width:260px"></label></div>`;
+  let h=`<div class="cmp sv">`;
+  if(isAdmin){
+    h+=`<h2>${isNew?"Add a person":"Edit answers — "+esc(P.name)}</h2>
+    <p class="sub">Admin mode on this device. Changes save in this browser${fileOK?` and straight into <b>${esc(fileHandle.name)}</b>`:""}.</p>
+    ${setupMode?`<div class="svpanel warn"><b>Protect your data:</b> set an admin passphrase. Until you do, anyone who opens a copy of this file can edit everyone's answers. <button type="button" class="mini primary" data-sv="pass">Set passphrase</button></div>`:""}
+    <div class="svtools">
+      <div><span class="svlbl">Person</span><select class="selref" id="svwho"><option value="">+ Add a new person</option>${PEOPLE.filter(Q=>Q.user).map(Q=>`<option value="${PEOPLE.indexOf(Q)}"${Q===P?' selected':''}>${esc(Q.name)}${Q.self?" (you)":""}</option>`).join("")}</select>${P&&!P.self?' <button type="button" class="mini" id="svdelete">Delete</button>':''}</div>
+      <div><span class="svlbl">Responses</span><button type="button" class="mini" data-sv="paste">Paste a response</button> <label class="mini fbtn">Import file<input type="file" id="svimport" accept=".json,application/json" hidden></label> <button type="button" class="mini" id="svexport">Export all (.json)</button></div>
+      <div><span class="svlbl">This file</span><button type="button" class="mini" id="svlink">${fileHandle?(fileOK?"Linked: "+esc(fileHandle.name):"Reconnect "+esc(fileHandle.name)):"Link this file (Chrome/Edge)"}</button> <button type="button" class="mini" id="svdl">Download a copy</button></div>
+      <div><span class="svlbl">Admin</span><button type="button" class="mini" data-sv="pass">${ADMIN_CFG?"Change passphrase":"Set passphrase"}</button>${ADMIN_CFG?' <button type="button" class="mini" id="svlock">Lock this device</button>':''}</div>
+    </div>`}
+  else{
+    h+=`<h2>${isNew?"Take the survey":"Your answers — "+esc(P.name)}</h2>
+    <p class="sub">Choose the view you hold on each topic, tick any others you partly hold, and say how sure you are. Your answers are saved in this browser only. You can compare yourself with everyone in the app, but you can't change anyone else's answers. When you're done, send them to Luke.</p>
+    ${P?`<div class="svtools"><div><button type="button" class="mini primary" data-sv="send">Send my answers to Luke</button></div></div>`:""}`}
+  h+=panelHTML();
+  h+=`<form id="svform" autocomplete="off"><div class="svrow"><label>Name <input name="name" required maxlength="60" value="${esc(P?P.name:"")}" class="chin"></label><label>Church / background <input name="church" maxlength="80" value="${esc(P?P.church||"":"")}" class="chin"></label></div>`;
   TOPICS.forEach((T,i)=>{h+=`<fieldset class="svq"><legend>${i+1}. ${esc(T.name)} <span>${esc(T.q)}</span></legend><div class="svopts">`+
     T.opts.map((o,k)=>`<label class="svo"><input type="radio" name="t${i}" value="${k}"${val(i)===k?' checked':''}><b>${esc(o.n)}</b><span>${esc(o.d)}</span></label>`).join("")+
     `<label class="svo ns"><input type="radio" name="t${i}" value=""${val(i)==null?' checked':''}><b>Not sure / skip</b></label></div>
     <div class="svmeta"><span>Also partly hold: ${T.opts.map((o,k)=>`<label><input type="checkbox" name="a${i}" value="${k}"${al(i).includes(k)?' checked':''}> ${esc(o.s)}</label>`).join(" ")}</span>
-    <label>Conviction <input type="range" name="c${i}" min="1" max="5" value="${cv(i)}" oninput="this.nextElementSibling.textContent=this.value"><output>${cv(i)}</output>/5</label></div></fieldset>`});
-  h+=`<div class="svrow"><button type="button" id="svsave" class="primary">Save and view wheel</button> <button type="button" class="mini" id="svcancel">Cancel</button></div></form></div>`;
-  s.innerHTML=h}
-function readSurvey(form){const fd=new FormData(form);const name=(fd.get("name")||"").trim()||"New person";
-  let P=surveyFor;if(!P){P={name,user:true,on:true,v:[],also:{},conv:{}};PEOPLE.splice(1,0,P)}
-  P.name=name;P.church=fd.get("church")||"";P.user=true;
+    <label>How sure <input type="range" name="c${i}" min="1" max="5" value="${cv(i)}" oninput="this.nextElementSibling.textContent=this.value"><output>${cv(i)}</output>/5</label></div></fieldset>`});
+  h+=`<div class="svrow"><button type="button" id="svsave" class="primary">${isAdmin?"Save":"Save my answers"}</button> <button type="button" class="mini" id="svcancel">Cancel</button></div></form>`;
+  if(!isAdmin&&ADMIN_CFG)h+=`<p class="sub" style="margin-top:28px;text-align:right"><button type="button" class="lnk" data-sv="login">Admin sign-in</button></p>`;
+  s.innerHTML=h+`</div>`}
+function readSurvey(form){const fd=new FormData(form);
+  let P=surveyFor;if(!isAdmin)P=PEOPLE.find(p=>p.mine)||null;if(P&&!canEdit(P))return null;
+  if(!P){P={name:"",user:true,on:true,v:[],also:{},conv:{}};if(!isAdmin)P.mine=true;PEOPLE.splice(1,0,P)}
+  const name=String(fd.get("name")||"").trim().slice(0,60)||(isAdmin?"New person":"Me");
+  P.name=P.self?name:uniqueName(name,P);P.church=String(fd.get("church")||"").slice(0,80);P.user=true;
   P.v=TOPICS.map((_,i)=>{const x=fd.get("t"+i);return {c:x===""||x==null?null:+x}});
   P.also={};P.conv={};TOPICS.forEach((_,i)=>{const a=fd.getAll("a"+i).map(Number).filter(k=>k!==P.v[i].c);if(a.length)P.also[i]=a;if(P.v[i].c!=null)P.conv[i]=+fd.get("c"+i)});
   saveUsers(P);owner=P;if(!P.self){target=PEOPLE.find(Q=>Q.self)||target;cwOther=P;P.on=true}else target=P;return P}
@@ -957,13 +1082,21 @@ function setView(v){view=v;stopLoop();["Wheel","Compare","Survey"].forEach(k=>do
   document.getElementById("wheelBar").style.display=v==="wheel"?"":"none";document.getElementById("hint").style.display=v==="wheel"?"":"none";
   s.style.maxWidth=v==="wheel"?"":"none";tip.style.display="none";if(v==="wheel"){ownerSel();draw()}else if(v==="compare")renderCompare();else renderSurvey()}
 document.getElementById("vWheel").onclick=()=>setView("wheel");document.getElementById("vCompare").onclick=()=>setView("compare");
-document.getElementById("vSurvey").onclick=()=>{surveyFor=PEOPLE.find(P=>P.self);setView("survey")};
+document.getElementById("vSurvey").onclick=()=>{surveyFor=isAdmin?PEOPLE.find(P=>P.self):(PEOPLE.find(p=>p.mine)||null);svPanel=null;setView("survey")};
 s.addEventListener("click",e=>{
-  if(view==="wheel"){const g=e.target.closest(".topic");if(g){const i=+g.dataset.i,n=TOPICS[i].opts.length,c=choice(owner,i);owner.v[i]={c:c==null?0:(c+1)%n};if(owner.also[i])owner.also[i]=owner.also[i].filter(k=>k!==owner.v[i].c);saveUsers(owner);draw()}return}
+  if(view==="wheel"){const g=e.target.closest(".topic");if(g&&!canEdit(owner)){tip.innerHTML=tipHTML(+g.dataset.i);tip.style.display="block";const r=tip.getBoundingClientRect();tip.style.left=Math.max(8,Math.min(e.clientX-r.width/2,innerWidth-r.width-8))+"px";tip.style.top=Math.max(8,Math.min(e.clientY+16,innerHeight-r.height-8))+"px";return}if(g){const i=+g.dataset.i,n=TOPICS[i].opts.length,c=choice(owner,i);owner.v[i]={c:c==null?0:(c+1)%n};if(owner.also[i])owner.also[i]=owner.also[i].filter(k=>k!==owner.v[i].c);saveUsers(owner);draw()}return}
+  if(view==="survey"){const sv=e.target.closest("[data-sv]");if(sv){svPanel=sv.dataset.sv||null;renderSurvey();if(svPanel)window.scrollTo({top:0,behavior:"smooth"});return}
+    if(e.target.id==="svcopy"){const t=document.getElementById("svcode");t.select();try{navigator.clipboard.writeText(t.value)}catch(err){document.execCommand("copy")}e.target.textContent="Copied ✓";return}
+    if(e.target.id==="pplogin"){const m=document.getElementById("ppmsg");m.textContent="Checking…";unlockAdmin(document.getElementById("pp0").value).then(ok=>{if(!ok)m.textContent="That passphrase didn't match"});return}
+    if(e.target.id==="ppset"&&isAdmin){const a=document.getElementById("pp1").value,b=document.getElementById("pp2").value,m=document.getElementById("ppmsg");
+      if(a.length<10){m.textContent="Use at least 10 characters";return}if(a!==b){m.textContent="The two don't match";return}
+      if(!window.crypto||!crypto.subtle){m.textContent="This browser can't do this here";return}
+      m.textContent="Saving…";setPassphrase(a).then(()=>{svPanel=null;renderSurvey();toast(fileOK?"Passphrase saved into "+fileHandle.name+" — now commit & push":"Passphrase saved — link this file or download a copy to keep it")});return}
+    if(e.target.id==="svlock"&&isAdmin){lockAdmin();return}}
+  if(view==="survey"&&!isAdmin&&/^(svdl|svlink|pasteadd|svexport|svdelete)$/.test(e.target.id))return;
   if(e.target.id==="svdl"){downloadApp();return}
   if(e.target.id==="svlink"){fileHandle&&!fileOK?reconnectFile():linkFile();return}
-  if(view==="survey"&&e.target.id==="svpaste"){const b=document.getElementById("pastebox");b.style.display=b.style.display==="none"?"block":"none";return}
-  if(view==="survey"&&e.target.id==="pasteadd"){if(importResponse(document.getElementById("pastetxt").value)){setView("compare");ctab="cwheel";renderCompare()}return}
+  if(view==="survey"&&e.target.id==="pasteadd"){if(importResponse(document.getElementById("pastetxt").value)){svPanel=null;setView("compare");ctab="cwheel";renderCompare()}return}
   if(view==="survey"){if(e.target.id==="svsave"){saveSurvey();return}if(e.target.id==="svcancel"){setView("wheel");window.scrollTo({top:0})}
     if(e.target.id==="svexport"){const data=JSON.stringify(serializeUsers(),null,2);
       const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));a.download="decision-wheel-answers.json";a.click()}
@@ -983,22 +1116,28 @@ s.addEventListener("click",e=>{
     renderCompare();return}
   const fa=e.target.closest("[data-fa],[data-fn]");if(fa){const F=FAM[+(fa.dataset.fa??fa.dataset.fn)],on=fa.dataset.fa!=null;PEOPLE.forEach(P=>{if(fam(P)===F)P.on=on});renderCompare();return}
   const chip=e.target.closest(".chip");if(chip){const P=PEOPLE[+chip.dataset.p];if(P!==target)P.on=!P.on;renderCompare();return}
-  const c=e.target.closest(".cell");if(!c)return;const P=PEOPLE[editor];if(!P||!P.user)return;const i=+c.dataset.i,k=+c.dataset.k;
+  const c=e.target.closest(".cell");if(!c)return;const P=PEOPLE[editor];if(!P||!canEdit(P))return;const i=+c.dataset.i,k=+c.dataset.k;
   P.v[i]={c:k};if(P.also&&P.also[i])P.also[i]=P.also[i].filter(x=>x!==k);if(P.user)saveUsers(P);renderCompare()});
 s.addEventListener("change",e=>{const el=e.target;
   if(view==="survey"){if(el.id==="svwho"){surveyFor=el.value===""?null:PEOPLE[+el.value];renderSurvey()}
-    if(el.id==="svimport"&&el.files[0]){el.files[0].text().then(txt=>{try{importResponse(txt)}catch(err){el.parentElement.insertAdjacentHTML("afterend",'<span class="err"> That file could not be read.</span>')}})}
+    if(el.id==="svimport"&&isAdmin&&el.files[0]){el.files[0].text().then(txt=>{try{importResponse(txt)}catch(err){el.parentElement.insertAdjacentHTML("afterend",'<span class="err"> That file could not be read.</span>')}})}
     return}
   if(el.id==="seltarget"){target=PEOPLE[+el.value];target.on=true;renderCompare()}
   if(el.id==="selcw"){cwOther=PEOPLE[+el.value];cwOther.on=true;renderCompare()}
   if(el.id==="selcwA"){target=PEOPLE[+el.value];target.on=true;renderCompare()}
   if(el.id==="seled"){editor=+el.value;renderCompare()}
   if(el.id==="readmine"){readMine=el.checked;renderCompare()}
-  if(el.dataset.church!==undefined){PEOPLE[+el.dataset.church].church=el.value;saveUsers(PEOPLE[+el.dataset.church]);renderCompare()}});
-function saveSurvey(){const form=document.getElementById("svform");if(!form)return;const P=readSurvey(form);t=1;setView("wheel");window.scrollTo({top:0});toast("Saved "+P.name+"'s answers")}
+  if(el.dataset.church!==undefined){if(!canEdit(PEOPLE[+el.dataset.church]))return;PEOPLE[+el.dataset.church].church=el.value.slice(0,80);saveUsers(PEOPLE[+el.dataset.church]);renderCompare()}});
+function saveSurvey(){const form=document.getElementById("svform");if(!form)return;
+  if(!form.name.value.trim()){form.name.focus();toast("Please enter a name");return}
+  const P=readSurvey(form);if(!P){toast("You can only change your own answers");return}
+  if(!isAdmin){svPanel="send";surveyFor=P;renderSurvey();window.scrollTo({top:0,behavior:"smooth"});toast("Saved — now send them to Luke");return}
+  t=1;setView("wheel");window.scrollTo({top:0});toast("Saved "+P.name+"'s answers")}
 function toast(msg){let el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";document.body.appendChild(el)}el.textContent=msg;el.className="show";clearTimeout(el._t);el._t=setTimeout(()=>el.className="",2500)}
 document.getElementById("savestat").addEventListener("click",e=>{if(e.target.id==="dlapp")downloadApp();if(e.target.id==="reconnect")reconnectFile()});
 s.addEventListener("submit",e=>{e.preventDefault();if(e.target.id==="svform")saveSurvey()});
-ownerSel();draw();setStatus();initLinked();
+ownerSel();draw();setStatus();initRoles();
+// offline: once the app is opened from the website, it keeps working with no internet (phone or PC)
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 
 </script></body></html>
