@@ -240,6 +240,23 @@ a.vall{font-size:11.5px;font-weight:700;color:var(--teal);text-decoration:none;b
 #vpop sup{font-size:10px;color:var(--muted);margin-right:2px}
 #vpop .vpf{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
 #vpop .vpo{font-weight:700;color:var(--teal);text-decoration:none}#vpop .vpc{font-size:10.5px;color:var(--muted)}
+
+/* compare landing: equal-size wrapped buttons */
+.btngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:0 0 14px}
+.btngrid button{width:100%;min-height:40px;border-radius:10px;padding:8px 10px;font-size:13.5px;line-height:1.2;white-space:normal;text-align:center}
+.cmp .tabs.btngrid{display:grid;flex-wrap:initial;overflow:visible}
+.btngrid button small{font-size:11px;opacity:.85}
+button.era{opacity:1}button.era:not(.on){background:var(--bg);color:var(--teal)}
+.ctl{border:1px solid var(--line);border-radius:14px;padding:12px 14px 2px;margin:0 0 14px;background:var(--soft)}
+.ctlrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.ctlrow .selref{flex:1;min-width:180px;max-width:340px;margin:0;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.ctlh{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:0 0 6px}
+.ctlnote{font-weight:400;text-transform:none;letter-spacing:0;font-size:11.5px;margin-left:6px}
+@media (max-width:700px){.btngrid{grid-template-columns:repeat(3,1fr);gap:6px}.btngrid button{font-size:12.5px;padding:6px 4px;min-height:44px}.cmp .tabs.btngrid{display:grid;flex-wrap:initial;overflow:visible}.ctlrow .selref{max-width:none}}
+/* pills: grey outline when closed, teal when open; topic positions keep their gold */
+.bpill{border:1.5px solid var(--muted)!important}
+.bpill[open]{border:2px solid var(--teal)!important}
+.tab-read .rcard,.bio-desk .rcard,.tdesk .rcard{border:1.5px solid var(--muted)!important}
 </style></head>
 <body>
 <div class="bar">
@@ -854,8 +871,9 @@ function labels(P){const c=i=>choice(P,i),also=alsoOf(P,3);const t=[],d=[];const
 // ================= compare UI =================
 let pendingScroll=null;let view="wheel",ctab="tend",editor=0,readMine=false,readMode="topic"; // editor = index of a survey user (Luke by default)
 function chips(){const tg=PEOPLE.indexOf(target);
-  let h=`<div class="tbar"><label>Target person <select class="selref" id="seltarget">${PEOPLE.map((P,k)=>`<option value="${k}"${P===target?' selected':''}>${esc(P.name)}${P.user&&!P.self?' (survey)':''}</option>`).join("")}</select></label>
-  <span class="qb"><button class="mini" data-q="all">Select all</button><button class="mini" data-q="none">Deselect all</button><button class="mini" data-q="two">+ closest</button><button class="mini" data-q="near">+ 3 closest</button><button class="mini" data-q="modern">+ modern authors</button></span></div>${eraBar()}<details class="pbox" id="pbox"${peopleOpen?" open":""}><summary><span class="pbt">People shown</span> <span class="pbn">${visible().length} of ${PEOPLE.filter(eraOK).length}</span> <span class="pbd">${visible().slice(0,14).map(P=>dotH(P,18)).join("")}${visible().length>14?" …":""}</span><span class="bchev">›</span></summary><div class="fams">`;
+  let h=`<div class="ctl"><div class="ctlrow"><label class="ctlh" for="seltarget">Target person</label><select class="selref" id="seltarget">${PEOPLE.map((P,k)=>`<option value="${k}"${P===target?' selected':''}>${esc(P.name)}${P.user&&!P.self?' (survey)':''}</option>`).join("")}</select></div>
+  <div class="ctlh">Target people</div><div class="btngrid"><button class="mini" data-q="all">Select all</button><button class="mini" data-q="none">Deselect all</button><button class="mini" data-q="two">+ Closest</button><button class="mini" data-q="near">+ 3 closest</button><button class="mini" data-q="modern">+ Modern authors</button></div>
+  ${eraBar()}</div><details class="pbox" id="pbox"${peopleOpen?" open":""}><summary><span class="pbt">People shown</span> <span class="pbn">${visible().length} of ${PEOPLE.filter(eraOK).length}</span> <span class="pbd">${visible().slice(0,14).map(P=>dotH(P,18)).join("")}${visible().length>14?" …":""}</span><span class="bchev">›</span></summary><div class="fams">`;
   FAM.forEach((F,fi)=>{const ps=PEOPLE.filter(P=>fam(P)===F&&eraOK(P));if(!ps.length)return;
     h+=`<div class="fam"><div class="fh"><i style="background:${F.col}"></i>${F.n}<button class="lnk" data-fa="${fi}">all</button><button class="lnk" data-fn="${fi}">none</button></div><div class="people">`+ps.map(P=>{const k=PEOPLE.indexOf(P);return `<button class="chip${P.on||P===target?'':' off'}${P===target?' tgt':''}" data-p="${k}">${dotH(P,20)}<span>${esc(P.name)}</span>${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}</button>`}).join("")+`</div></div>`});
   return h+`</div></details>`}
@@ -868,8 +886,9 @@ const erasOf=P=>P.user?["M"]:(ERA_OF[P.name]||["H","M"]);
 let eraSel=new Set((()=>{try{const v=JSON.parse(lsGet("decisionwheel_eras")||"null");if(Array.isArray(v)&&v.length)return v}catch(e){}return ["A","H","M"]})());
 const eraOK=P=>P.user||P===target||erasOf(P).some(e=>eraSel.has(e)); // survey users and the target always stay
 const eraItemOK=eras=>eras.some(e=>eraSel.has(e));
-function eraBar(){return `<div class="erabar"><span class="svlbl">Era</span>${["A","H","M"].map(e=>{const n=PEOPLE.filter(P=>!P.user&&erasOf(P).includes(e)).length;
-  return `<button class="mini era${eraSel.has(e)?" on":""}" data-era="${e}" title="${ERA_NAMES[e]}">${ERA_NAMES[e]} <span class="ecount">${n}</span></button>`}).join("")}<span class="sub" style="margin:0;font-size:12px">People count in each era they were active in. Also filters topic debates.</span></div>`}
+const ERA_BTN={A:["Ancient","pre-1900"],H:["Modern history","1900–2005"],M:["Modern","2005+"]};
+function eraBar(){return `<div class="ctlh">Target era <span class="ctlnote">People count in every era they were active in. Also filters topic debates.</span></div><div class="btngrid">${["A","H","M"].map(e=>{const n=PEOPLE.filter(P=>!P.user&&erasOf(P).includes(e)).length;
+  return `<button class="mini era${eraSel.has(e)?" on":""}" data-era="${e}" title="${ERA_NAMES[e]}">${ERA_BTN[e][0]} <small>${ERA_BTN[e][1]}</small> <span class="ecount">${n}</span></button>`}).join("")}</div>`}
 const visible=()=>PEOPLE.filter(P=>(P.on||P===target)&&eraOK(P));
 function tabTend(vis){
   const W=1040,Lx=270,Rx=820,TW=Rx-Lx,lane=24,PER=8,GAP=21;let y=10,svg="",lastG="";const F=target;
@@ -1357,8 +1376,8 @@ function tabBios(vis){
     mob+=`<details class="bpill" id="biom-${k}"><summary><span class="bav" style="background:${F.col};color:${F.fg}">${esc(ini(P.name))}</span><span class="bpm"><span class="bpn">${esc(P.name)}${badges}</span><span class="bps">${esc(B.life||"")}${B.life&&line?" · ":""}${esc(line)}</span></span><span class="bchev">›</span></summary><div class="bbody"><div class="rov">${sub}</div>${body}</div></details>`});
   return h+desk+`</div>`+mob+`</div>`}
 function renderCompare(){const vis=visible();
-  let h=`<div class="cmp"><h2>Stage 3 — Where views overlap</h2><p class="sub">Pick a view, choose a target person, then open <b>People shown</b> to show or hide others. Colours group people by end-times family; initials identify them. The target always stays visible.</p>`;
-  h+=`<div class="tabs">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["topics","Topics"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`+chips();
+  let h=`<div class="cmp"><h2>Comparative analysis</h2><p class="sub">Pick a view, then choose who to compare. Colours group people by end-times family; initials identify them. The target person always stays visible.</p>`;
+  h+=`<div class="tabs btngrid">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["topics","Topics"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`+chips();
   h+=({cwheel:tabCmpWheel,tend:tabTend,heat:tabHeat,grid:tabGrid,scatter:tabScatter,tree:tabTree,combo:tabCombos,read:tabRead,labels:tabLabels,topics:tabTopics,bios:tabBios})[ctab](vis);
   if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{let el=document.getElementById(id);if(el&&!el.offsetParent&&/^(bio|top|rt|rp)-/.test(id)){el=document.getElementById(id.replace("-","m-"));if(el)el.open=true}if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
   h+=`<div class="src">Theologian views are summarised from their own writings and statements where available — see the Labels & churches tab for source links, and hover cells for notes. "—" means a different view or no clear public position. Source dots show how many independent sources were found for a placement.</div></div>`;
