@@ -229,6 +229,17 @@ html[data-theme=dark] .topt{border-color:#B8962E}
 .pbd{display:inline-flex;gap:2px;flex-wrap:wrap;flex:1;min-width:0}
 .pbox[open] .bchev{transform:rotate(90deg)}
 .pbox .fams{padding:4px 12px 10px;margin:0;border-top:1px dashed var(--line)}
+
+/* gold border for every collapsible pill (bios, topics, reading list) */
+.bpill{border:2px solid #C9A227}html[data-theme=dark] .bpill{border-color:#B8962E}
+.tab-read .rcard,.bio-desk .rcard{border:2px solid #C9A227}html[data-theme=dark] .tab-read .rcard,html[data-theme=dark] .bio-desk .rcard{border-color:#B8962E}
+/* verse tools */
+a.vall{font-size:11.5px;font-weight:700;color:var(--teal);text-decoration:none;border:1px dashed var(--teal);border-radius:999px;padding:1px 8px;white-space:nowrap}
+#vpop{position:fixed;z-index:40;display:none;background:var(--bg);color:var(--ink);border:2px solid #C9A227;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.22);padding:10px 12px;font-size:13.5px;line-height:1.5;max-height:50vh;overflow:auto}
+#vpop .vph{display:flex;align-items:center;gap:6px;margin-bottom:4px}#vpop .vpx{margin-left:auto;border:0;background:none;font-size:20px;line-height:1;padding:0 4px;color:var(--muted)}
+#vpop sup{font-size:10px;color:var(--muted);margin-right:2px}
+#vpop .vpf{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+#vpop .vpo{font-weight:700;color:var(--teal);text-decoration:none}#vpop .vpc{font-size:10.5px;color:var(--muted)}
 </style></head>
 <body>
 <div class="bar">
@@ -1006,17 +1017,24 @@ function bookLine(str){ // "Title — Author; Title2 — Author2" -> each book w
     return `<div class="bk">${esc(t)} — ${esc(a)} ${bookLinks(t,a.replace(/\(.*?\)/g,"").split(/&| and /)[0].trim())}</div>`}).join("")}
 function tabReadPeople(vis){const P=target;
   let h=`<p class="sub">Notable books by each person shown, tagged with the topics they cover. Tags are teal where the author agrees with ${esc(P.name)} on that topic and peach where they differ. "Koorong bestseller" marks books on Koorong's current bestseller list.</p><div class="rl">`;
-  vis.forEach(Q=>{const B=BOOKS[Q.name];if(!B)return;
-    h+=`<div class="rcard" id="rp-${PEOPLE.indexOf(Q)}"><div class="rt" style="display:flex;align-items:center;gap:8px">${dotH(Q)}${esc(Q.name)}<button class="lnk" data-goto="bio:${PEOPLE.indexOf(Q)}" style="margin-left:auto">Bio →</button></div>`+B.map(([ti,tp,k])=>`<div class="ro"><b>${esc(ti)}</b> ${bookLinks(ti,Q.name)}${k?' <span class="kbadge" title="On Koorong\'s current bestseller list">Koorong bestseller</span>':''}<div>${tp.map(i=>{const a=choice(Q,i),b=choice(P,i);const cls=(a==null||b==null||Q===P?"con":a===b?"dec":"dif")+(inf(Q,i)?" inf":"");return `<span class="rtag ${cls}" title="${esc(TOPICS[i].name)}${a!=null?": "+esc(TOPICS[i].opts[a].n):""}">${TSHORT[i]}</span>`}).join(" ")||'<span style="color:#9AA3AD">devotional / general</span>'}</div></div>`).join("")+`</div>`});
+  let mob=`<div class="bio-mob">`;h=h.replace(/<div class="rl">$/,'<div class="rl bio-desk">');
+  vis.forEach(Q=>{const B=BOOKS[Q.name];if(!B)return;const kq=PEOPLE.indexOf(Q),F=fam(Q);
+    const books=B.map(([ti,tp,k])=>`<div class="ro"><b>${esc(ti)}</b> ${bookLinks(ti,Q.name)}${k?' <span class="kbadge" title="On Koorong\'s current bestseller list">Koorong bestseller</span>':''}<div>${tp.map(i=>{const a=choice(Q,i),b=choice(P,i);const cls=(a==null||b==null||Q===P?"con":a===b?"dec":"dif")+(inf(Q,i)?" inf":"");return `<span class="rtag ${cls}" title="${esc(TOPICS[i].name)}${a!=null?": "+esc(TOPICS[i].opts[a].n):""}">${TSHORT[i]}</span>`}).join(" ")||'<span style="color:#9AA3AD">devotional / general</span>'}</div></div>`).join("");
+    h+=`<div class="rcard" id="rp-${kq}"><div class="rt" style="display:flex;align-items:center;gap:8px">${dotH(Q)}${esc(Q.name)}<button class="lnk" data-goto="bio:${kq}" style="margin-left:auto">Bio →</button></div>${books}</div>`;
+    mob+=`<details class="bpill" id="rpm-${kq}"><summary><span class="bav" style="background:${F.col};color:${F.fg}">${esc(ini(Q.name))}</span><span class="bpm"><span class="bpn">${esc(Q.name)}</span><span class="bps">${B.length} book${B.length>1?"s":""} · ${esc(B[0][0])}</span></span><span class="bchev">›</span></summary><div class="bbody">${books}<div class="ro bbtns"><button class="lnk" data-goto="bio:${kq}">Bio →</button></div></div></details>`});
   const none=vis.filter(Q=>!BOOKS[Q.name]&&!Q.user).map(Q=>esc(Q.name));
+  h+=`</div>`+mob;
   return h+`</div>${none.length?`<p class="sub" style="margin-top:10px">No book list for: ${none.join(", ")}.</p>`:""}`}
 function tabRead(vis){const mode=`<div class="tabs" style="margin-top:0"><button class="mini${readMode==="topic"?" on":""}" data-rm="topic">By topic</button><button class="mini${readMode==="person"?" on":""}" data-rm="person">By person</button></div>`;
-  return mode+(readMode==="person"?tabReadPeople(vis):tabReadTopic())}
+  return `<div class="tab-read">`+mode+(readMode==="person"?tabReadPeople(vis):tabReadTopic())+`</div>`}
 function tabReadTopic(){const P=target;let h=`<p class="sub">One overview (usually a multi-view book) and a book per option for each topic. Tags show ${esc(P.name)}'s decision, "also holds" and considered options. <label style="margin-left:8px"><input type="checkbox" id="readmine"${readMine?' checked':''}> Only show the options ${esc(P.name)} didn't choose</label></p><p class="sub" style="font-size:12px">Each book links to <b>Koorong (AU)</b> where Koorong stocks it, otherwise to a <b>Christianbook (US)</b> search. <b>Free</b> links go to legal, free-to-read copies (author/publisher downloads or public-domain texts) where one exists.</p><div class="rl">`;
+  let mob=`<div class="bio-mob">`;h=h.replace(/<div class="rl">$/,'<div class="rl bio-desk">');
   TOPICS.forEach((T,i)=>{const R=READ[i],c=choice(P,i),al=alsoOf(P,i);
-    h+=`<div class="rcard" id="rt-${i}"><div class="rt" style="display:flex;align-items:center">${esc(T.name)}<button class="lnk" data-goto="topic:${i}" style="margin-left:auto">Topic page →</button></div><div class="rov">📚 Overview: ${bookLine(R.ov)}</div>`+T.opts.map((o,k)=>{if(readMine&&k===c)return "";const tag=c==null?"":k===c?'<span class="rtag dec">Your view</span>':al.includes(k)?'<span class="rtag also">Also holds</span>':'<span class="rtag con">Considered</span>';
-      return `<div class="ro"><b>${esc(o.n)}</b> ${tag}<div>${R.o[k]?bookLine(R.o[k]):"—"}</div></div>`}).join("")+`</div>`});
-  return h+`</div>`}
+    const body=`<div class="rov">📚 Overview: ${bookLine(R.ov)}</div>`+T.opts.map((o,k)=>{if(readMine&&k===c)return "";const tag=c==null?"":k===c?'<span class="rtag dec">Your view</span>':al.includes(k)?'<span class="rtag also">Also holds</span>':'<span class="rtag con">Considered</span>';
+      return `<div class="ro"><b>${esc(o.n)}</b> ${tag}<div>${R.o[k]?bookLine(R.o[k]):"—"}</div></div>`}).join("");
+    h+=`<div class="rcard" id="rt-${i}"><div class="rt" style="display:flex;align-items:center">${esc(T.name)}<button class="lnk" data-goto="topic:${i}" style="margin-left:auto">Topic page →</button></div>${body}</div>`;
+    mob+=`<details class="bpill" id="rtm-${i}"><summary><span class="bav tnumbig">${i+1}</span><span class="bpm"><span class="bpn">${esc(T.name)}</span><span class="bps">${c==null?"Books for each view":esc(P.name)+": "+esc(T.opts[c].s)}</span></span><span class="bchev">›</span></summary><div class="bbody">${body}<div class="ro bbtns"><button class="lnk" data-goto="topic:${i}">Topic page →</button></div></div></details>`});
+  return h+`</div>`+mob+`</div>`}
 function tabLabels(vis){
   let h=`<p class="sub">Describing terms come from each person's views. "Likely traditions" combines rules about which churches hold which views with the traditions of each person's closest matches (80%+ on 7+ topics), so it updates as people are added or views change. A rough guide only.</p><div style="overflow-x:auto"><table class="lbl"><tr><th style="width:160px">Person</th><th style="width:180px">Church attended / background</th><th>Describing terms</th><th style="width:22%">Likely traditions</th><th style="width:170px">Closest matches</th></tr>`;
   vis.forEach(P=>{const Lb=labels(P),near=closest(P),fromNear=near.filter(x=>x.f>=.8&&x.n>=7&&!x.Q.user).flatMap(x=>x.Q.trad||[]),trad=[...new Set([...Lb.d,...fromNear])];
@@ -1253,22 +1271,26 @@ const TINFO=[
      {for:["1 John 4:9-10","Rom 5:8","John 15:13","1 Pet 2:21","Phil 2:5-8"],against:["Rom 3:25-26","Heb 9:22","Isa 53:5","Mark 10:45"],
       who:"Peter Abelard (12th century); liberal Protestant theology (Schleiermacher, Ritschl) and many mainline churches; rarely held on its own by evangelicals."}]}
 ];
-const BIBLE_VERSION="ESV",BIBLE_KEY="decisionwheel_bible";
-const BIBLES={step:"STEP Bible",gateway:"Bible Gateway",youversion:"YouVersion (Bible app)"};
+const BIBLE_KEY="decisionwheel_bible";
+// NET Bible everywhere: STEP's NET with full notes, Bible Gateway's NET, YouVersion's NET (id 107)
+const BIBLES={step:"STEP Bible (NET)",gateway:"Bible Gateway (NET)",youversion:"YouVersion app (NET)"};
 let bibleSite=(()=>{const v=lsGet(BIBLE_KEY);return BIBLES[v]?v:"step"})();
-// book names as written in TINFO -> OSIS (STEP) and USFM (YouVersion) codes
-const BOOKS_REF={"Gen":["Gen","GEN"],"Exod":["Exod","EXO"],"Deut":["Deut","DEU"],"Judg":["Judg","JDG"],"1 Sam":["1Sam","1SA"],"Job":["Job","JOB"],"Ps":["Ps","PSA"],"Prov":["Prov","PRO"],
- "Eccl":["Eccl","ECC"],"Isa":["Isa","ISA"],"Jer":["Jer","JER"],"Ezek":["Ezek","EZK"],"Dan":["Dan","DAN"],"Joel":["Joel","JOL"],"Zech":["Zech","ZEC"],"Mal":["Mal","MAL"],
- "Matt":["Matt","MAT"],"Mark":["Mark","MRK"],"Luke":["Luke","LUK"],"John":["John","JHN"],"Acts":["Acts","ACT"],"Rom":["Rom","ROM"],"1 Cor":["1Cor","1CO"],"2 Cor":["2Cor","2CO"],
- "Gal":["Gal","GAL"],"Eph":["Eph","EPH"],"Phil":["Phil","PHP"],"Col":["Col","COL"],"1 Thess":["1Thess","1TH"],"2 Thess":["2Thess","2TH"],"1 Tim":["1Tim","1TI"],"2 Tim":["2Tim","2TI"],
- "Titus":["Titus","TIT"],"Heb":["Heb","HEB"],"1 Pet":["1Pet","1PE"],"2 Pet":["2Pet","2PE"],"1 John":["1John","1JN"],"2 John":["2John","2JN"],"Jude":["Jude","JUD"],"Rev":["Rev","REV"]};
-function verseURL(r){const m=r.match(/^(.+?)\s+(\d+)(?::([\d\-–]+))?$/);if(!m||!BOOKS_REF[m[1]])return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(r)}&version=${BIBLE_VERSION}`;
-  let [,bk,ch,vs]=m;if(!vs){vs=ch;ch="1"} // one-chapter books: "Jude 3" = Jude 1:3
-  vs=vs.replace("–","-");const [osis,usfm]=BOOKS_REF[bk];
-  if(bibleSite==="step")return `https://www.stepbible.org/?q=version=${BIBLE_VERSION}@reference=${osis}.${ch}.${vs}`;
-  if(bibleSite==="youversion")return `https://www.bible.com/bible/59/${usfm}.${ch}.${vs}.${BIBLE_VERSION}`;
-  return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(bk+" "+ch+":"+vs)}&version=${BIBLE_VERSION}`}
-const verseLink=r=>`<a class="vref" href="${verseURL(r)}" target="_blank" rel="noopener" title="Open in ${BIBLES[bibleSite]}">${esc(r.replace("-","–"))}</a>`;
+// book names as written in TINFO -> [OSIS (STEP), USFM (YouVersion), full name]
+const BOOKS_REF={"Gen":["Gen","GEN","Genesis"],"Exod":["Exod","EXO","Exodus"],"Deut":["Deut","DEU","Deuteronomy"],"Judg":["Judg","JDG","Judges"],"1 Sam":["1Sam","1SA","1 Samuel"],"Job":["Job","JOB","Job"],"Ps":["Ps","PSA","Psalms"],"Prov":["Prov","PRO","Proverbs"],
+ "Eccl":["Eccl","ECC","Ecclesiastes"],"Isa":["Isa","ISA","Isaiah"],"Jer":["Jer","JER","Jeremiah"],"Ezek":["Ezek","EZK","Ezekiel"],"Dan":["Dan","DAN","Daniel"],"Joel":["Joel","JOL","Joel"],"Zech":["Zech","ZEC","Zechariah"],"Mal":["Mal","MAL","Malachi"],
+ "Matt":["Matt","MAT","Matthew"],"Mark":["Mark","MRK","Mark"],"Luke":["Luke","LUK","Luke"],"John":["John","JHN","John"],"Acts":["Acts","ACT","Acts"],"Rom":["Rom","ROM","Romans"],"1 Cor":["1Cor","1CO","1 Corinthians"],"2 Cor":["2Cor","2CO","2 Corinthians"],
+ "Gal":["Gal","GAL","Galatians"],"Eph":["Eph","EPH","Ephesians"],"Phil":["Phil","PHP","Philippians"],"Col":["Col","COL","Colossians"],"1 Thess":["1Thess","1TH","1 Thessalonians"],"2 Thess":["2Thess","2TH","2 Thessalonians"],"1 Tim":["1Tim","1TI","1 Timothy"],"2 Tim":["2Tim","2TI","2 Timothy"],
+ "Titus":["Titus","TIT","Titus"],"Heb":["Heb","HEB","Hebrews"],"1 Pet":["1Pet","1PE","1 Peter"],"2 Pet":["2Pet","2PE","2 Peter"],"1 John":["1John","1JN","1 John"],"2 John":["2John","2JN","2 John"],"Jude":["Jude","JUD","Jude"],"Rev":["Rev","REV","Revelation"]};
+function parseRef(r){const m=r.match(/^(.+?)\s+(\d+)(?::([\d\-–]+))?$/);if(!m||!BOOKS_REF[m[1]])return null;let [,bk,ch,vs]=m;if(!vs){vs=ch;ch="1"}return {bk,ch,vs:vs.replace("–","-"),b:BOOKS_REF[bk]}}
+const stepRef=p=>`${p.b[0]}.${p.ch}.${p.vs}`;
+function verseURL(r){const p=parseRef(r);if(!p)return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(r)}&version=NET`;
+  if(bibleSite==="step")return `https://www.stepbible.org/?q=version=NET2full@reference=${stepRef(p)}`;
+  if(bibleSite==="youversion")return `https://www.bible.com/bible/107/${p.b[1]}.${p.ch}.${p.vs}.NET`;
+  return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(p.bk+" "+p.ch+":"+p.vs)}&version=NET`}
+// all the verses in a list, side by side in one STEP page
+function stepAllURL(list){return "https://www.stepbible.org/?q=version=NET2full@reference="+list.map(parseRef).filter(Boolean).map(stepRef).join(",")}
+const verseLink=r=>`<a class="vref" href="${verseURL(r)}" target="_blank" rel="noopener" data-ref="${esc(r)}">${esc(r.replace("-","–"))}</a>`;
+const verseAll=list=>list.length>1?`<a class="vall" href="${stepAllURL(list)}" target="_blank" rel="noopener" title="Open all ${list.length} passages together in STEP Bible">Read all in STEP ↗</a>`:"";
 // "Often held with": among everyone in the app who holds option k on topic i, which other choices do most of them share?
 function heldWith(i,k){const H=PEOPLE.filter(P=>choice(P,i)===k&&eraOK(P));if(H.length<2)return [];
   const out=[];TOPICS.forEach((T,j)=>{if(j===i)return;const ans=H.filter(P=>choice(P,j)!=null);if(ans.length<2)return;
@@ -1296,7 +1318,7 @@ const ORGS=[
  [["Presbyterian & Reformed","Baptists","Sydney Anglicans","The Gospel Coalition","Confessional Lutherans"],["Eastern Orthodox","Many Anabaptists","Many Pentecostal preachers"],["Many mainline churches","Liberal Protestant tradition"]]
 ];
 function tabTopics(vis){const P=target;
-  let h=`<p class="sub">A page for each topic: what it's about, the main debates, and for each view the verses its supporters use, the verses critics raise, which churches typically hold it, who in this app holds it, and which other views usually go with it. Tags show ${esc(P.name)}'s view. </p><p class="sub">Open verses in <select class="selref" id="selbible">${Object.entries(BIBLES).map(([k,l])=>`<option value="${k}"${k===bibleSite?" selected":""}>${l}</option>`).join("")}</select> (${BIBLE_VERSION}). On a phone, YouVersion opens in the Bible app if it's installed.</p><p class="sub" style="font-size:12px">Summaries are general reference and haven't yet been individually checked against sources. "Held by" and "Often held with" are worked out from the people in this app in the chosen era(s), so they change as people are added.</p>`;
+  let h=`<p class="sub">A page for each topic: what it's about, the main debates, and for each view the verses its supporters use, the verses critics raise, which churches typically hold it, who in this app holds it, and which other views usually go with it. Tags show ${esc(P.name)}'s view. </p><p class="sub">Open verses in <select class="selref" id="selbible">${Object.entries(BIBLES).map(([k,l])=>`<option value="${k}"${k===bibleSite?" selected":""}>${l}</option>`).join("")}</select> — all in the NET Bible. <span class="tmut">Hover a verse (or tap it on a phone) to read it here; "Read all in STEP" opens every verse in a list together.</span></p><p class="sub" style="font-size:12px">Summaries are general reference and haven't yet been individually checked against sources. "Held by" and "Often held with" are worked out from the people in this app in the chosen era(s), so they change as people are added.</p>`;
   let desk=`<div class="rl tdesk">`,mob=`<div class="bio-mob">`;
   TOPICS.forEach((T,i)=>{const I=TINFO[i]||{o:[]},c=choice(P,i),al=alsoOf(P,i);
     const opts=T.opts.map((o,k)=>{const X=I.o[k]||{},tag=c==null?"":k===c?`<span class="rtag dec">${esc(P.name)}'s view</span>`:al.includes(k)?'<span class="rtag also">Also holds</span>':"";
@@ -1304,8 +1326,8 @@ function tabTopics(vis){const P=target;
       return `<div class="topt"><div class="toh"><b>${esc(o.n)}</b> ${tag}</div><div class="tod">${esc(o.d)}</div>
         <div class="trow"><span class="tl">Held by here (${holders.length})</span><div class="tdots">${holders.map(Q=>`<button class="tdot${inf(Q,i)?" inf":""}" data-goto="bio:${PEOPLE.indexOf(Q)}" title="${esc(Q.name)}${inf(Q,i)?" (inferred)":""} — open bio">${dotH(Q,20)}</button>`).join("")||'<span class="tmut">no one yet</span>'}</div></div>
         <div class="trow"><span class="tl">Often held with</span><div>${hw.map(x=>`<span class="tag" title="${x.n} of ${x.of} who hold this and answered ${esc(TOPICS[x.j].name)}">${esc(TSHORT[x.j])}: ${esc(TOPICS[x.j].opts[x.m].s)} · ${Math.round(100*x.f)}%</span>`).join("")||'<span class="tmut">not enough people yet</span>'}</div></div>
-        ${X.for?`<div class="trow vfor"><span class="tl">Verses used to support it</span><div class="vlist">${X.for.map(verseLink).join("")}</div></div>`:""}
-        ${X.against?`<div class="trow vag"><span class="tl">Verses critics raise</span><div class="vlist">${X.against.map(verseLink).join("")}</div></div>`:""}</div>`}).join("");
+        ${X.for?`<div class="trow vfor"><span class="tl">Verses used to support it</span><div class="vlist">${X.for.map(verseLink).join("")}${verseAll(X.for)}</div></div>`:""}
+        ${X.against?`<div class="trow vag"><span class="tl">Verses critics raise</span><div class="vlist">${X.against.map(verseLink).join("")}${verseAll(X.against)}</div></div>`:""}</div>`}).join("");
     const orgs=T.opts.map((o,k)=>{const items=(ORGS[i]||[])[k]||[];if(!items.length)return "";
       return `<div class="chb"><span class="chbo">${esc(o.s)}</span><div>${items.map(x=>`<span class="tag org">${esc(x)}</span>`).join("")}</div></div>`}).join("");
     const body=`${I.about?`<div class="ro"><b>What it's about</b><div>${esc(I.about)}</div></div>`:""}${orgs?`<div class="ro"><b>Commonly held by</b> <span class="tmut">churches, denominations &amp; organisations</span>${orgs}</div>`:""}${opts}
@@ -1338,7 +1360,7 @@ function renderCompare(){const vis=visible();
   let h=`<div class="cmp"><h2>Stage 3 — Where views overlap</h2><p class="sub">Pick a view, choose a target person, then open <b>People shown</b> to show or hide others. Colours group people by end-times family; initials identify them. The target always stays visible.</p>`;
   h+=`<div class="tabs">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels & churches"],["topics","Topics"],["bios","Bios"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`+chips();
   h+=({cwheel:tabCmpWheel,tend:tabTend,heat:tabHeat,grid:tabGrid,scatter:tabScatter,tree:tabTree,combo:tabCombos,read:tabRead,labels:tabLabels,topics:tabTopics,bios:tabBios})[ctab](vis);
-  if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{let el=document.getElementById(id);if(el&&!el.offsetParent&&/^(bio|top)-/.test(id)){el=document.getElementById(id.replace("-","m-"));if(el)el.open=true}if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
+  if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{let el=document.getElementById(id);if(el&&!el.offsetParent&&/^(bio|top|rt|rp)-/.test(id)){el=document.getElementById(id.replace("-","m-"));if(el)el.open=true}if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
   h+=`<div class="src">Theologian views are summarised from their own writings and statements where available — see the Labels & churches tab for source links, and hover cells for notes. "—" means a different view or no clear public position. Source dots show how many independent sources were found for a placement.</div></div>`;
   s.innerHTML=h}
 // ================= survey =================
@@ -1487,6 +1509,35 @@ function toast(msg){let el=document.getElementById("toast");if(!el){el=document.
 document.getElementById("savestat").addEventListener("click",e=>{if(e.target.id==="dlapp")downloadApp();if(e.target.id==="reconnect")reconnectFile()});
 s.addEventListener("submit",e=>{e.preventDefault();if(e.target.id==="svform")saveSurvey()});
 ownerSel();draw();setStatus();initRoles();
+
+// ---- verse pop-ups (NET Bible text from labs.bible.org; remembered on this device so they work offline once seen) ----
+const VCACHE_KEY="decisionwheel_verses_v1";let VCACHE={};try{VCACHE=JSON.parse(lsGet(VCACHE_KEY)||"{}")||{}}catch(e){}
+const touch=matchMedia("(hover: none)").matches;
+async function verseText(r){if(VCACHE[r])return VCACHE[r];const p=parseRef(r);if(!p)throw new Error("ref");
+  const q=encodeURIComponent(`${p.b[2]} ${p.ch}:${p.vs}`);const res=await fetch(`https://labs.bible.org/api/?passage=${q}&type=json&formatting=plain`);
+  if(!res.ok)throw new Error("net");const arr=await res.json();const txt=arr.map(v=>`<sup>${esc(v.verse)}</sup>${esc(String(v.text).replace(/<[^>]*>/g,"").trim())}`).join(" ");
+  VCACHE[r]=txt;try{const k=Object.keys(VCACHE);if(k.length>400)delete VCACHE[k[0]];lsSet(VCACHE_KEY,JSON.stringify(VCACHE))}catch(e){}return txt}
+let vpop=null,vpopFor=null,vpopHide=null;
+function showVerse(a){clearTimeout(vpopHide);if(!vpop){vpop=document.createElement("div");vpop.id="vpop";document.body.appendChild(vpop);
+    vpop.addEventListener("mouseenter",()=>clearTimeout(vpopHide));vpop.addEventListener("mouseleave",()=>hideVerse(200))}
+  const r=a.dataset.ref;vpopFor=a;
+  vpop.innerHTML=`<div class="vph"><b>${esc(r.replace("-","–"))}</b> <span class="tmut">NET</span>${touch?'<button class="vpx" aria-label="Close">×</button>':""}</div><div class="vpt">Loading…</div>
+    <div class="vpf"><a href="${a.href}" target="_blank" rel="noopener" class="vpo">Open in ${esc(BIBLES[bibleSite].replace(/ \(NET\)/,""))} ↗</a><span class="vpc">NET Bible® © Biblical Studies Press. Used by permission.</span></div>`;
+  vpop.style.display="block";placeVerse(a);
+  verseText(r).then(t=>{if(vpopFor===a){vpop.querySelector(".vpt").innerHTML=t;placeVerse(a)}})
+    .catch(()=>{if(vpopFor===a)vpop.querySelector(".vpt").textContent=navigator.onLine===false?"Verse text needs the internet the first time — use the link below.":"Couldn't load the verse text — use the link below."})}
+function placeVerse(a){const r=a.getBoundingClientRect(),vw=document.documentElement.clientWidth||innerWidth,w=Math.min(340,vw-16);vpop.style.width=w+"px";
+  let x=Math.max(8,Math.min(r.left,vw-w-8)),y=r.bottom+6;const h=vpop.offsetHeight;if(y+h>innerHeight-8)y=Math.max(8,r.top-h-6);
+  vpop.style.left=x+"px";vpop.style.top=y+"px"}
+function hideVerse(ms){clearTimeout(vpopHide);vpopHide=setTimeout(()=>{if(vpop)vpop.style.display="none";vpopFor=null},ms||0)}
+if(!touch){document.addEventListener("mouseover",e=>{const a=e.target.closest&&e.target.closest("a.vref");if(a&&a!==vpopFor)showVerse(a)});
+  document.addEventListener("mouseout",e=>{const a=e.target.closest&&e.target.closest("a.vref");if(a)hideVerse(250)})}
+// phones: first tap shows the verse; the pop-up's own button opens the Bible site/app
+document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest("a.vref");
+  if(a&&touch){e.preventDefault();if(vpopFor===a){hideVerse()}else showVerse(a);return}
+  if(vpop&&vpop.style.display==="block"&&!e.target.closest("#vpop"))hideVerse();
+  if(e.target.closest(".vpx"))hideVerse()},true);
+addEventListener("scroll",()=>{if(touch&&vpopFor)placeVerse(vpopFor);else if(vpopFor)hideVerse()},{passive:true});
 // ---- light / dark (charcoal) switch ----
 const THEME_KEY="decisionwheel_theme",MODES=["auto","light","dark"],MODE_LABEL={auto:"◐ Auto",light:"☀ Light",dark:"☾ Dark"};
 function applyTheme(){const m=document.documentElement.getAttribute("data-mode")||"auto";
