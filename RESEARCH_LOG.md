@@ -185,3 +185,13 @@ Order: A Hayford + Gentry · B Darby + Wright · C Chuck Smith + Laurie · D Spr
   - https://pneumareview.com/oskar-skarsaune-from-the-jewish-messiah-to-the-creeds-of-the-church/
   - https://ivpress.com/in-the-shadow-of-the-temple
 - Next time: confirm his church membership (Church of Norway?) and look for his own writing on Israel and the church
+
+
+## Added person — Tokunboh Adeyemo (from Luke's research queue, Oct 2026)
+- Nigerian theologian (1944–2010), converted from Islam in 1966; General Secretary of the Association of Evangelicals in Africa (1978–2002); general editor of the Africa Bible Commentary (2006); elder at Nairobi Pentecostal Church; studied at Talbot and Dallas Theological Seminary.
+- Missions: Exclusivist (stated). Natural revelation "does not save"; only faith in Christ — "no man comes unto the Father but by me" (his AJET article answering claims that African traditional religion saves).
+  - https://gospelstudies.org.uk/biblicalstudies/pdf/ajet/02-2_004.pdf
+- Gifts *Continuationist (inferred)*; Baptism *Believer's (inferred)*, both from his long eldership at Nairobi Pentecostal Church.
+  - https://dacb.org/stories/nigeria/adeyemo-tokunboh2/
+- Also: https://en.wikipedia.org/wiki/Africa_Bible_Commentary · https://www.biola.edu/blogs/biola-magazine/2007/alumnus-produces-first-african-bible-commentary
+- Next time: his Dallas Theological Seminary doctorate may point to dispensational views on the end-times topics — look for his own statements before placing anything
