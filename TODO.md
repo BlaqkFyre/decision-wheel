@@ -45,6 +45,9 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [x] Added George Athas (Moore College; Bridging the Testaments): Daniel's 70th week fulfilled by 163 BC (stated); Baptism, Supper, Women inferred from Sydney Anglican ties
 - [x] Pop-ups on pills: Commonly held by (people linked to that church/group), Often held with, bio beliefs and describing terms
 - [ ] Research the new atonement options for people already in the app
+- [x] "＋ Add a person" (admin, in People to Compare): look up on Wikipedia + Open Library, confirm the right person (book match helps), or save without checking when offline and "Check now" later. Saved people appear with a "to research" badge, their bio summary, books and source links, and travel in index.html / Export all / Import
+- [ ] Each session: Claude checks the research queue (`added` in index.html) and researches those people properly (then they become full entries)
+- [ ] Sync added people from phone to PC automatically (now: they save on the phone; Export all on phone → Import on PC). Later: GitHub sync
 - [ ] Add more pre-1900 voices so that era isn't just Darby (e.g. Augustine, Luther, Calvin, Wesley, Spurgeon) — needs research
 - [ ] Check topic summaries, verse lists and church lists against sources (currently general reference)
 - [ ] Restyle (Luke to give direction)

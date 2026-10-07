@@ -265,6 +265,18 @@ button.era{opacity:1}button.era:not(.on){background:var(--bg);color:var(--teal)}
 .pplist{display:flex;flex-wrap:wrap;gap:4px 10px}
 button.ppl{display:inline-flex;align-items:center;gap:5px;border:0;background:none;padding:2px 0;color:var(--ink);font-size:13px;cursor:pointer}
 .tag.pp{cursor:pointer}.tag.pp:hover{outline:1.5px solid var(--teal)}
+
+/* add a person */
+#addp{position:fixed;inset:0;z-index:50;background:rgba(20,24,28,.45);display:none;align-items:flex-start;justify-content:center;padding:24px 10px;overflow:auto}
+#addp .mbox{background:var(--bg);color:var(--ink);border:2px solid var(--teal);border-radius:16px;width:min(560px,100%);padding:14px 16px;box-sizing:border-box}
+#addp .vph{display:flex;align-items:center}#addp .vpx{margin-left:auto;border:0;background:none;font-size:24px;color:var(--muted)}
+.aplab{display:block;font-size:13px;font-weight:700;margin:8px 0 0}.aplab .chin{display:block;width:100%!important;box-sizing:border-box;margin-top:4px;padding:8px 10px;border-radius:10px;font-weight:400}
+.apgrp{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:8px 0}
+.apc{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-top:1px dashed var(--line);font-size:13px;cursor:pointer}.apc:first-of-type{border-top:0}
+.apx{font-size:12px;color:var(--muted)}.apok{color:var(--teal)}
+.aq{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;border-top:1px dashed var(--line);padding:7px 0;font-size:13.5px}.aqb{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+button.addbtn{margin-left:auto;border-radius:10px;padding:8px 12px}
+.new.torsch{background:var(--orangebg);color:var(--ink)}
 </style></head>
 <body>
 <div class="bar">
@@ -628,6 +640,7 @@ const RESEARCH={"J.N. Darby": {"0": {"c": 0, "n": "Saw 1 Thess 4:17 rapture endi
     x.s.forEach(([t,u])=>{if(u&&!seen.has(u)){seen.add(u);LINKS[name].push([t,u])}})})})})();
 // ---- saved users: browser storage + answers built into the file + optional linked save file ----
 const STORE="decisionwheel_users_v1",TOMB="decisionwheel_deleted_v1";
+const ADDED_KEY="decisionwheel_added_v1";let ADDED=[]; // people Luke added to look up / research (see "Add a person")
 const keyOf=r=>r.self?"__self__":"u:"+r.name;
 function serializeUsers(){return PEOPLE.filter(P=>P.user&&!P.mine).map(P=>{const byName={},al={},cv={};TOPICS.forEach((T,i)=>{byName[T.name]=P.v[i]?P.v[i].c:null;if((P.also||{})[i])al[T.name]=P.also[i];if((P.conv||{})[i])cv[T.name]=P.conv[i]});
   return {name:P.name,self:!!P.self,church:P.church||"",trad:P.trad||[],answers:byName,alsoHolds:al,conviction:cv,saved:P.saved||0}})}
@@ -652,8 +665,10 @@ async function initRoles(){
   if(ADMIN_CFG)isAdmin=await tokenValid();
   else{isAdmin=location.protocol==="file:";setupMode=isAdmin} // no passphrase yet: only Luke's own local copy may manage it
   if(isAdmin){try{DELETED=JSON.parse(lsGet(TOMB)||"{}")||{}}catch(e){}
-    try{const people=JSON.parse(lsGet(STORE)||"null");if(people)mergeBundle({people,deleted:DELETED})}catch(e){}}
+    try{const people=JSON.parse(lsGet(STORE)||"null");if(people)mergeBundle({people,deleted:DELETED})}catch(e){}
+    try{const ad=JSON.parse(lsGet(ADDED_KEY)||"null");if(Array.isArray(ad))mergeAdded(ad)}catch(e){}}
   else loadMine();
+  applyAdded();
   rolesReady=true;if(isAdmin)await initLinked();rerender()}
 function loadMine(){try{const u=JSON.parse(lsGet(MINE_KEY)||"null");if(!u||!u.name)return;u.self=false;
   u.name=uniqueName(u.name,null);applyUsers([u]);const P=PEOPLE.find(p=>p.user&&!p.self&&p.name===u.name);
@@ -674,7 +689,7 @@ function cleanRecord(u){const T=TOPICS,str=(x,n)=>String(x==null?"":x).replace(/
     const al=(u.alsoHolds||{})[t.name];if(Array.isArray(al)){const v=al.filter(k=>Number.isInteger(k)&&k>=0&&k<t.opts.length);if(v.length)alsoHolds[t.name]=v}
     const cv=(u.conviction||{})[t.name];if(Number.isInteger(cv)&&cv>=1&&cv<=5)conviction[t.name]=cv});
   return {name:str(u.name,60).trim()||"Survey respondent",self:false,church:str(u.church,80),trad:[],answers,alsoHolds,conviction,saved:Date.now()}}
-function bundle(){const b={version:1,people:serializeUsers(),deleted:DELETED};if(ADMIN_CFG)b.admin=ADMIN_CFG;return b}
+function bundle(){const b={version:1,people:serializeUsers(),deleted:DELETED};if(ADMIN_CFG)b.admin=ADMIN_CFG;if(ADDED.length)b.added=ADDED;return b}
 function storageOK(){try{localStorage.setItem("dw_t","1");localStorage.removeItem("dw_t");return true}catch(e){return false}}
 function saveUsers(...changed){const now=Date.now();changed.forEach(P=>{if(P&&canEdit(P))P.saved=now});
   if(!isAdmin){const P=PEOPLE.find(p=>p.mine);if(P){const r=serializeOne(P);lsSet(MINE_KEY,JSON.stringify(r))}setStatus();return}
@@ -682,7 +697,7 @@ function saveUsers(...changed){const now=Date.now();changed.forEach(P=>{if(P&&ca
   writeLinked();markUnsaved();setStatus()}
 function serializeOne(P){const m=P.mine;P.mine=false;const r=serializeUsers().find(x=>x.name===P.name&&!x.self);P.mine=m;return r}
 // merge records from any source: newest version of each person wins; deletions win if newer
-function mergeBundle(b){if(!b)return;if(!Array.isArray(b)&&b.admin&&b.admin.check&&b.admin.salt)ADMIN_CFG=b.admin;const people=Array.isArray(b)?b:(b.people||[]),del=Array.isArray(b)?{}:(b.deleted||{});
+function mergeBundle(b){if(!b)return;if(!Array.isArray(b)&&Array.isArray(b.added))mergeAdded(b.added);if(!Array.isArray(b)&&b.admin&&b.admin.check&&b.admin.salt)ADMIN_CFG=b.admin;const people=Array.isArray(b)?b:(b.people||[]),del=Array.isArray(b)?{}:(b.deleted||{});
   Object.entries(del).forEach(([k,t])=>{if(!DELETED[k]||DELETED[k]<t)DELETED[k]=t});
   people.forEach(u=>{const k=keyOf(u),cur=u.self?PEOPLE.find(p=>p.self):PEOPLE.find(p=>p.user&&p.name===u.name);
     if(DELETED[k]&&DELETED[k]>=(u.saved||0))return;
@@ -698,7 +713,8 @@ function parseResponse(txt){txt=String(txt||"").trim();const m=txt.match(/DW1:([
   if(m){const b=m[1].replace(/[^A-Za-z0-9+\/=]/g,"");return JSON.parse(decodeURIComponent(escape(atob(b))))}
   const j=txt.indexOf("{"),k=txt.indexOf("[");const st=j<0?k:k<0?j:Math.min(j,k);return JSON.parse(txt.slice(st))}
 function importResponse(txt){if(!isAdmin){toast("Only Luke can add responses");return false}if(String(txt||"").length>200000){toast("That response is too large");return false}let d;try{d=parseResponse(txt)}catch(e){toast("Couldn't read that response — paste the whole DW1: code or choose the .json file");return false}
-  const arr=Array.isArray(d)?d:(d.people||[]);if(!arr.length){toast("No answers found in that response");return false}
+  if(d&&!Array.isArray(d)&&Array.isArray(d.added)&&d.added.length){mergeAdded(d.added.map(cleanAdded).filter(Boolean));applyAdded();saveAdded()}
+  const arr=Array.isArray(d)?d:(d.people||[]);if(!arr.length){if(d&&d.added&&d.added.length){toast(`Imported ${d.added.length} added people`);return true}toast("No answers found in that response");return false}
   const isResp=d.type==="decision-wheel-response";const now=Date.now();
   const clean=arr.slice(0,50).map(u=>{const r=cleanRecord(u);r.saved=now;r.name=r.name.replace(/ \(you( \d+)?\)$/,"");
     if(PEOPLE.find(p=>(!p.user||p.self)&&p.name===r.name))r.name+=" (survey)";delete DELETED["u:"+r.name];return r});
@@ -887,7 +903,7 @@ function labels(P){const c=i=>choice(P,i),also=alsoOf(P,3);const t=[],d=[];const
 // ================= compare UI =================
 let pendingScroll=null;let view="wheel",ctab="tend",editor=0,readMine=false,readMode="topic"; // editor = index of a survey user (Luke by default)
 function chips(){const tg=PEOPLE.indexOf(target);
-  let h=`<div class="ctl"><div class="ctlrow"><label class="ctlh" for="seltarget">Target person</label><select class="selref" id="seltarget">${PEOPLE.map((P,k)=>`<option value="${k}"${P===target?' selected':''}>${esc(P.name)}${P.user&&!P.self?' (survey)':''}</option>`).join("")}</select></div>
+  let h=`<div class="ctl"><div class="ctlrow"><label class="ctlh" for="seltarget">Target person</label><select class="selref" id="seltarget">${PEOPLE.map((P,k)=>`<option value="${k}"${P===target?' selected':''}>${esc(P.name)}${P.user&&!P.self?' (survey)':''}</option>`).join("")}</select>${isAdmin?'<button class="mini addbtn" id="addperson">＋ Add a person</button>':""}</div>
   <div class="ctlh">Target people</div><div class="btngrid"><button class="mini" data-q="all">Select all</button><button class="mini" data-q="none">Deselect all</button><button class="mini" data-q="two">+ Closest</button><button class="mini" data-q="near">+ 3 closest</button><button class="mini" data-q="modern">+ Modern authors</button></div>
   ${eraBar()}</div><details class="pbox" id="pbox"${peopleOpen?" open":""}><summary><span class="pbt">People shown</span> <span class="pbn">${visible().length} of ${PEOPLE.filter(eraOK).length}</span> <span class="pbd">${visible().slice(0,14).map(P=>dotH(P,18)).join("")}${visible().length>14?" …":""}</span><span class="bchev">›</span></summary><div class="fams">`;
   FAM.forEach((F,fi)=>{const ps=PEOPLE.filter(P=>fam(P)===F&&eraOK(P));if(!ps.length)return;
@@ -1394,7 +1410,7 @@ function tabBios(vis){
       <div class="ro"><b>Describing terms</b><div>${L.t.map(x=>`<span class="tag pp" data-pp="term" data-v="${esc(x)}">${esc(x)}</span>`).join("")||'<span style="color:#9AA3AD">not enough data yet</span>'}</div></div>
       <div class="ro"><b>Beliefs (${held.length} of ${NT} topics)</b>${TOPICS.some((_,i)=>inf(P,i))?' <span class="infkey">italic = inferred</span>':""}<div>${held.join("")||'<span style="color:#9AA3AD">none recorded yet</span>'}</div></div>
       <div class="ro bbtns">${BOOKS[P.name]?`<button class="lnk" data-goto="read:${k}">Reading list →</button>`:""} <button class="lnk" data-goto="heat:${k}">Compare on wheel →</button></div>`;
-    const badges=`${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}`;
+    const badges=`${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}${P.added?'<span class="new torsch">to research</span>':''}`;
     desk+=`<div class="rcard" id="bio-${k}"><div class="rt" style="display:flex;align-items:center;gap:8px">${dotH(P)}${esc(P.name)}${badges}</div><div class="rov">${sub}</div>${body}</div>`;
     const line=B.spec||B.known||(P.user?(P.church||"Survey user"):"");
     mob+=`<details class="bpill" id="biom-${k}"><summary><span class="bav" style="background:${F.col};color:${F.fg}">${esc(ini(P.name))}</span><span class="bpm"><span class="bpn">${esc(P.name)}${badges}</span><span class="bps">${esc(B.life||"")}${B.life&&line?" · ":""}${esc(line)}</span></span><span class="bchev">›</span></summary><div class="bbody"><div class="rov">${sub}</div>${body}</div></details>`});
@@ -1507,13 +1523,14 @@ s.addEventListener("click",e=>{
   if(e.target.id==="svlink"){fileHandle&&!fileOK?reconnectFile():linkFile();return}
   if(view==="survey"&&e.target.id==="pasteadd"){if(importResponse(document.getElementById("pastetxt").value)){svPanel=null;setView("compare");ctab="cwheel";renderCompare()}return}
   if(view==="survey"){if(e.target.id==="svsave"){saveSurvey();return}if(e.target.id==="svcancel"){setView("wheel");window.scrollTo({top:0})}
-    if(e.target.id==="svexport"){const data=JSON.stringify(serializeUsers(),null,2);
+    if(e.target.id==="svexport"){const data=JSON.stringify({version:1,type:"decision-wheel-export",people:serializeUsers(),added:ADDED},null,2);
       const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));a.download="decision-wheel-answers.json";a.click()}
     if(e.target.id==="svdelete"&&surveyFor&&!surveyFor.self){const P=surveyFor;deleteUser(P);if(owner===P)owner=PEOPLE[0];if(target===P)target=PEOPLE[0];surveyFor=null;renderSurvey()}
     return}
   if(e.target.matches("input,select"))return;
   const er=e.target.closest("[data-era]");if(er){const v=er.dataset.era;if(eraSel.has(v)){if(eraSel.size>1)eraSel.delete(v)}else eraSel.add(v);lsSet("decisionwheel_eras",JSON.stringify([...eraSel]));renderCompare();return}
   const tb=e.target.closest("[data-tab]");if(tb){ctab=tb.dataset.tab;renderCompare();return}
+  if(e.target.id==="addperson"){openAdd();return}
   if(e.target.id==="cwswap"&&cwOther){const a=target;target=cwOther;cwOther=a;target.on=true;renderCompare();return}
   const go=e.target.closest("[data-goto]");if(go){const [w,k]=go.dataset.goto.split(":");
     if(w==="topic"){ctab="topics";pendingScroll="top-"+k;renderCompare();return}
@@ -1616,6 +1633,84 @@ document.addEventListener("click",e=>{const pl=e.target.closest&&e.target.closes
   if(a){if(touch&&ppFor===a)hidePP();else showPP(a);return}
   if(ppop&&ppop.style.display==="block"&&(!e.target.closest("#ppop")||e.target.closest(".vpx")||e.target.closest(".ppl")))hidePP()},true);
 addEventListener("scroll",()=>{if(ppFor){if(touch)placePop(ppop,ppFor);else hidePP()}},{passive:true});
+
+// ---- Add a person (admin): look them up, confirm from a source, keep them for research later ----
+// Lookups use Wikipedia and Open Library (both free, work from the browser). Without internet a person can still be
+// saved with the book you saw and notes, then checked later. Added people travel inside index.html (via "Link this file"),
+// in Export all / Import, and Claude researches the queue in the next session.
+function strc(x,n){return String(x==null?"":x).replace(/[\u0000-\u001f]/g," ").slice(0,n)}
+function cleanAdded(a){if(!a||!a.name)return null;const w=a.wiki,o=a.ol;
+  return {name:strc(a.name,80).trim(),book:strc(a.book,140),notes:strc(a.notes,600),confirmed:!!a.confirmed,removed:!!a.removed,saved:+a.saved||Date.now(),
+    wiki:w&&w.url&&/^https:\/\/[a-z]+\.wikipedia\.org\//.test(w.url)?{title:strc(w.title,120),desc:strc(w.desc,200),extract:strc(w.extract,700),url:strc(w.url,300)}:null,
+    ol:o&&/^OL\d+A$/.test(o.key||"")?{key:o.key,name:strc(o.name,120),birth:strc(o.birth,40),death:strc(o.death,40),top:strc(o.top,160)}:null,
+    books:Array.isArray(a.books)?a.books.slice(0,8).map(b=>[strc(b[0],160),strc(b[1],8)]):[]}}
+function mergeAdded(list){list.forEach(a=>{a=cleanAdded(a);if(!a)return;const i=ADDED.findIndex(x=>x.name.toLowerCase()===a.name.toLowerCase());
+  if(i<0)ADDED.push(a);else if((a.saved||0)>(ADDED[i].saved||0))ADDED[i]=a})}
+function saveAdded(){if(isAdmin){lsSet(ADDED_KEY,JSON.stringify(ADDED));saveUsers()}}
+function yearOf(x){const m=String(x||"").match(/(\d{3,4})/);return m?+m[1]:null}
+function erasFromYears(b,d){b=yearOf(b);d=yearOf(d);if(d&&d<1900)return["A"];if(b&&b<1870)return["A","H"];if(b&&b<1955)return d&&d<2005?["H"]:["H","M"];return["M"]}
+function applyAdded(){
+  for(let i=PEOPLE.length-1;i>=0;i--){const P=PEOPLE[i];if(P.added&&!ADDED.some(a=>!a.removed&&a.name===P.name))PEOPLE.splice(i,1)}
+  ADDED.forEach(a=>{if(a.removed)return;let P=PEOPLE.find(p=>p.name===a.name&&!p.user);if(P&&!P.added)return; // already fully researched
+    if(!P){P={name:a.name,added:true,trad:[],on:false,church:"",src:"",v:TOPICS.map(()=>({c:null})),also:{},conv:{}};PEOPLE.push(P)}
+    P.src="Added by Luke"+(a.book?" after seeing "+a.book:"");const o=a.ol||{};
+    const life=o.birth&&o.death?`${yearOf(o.birth)}–${yearOf(o.death)}`:o.birth?`b. ${yearOf(o.birth)}`:"";
+    BIO[a.name]={life,era:"",known:[a.wiki&&a.wiki.desc,a.wiki&&a.wiki.extract].filter(Boolean).join(" — ")||(o.top?"Author of "+o.top+".":"Not looked up yet."),
+      spec:[a.book&&"Seen: "+a.book,a.notes&&"Luke's note: "+a.notes].filter(Boolean).join(" · "),contro:[]};
+    BOOKS[a.name]=(a.books||[]).map(([t])=>[t,[]]);
+    LINKS[a.name]=[a.wiki&&["Wikipedia: "+a.wiki.title,a.wiki.url],a.ol&&["Open Library: "+a.ol.name,"https://openlibrary.org/authors/"+a.ol.key]].filter(Boolean);
+    ERA_OF[a.name]=erasFromYears(o.birth,o.death)})}
+let addBox=null,addCands=null;
+function openAdd(prefill){if(!isAdmin)return;if(!addBox){addBox=document.createElement("div");addBox.id="addp";document.body.appendChild(addBox);addBox.addEventListener("click",addClick)}
+  addBox.innerHTML=`<div class="mbox" role="dialog" aria-label="Add a person"><div class="vph"><h3 style="margin:0">Add a person</h3><button class="vpx" data-a="close" aria-label="Close">×</button></div>
+   <p class="sub" style="margin:4px 0 10px">Look them up, confirm it's the right person from a source or book, and they're saved for research. No internet? Save now and check later.</p>
+   <label class="aplab">Name<input id="ap_name" class="chin" autocomplete="off" value="${esc(prefill&&prefill.name||"")}"></label>
+   <label class="aplab">Book or source you saw <span class="tmut">(optional, helps confirm)</span><input id="ap_book" class="chin" autocomplete="off" value="${esc(prefill&&prefill.book||"")}"></label>
+   <label class="aplab">Notes <span class="tmut">(optional)</span><textarea id="ap_notes" class="chin" rows="2">${esc(prefill&&prefill.notes||"")}</textarea></label>
+   <div class="btngrid" style="margin-top:8px"><button class="primary" data-a="find">Find &amp; confirm</button><button data-a="quick">Save without checking</button></div>
+   <div id="ap_res"></div><div class="ctlh" style="margin-top:12px">Research queue</div><div id="ap_queue"></div></div>`;
+  addBox.style.display="flex";renderQueue();document.getElementById("ap_name").focus()}
+function renderQueue(){const q=ADDED.filter(a=>!a.removed),el=document.getElementById("ap_queue");if(!el)return;
+  el.innerHTML=q.length?q.map((a,i)=>`<div class="aq"><div><b>${esc(a.name)}</b> <span class="rtag ${a.confirmed?"dec":"con"}">${a.confirmed?"Confirmed":"Not checked"}</span>${PEOPLE.some(p=>p.name===a.name&&!p.added)?' <span class="rtag also">Researched</span>':""}
+     <div class="tmut" style="font-size:12px">${esc([a.book,a.notes].filter(Boolean).join(" · "))}</div></div>
+     <div class="aqb">${a.confirmed?"":`<button class="mini" data-a="check" data-n="${esc(a.name)}">Check now</button>`}<button class="mini" data-a="remove" data-n="${esc(a.name)}">Remove</button></div></div>`).join(""):'<span class="tmut">No one added yet.</span>'}
+async function findPerson(){const name=document.getElementById("ap_name").value.trim(),book=document.getElementById("ap_book").value.trim(),res=document.getElementById("ap_res");
+  if(!name){toast("Type a name first");return}
+  if(navigator.onLine===false){res.innerHTML=`<p class="err">You're offline. Use "Save without checking" and check them later.</p>`;return}
+  res.innerHTML=`<p class="tmut">Searching Wikipedia and Open Library…</p>`;
+  const q=encodeURIComponent(name);let wiki=[],ol=[];
+  try{const j=await (await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${q}&format=json&origin=*&srlimit=4`)).json();
+    wiki=(await Promise.all(j.query.search.slice(0,4).map(async x=>{try{const s=await (await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/"+encodeURIComponent(x.title.replace(/ /g,"_")))).json();
+      return s.type==="standard"?{title:s.title,desc:s.description||"",extract:s.extract||"",url:(s.content_urls&&s.content_urls.desktop.page)||("https://en.wikipedia.org/wiki/"+encodeURIComponent(x.title))}:null}catch(e){return null}}))).filter(Boolean)}catch(e){}
+  try{const j=await (await fetch(`https://openlibrary.org/search/authors.json?q=${q}&limit=5`)).json();
+    ol=j.docs.map(d=>({key:String(d.key).replace("/authors/",""),name:d.name,birth:d.birth_date||"",death:d.death_date||"",top:d.top_work||"",count:d.work_count||0}))}catch(e){}
+  const bk=book.toLowerCase(),nm=name.toLowerCase();
+  const wScore=w=>(w.title.toLowerCase()===nm?3:0)+(/theolog|pastor|bishop|author|scholar|preacher|minister|christian|church|bible|professor/i.test(w.desc+" "+w.extract)?2:0)+(bk&&(w.extract.toLowerCase().includes(bk))?3:0);
+  const oScore=o=>(o.name.toLowerCase()===nm?2:0)+(bk&&o.top.toLowerCase().includes(bk.slice(0,18))?4:0)+Math.min(2,o.count/10);
+  wiki.sort((a,b)=>wScore(b)-wScore(a));ol.sort((a,b)=>oScore(b)-oScore(a));addCands={wiki,ol,name,book};
+  if(!wiki.length&&!ol.length){res.innerHTML=`<p class="err">Nothing found. Check the spelling, or "Save without checking".</p>`;return}
+  res.innerHTML=`<div class="ctlh" style="margin-top:12px">Is this them? Pick the matching source(s)</div>
+   ${wiki.length?`<div class="apgrp"><div class="tmut" style="font-size:12px">Wikipedia</div>${wiki.map((w,i)=>`<label class="apc"><input type="radio" name="apw" value="${i}"${i===0&&wScore(w)>=3?" checked":""}><span><b>${esc(w.title)}</b> <span class="tmut">${esc(w.desc)}</span><br><span class="apx">${esc(w.extract.slice(0,170))}${w.extract.length>170?"…":""}</span></span></label>`).join("")}<label class="apc"><input type="radio" name="apw" value=""${wScore(wiki[0])>=3?"":" checked"}><span class="tmut">None of these</span></label></div>`:""}
+   ${ol.length?`<div class="apgrp"><div class="tmut" style="font-size:12px">Open Library (books)</div>${ol.map((o,i)=>`<label class="apc"><input type="radio" name="apo" value="${i}"${i===0&&oScore(o)>=2?" checked":""}><span><b>${esc(o.name)}</b> <span class="tmut">${esc([o.birth&&"b. "+o.birth,o.death&&"d. "+o.death].filter(Boolean).join(" · "))}</span><br><span class="apx">${o.top?"Best known: "+esc(o.top)+" · ":""}${o.count} works${bk&&o.top.toLowerCase().includes(bk.slice(0,18))?' · <b class="apok">matches your book ✓</b>':""}</span></span></label>`).join("")}<label class="apc"><input type="radio" name="apo" value=""${ol.length&&oScore(ol[0])>=2?"":" checked"}><span class="tmut">None of these</span></label></div>`:""}
+   <div class="btngrid" style="margin-top:8px"><button class="primary" data-a="confirm">Confirm &amp; save</button></div>`}
+async function confirmPerson(){const c=addCands;if(!c)return;const wi=(document.querySelector('input[name="apw"]:checked')||{}).value,oi=(document.querySelector('input[name="apo"]:checked')||{}).value;
+  const w=wi!==""&&wi!=null?c.wiki[+wi]:null,o=oi!==""&&oi!=null?c.ol[+oi]:null;
+  if(!w&&!o){toast("Pick at least one source to confirm, or Save without checking");return}
+  let books=[];if(o){try{const j=await (await fetch(`https://openlibrary.org/search.json?author_key=${o.key}&limit=8&fields=title,first_publish_year&sort=editions`)).json();
+    const seen=new Set();books=j.docs.filter(d=>{const k=d.title.toLowerCase();if(seen.has(k))return false;seen.add(k);return true}).slice(0,6).map(d=>[d.title,String(d.first_publish_year||"")])}catch(e){}}
+  const name=(w&&w.title.replace(/ \(.*\)$/,""))||(o&&o.name)||c.name;
+  savePerson({name,book:c.book,notes:document.getElementById("ap_notes").value.trim(),confirmed:true,wiki:w,ol:o,books})}
+function savePerson(a){a.saved=Date.now();mergeAdded([a]);applyAdded();saveAdded();const P=PEOPLE.find(p=>p.name===cleanAdded(a).name);if(P)P.on=true;
+  toast(a.confirmed?`Saved ${a.name} — added to the research queue`:`Saved ${a.name} — check them when you're online`);
+  document.getElementById("ap_res").innerHTML="";["ap_name","ap_book","ap_notes"].forEach(id=>document.getElementById(id).value="");renderQueue();if(view==="compare")renderCompare()}
+function addClick(e){const b=e.target.closest("[data-a]");if(e.target===addBox){addBox.style.display="none";return}if(!b)return;const a=b.dataset.a;
+  if(a==="close"){addBox.style.display="none";if(view==="compare")renderCompare()}
+  if(a==="find")findPerson();
+  if(a==="confirm")confirmPerson();
+  if(a==="quick"){const name=document.getElementById("ap_name").value.trim();if(!name){toast("Type a name first");return}
+    savePerson({name,book:document.getElementById("ap_book").value.trim(),notes:document.getElementById("ap_notes").value.trim(),confirmed:false})}
+  if(a==="check"){const x=ADDED.find(y=>y.name===b.dataset.n);openAdd(x);findPerson()}
+  if(a==="remove"){const x=ADDED.find(y=>y.name===b.dataset.n);if(x){x.removed=true;x.saved=Date.now();applyAdded();saveAdded();renderQueue()}}}
 // ---- light / dark (charcoal) switch ----
 const THEME_KEY="decisionwheel_theme",MODES=["auto","light","dark"],MODE_LABEL={auto:"◐ Auto",light:"☀ Light",dark:"☾ Dark"};
 function applyTheme(){const m=document.documentElement.getAttribute("data-mode")||"auto";

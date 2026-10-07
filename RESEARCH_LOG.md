@@ -6,6 +6,7 @@
 - After the last pair, ask Luke before starting again from the top. Pause whenever he says.
 - Inferred views (from a person's church, school or wider teaching, not their own words) start with "(inferred)" and show in italics in the app.
 - If sources conflict about a person's view, use the most recent one, and note the older view in the log.
+- Also check the app's research queue (people Luke added with "＋ Add a person", stored as `added` in index.html) and research those first.
 - Status: paused (Oct 2026). Next up when resumed: ask Luke which group to start with.
 
 Order: 1 Cahn + Begg · 2 Comer + Tripp · 3 Ortlund + McLaughlin · 4 Lennox + Bray · 5 Chandler + Jeremiah (then ask before restarting)
