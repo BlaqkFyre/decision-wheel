@@ -41,6 +41,10 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [x] Inferred placements shown in italics (dashed outline) in bios, heat map, topic pages, reading list and wheel tooltips
 - [x] Topic pages: "Commonly held by" section listing churches, denominations & organisations for each view
 - [ ] Rotating research on little-known people (pairs: Cahn+Begg, Comer+Tripp, Ortlund+McLaughlin, Lennox+Bray, Chandler+Jeremiah) — round 1 done. Round 2 on other low-info people (Bock+DeYoung, Warren+Stott, Lewis+Walvoord, Keller+Packer, Storms+Tsarfati) done. Round 3 (Hayford+Gentry, Darby+Wright, Smith+Laurie, Sproul+MacArthur, Grudem+Piper) and round 4 (round 1 again) done. Research PAUSED: see the method at the top of RESEARCH_LOG.md; ask Luke before resuming
+- [x] Atonement now has 5 views (added Satisfaction/Anselm and Governmental/Grotius); wheel, grid, survey and survey.html support 4–5 options. Luke: Christus Victor & restoration (4/5), also partly holds Penal substitution
+- [x] Added George Athas (Moore College; Bridging the Testaments): Daniel's 70th week fulfilled by 163 BC (stated); Baptism, Supper, Women inferred from Sydney Anglican ties
+- [x] Pop-ups on pills: Commonly held by (people linked to that church/group), Often held with, bio beliefs and describing terms
+- [ ] Research the new atonement options for people already in the app
 - [ ] Add more pre-1900 voices so that era isn't just Darby (e.g. Augustine, Luther, Calvin, Wesley, Spurgeon) — needs research
 - [ ] Check topic summaries, verse lists and church lists against sources (currently general reference)
 - [ ] Restyle (Luke to give direction)

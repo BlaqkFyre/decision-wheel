@@ -163,3 +163,12 @@ Order: A Hayford + Gentry · B Darby + Wright · C Chuck Smith + Laurie · D Spr
   - https://thevillagechurch.net/content/TheVillageChurch/Documents/TheVillageChurch_2026_MemberExpectations.pdf
 - Jeremiah — nothing new for his gaps. The Book of Signs and The Great Disappearance fit his existing futurist / rapture placements but say nothing on the missing topics.
   - https://www.christianbook.com/book-signs-undeniable-prophecies-apocalypse-ebook/david-jeremiah/9780785229575/pd/99033EB
+
+
+## Added person — George Athas (Oct 2026)
+- Daniel's 70th week: Fulfilled (stated). Overlapping 'weeks' fit 490 years into 441; "the final 'week' can be identified as 170–163 BCE", ending with the Maccabean rededication of the temple. Placed under "Fulfilled", not still future, although his end point is the Maccabean era rather than Christ.
+  - https://jhsonline.org/index.php/jhs/article/view/6231 (and the PDF download)
+- Baptism *Infant*, Lord's Supper *Spiritual presence*, Women *Complementarian* — all inferred from his role as an ordained Sydney Anglican at Moore College.
+  - https://eternitynews.com.au/people/george-athas/
+  - https://masterlectures.zondervanacademic.com/bridging-the-testaments-george-athas/videos/bridging-the-testaments-session-1-introduction
+- Next time: his own statements in Bridging the Testaments on Israel and the church, and on the Antichrist (Antiochus IV?)
