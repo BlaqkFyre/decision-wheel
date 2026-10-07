@@ -172,3 +172,14 @@ Order: A Hayford + Gentry · B Darby + Wright · C Chuck Smith + Laurie · D Spr
   - https://eternitynews.com.au/people/george-athas/
   - https://masterlectures.zondervanacademic.com/bridging-the-testaments-george-athas/videos/bridging-the-testaments-session-1-introduction
 - Next time: his own statements in Bridging the Testaments on Israel and the church, and on the Antichrist (Antiochus IV?)
+
+
+## Added person — Oskar Skarsaune (Oct 2026)
+- Norwegian church historian (b. 1946), professor emeritus at MF Norwegian School of Theology; In the Shadow of the Temple (2002); co-edited Jewish Believers in Jesus. Close ties to Messianic Jewish believers in Israel.
+- No first-hand statements found on the app's topics. Placed (both *inferred* from his Lutheran setting): Baptism *Infant*; Lord's Supper *Real presence*.
+- Not placed: Israel & the Church. His work stresses Jewish believers and the church's Jewish roots, but no clear statement on the three options was found.
+  - https://en.wikipedia.org/wiki/Oskar_Skarsaune
+  - https://christianitytoday.com/ct/2003/october/28.105.html
+  - https://pneumareview.com/oskar-skarsaune-from-the-jewish-messiah-to-the-creeds-of-the-church/
+  - https://ivpress.com/in-the-shadow-of-the-temple
+- Next time: confirm his church membership (Church of Norway?) and look for his own writing on Israel and the church
