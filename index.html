@@ -1643,7 +1643,8 @@ function cleanAdded(a){if(!a||!a.name)return null;const w=a.wiki,o=a.ol;
   return {name:strc(a.name,80).trim(),book:strc(a.book,140),notes:strc(a.notes,600),confirmed:!!a.confirmed,removed:!!a.removed,saved:+a.saved||Date.now(),
     wiki:w&&w.url&&/^https:\/\/[a-z]+\.wikipedia\.org\//.test(w.url)?{title:strc(w.title,120),desc:strc(w.desc,200),extract:strc(w.extract,700),url:strc(w.url,300)}:null,
     ol:o&&/^OL\d+A$/.test(o.key||"")?{key:o.key,name:strc(o.name,120),birth:strc(o.birth,40),death:strc(o.death,40),top:strc(o.top,160)}:null,
-    books:Array.isArray(a.books)?a.books.slice(0,8).map(b=>[strc(b[0],160),strc(b[1],8)]):[]}}
+    books:Array.isArray(a.books)?a.books.slice(0,10).map(b=>[strc(b[0],160),strc(b[1],8)]):[],
+    alt:Array.isArray(a.alt)?a.alt.slice(0,6).map(x=>x&&x.type==="wiki"&&/^https:\/\/[a-z]+\.wikipedia\.org\//.test(x.url||"")?{type:"wiki",title:strc(x.title,120),url:strc(x.url,300)}:x&&x.type==="ol"&&/^OL\d+A$/.test(x.key||"")?{type:"ol",key:x.key,name:strc(x.name,120),top:strc(x.top,160)}:null).filter(Boolean):[]}}
 function mergeAdded(list){list.forEach(a=>{a=cleanAdded(a);if(!a)return;const i=ADDED.findIndex(x=>x.name.toLowerCase()===a.name.toLowerCase());
   if(i<0)ADDED.push(a);else if((a.saved||0)>(ADDED[i].saved||0))ADDED[i]=a})}
 function saveAdded(){if(isAdmin){lsSet(ADDED_KEY,JSON.stringify(ADDED));saveUsers()}}
@@ -1658,7 +1659,8 @@ function applyAdded(){
     BIO[a.name]={life,era:"",known:[a.wiki&&a.wiki.desc,a.wiki&&a.wiki.extract].filter(Boolean).join(" — ")||(o.top?"Author of "+o.top+".":"Not looked up yet."),
       spec:[a.book&&"Seen: "+a.book,a.notes&&"Luke's note: "+a.notes].filter(Boolean).join(" · "),contro:[]};
     BOOKS[a.name]=(a.books||[]).map(([t])=>[t,[]]);
-    LINKS[a.name]=[a.wiki&&["Wikipedia: "+a.wiki.title,a.wiki.url],a.ol&&["Open Library: "+a.ol.name,"https://openlibrary.org/authors/"+a.ol.key]].filter(Boolean);
+    LINKS[a.name]=[a.wiki&&["Wikipedia: "+a.wiki.title,a.wiki.url],a.ol&&["Open Library: "+a.ol.name,"https://openlibrary.org/authors/"+a.ol.key],
+      ...(a.alt||[]).map(x=>x.type==="wiki"?["Wikipedia (possibly the same person): "+x.title,x.url]:["Open Library (possibly the same person): "+x.name+(x.top?" — "+x.top:""),"https://openlibrary.org/authors/"+x.key])].filter(Boolean);
     ERA_OF[a.name]=erasFromYears(o.birth,o.death)})}
 let addBox=null,addCands=null;
 function openAdd(prefill){if(!isAdmin)return;if(!addBox){addBox=document.createElement("div");addBox.id="addp";document.body.appendChild(addBox);addBox.addEventListener("click",addClick)}
@@ -1673,7 +1675,7 @@ function openAdd(prefill){if(!isAdmin)return;if(!addBox){addBox=document.createE
 function renderQueue(){const q=ADDED.filter(a=>!a.removed),el=document.getElementById("ap_queue");if(!el)return;
   el.innerHTML=q.length?q.map((a,i)=>`<div class="aq"><div><b>${esc(a.name)}</b> <span class="rtag ${a.confirmed?"dec":"con"}">${a.confirmed?"Confirmed":"Not checked"}</span>${PEOPLE.some(p=>p.name===a.name&&!p.added)?' <span class="rtag also">Researched</span>':""}
      <div class="tmut" style="font-size:12px">${esc([a.book,a.notes].filter(Boolean).join(" · "))}</div></div>
-     <div class="aqb">${a.confirmed?"":`<button class="mini" data-a="check" data-n="${esc(a.name)}">Check now</button>`}<button class="mini" data-a="remove" data-n="${esc(a.name)}">Remove</button></div></div>`).join(""):'<span class="tmut">No one added yet.</span>'}
+     <div class="aqb">${a.confirmed?"":`<button class="mini" data-a="check" data-n="${esc(a.name)}">Check now</button>`}<button class="mini" data-a="rename" data-n="${esc(a.name)}">Rename</button><button class="mini" data-a="remove" data-n="${esc(a.name)}">Remove</button></div></div>`).join(""):'<span class="tmut">No one added yet.</span>'}
 async function findPerson(){const name=document.getElementById("ap_name").value.trim(),book=document.getElementById("ap_book").value.trim(),res=document.getElementById("ap_res");
   if(!name){toast("Type a name first");return}
   if(navigator.onLine===false){res.innerHTML=`<p class="err">You're offline. Use "Save without checking" and check them later.</p>`;return}
@@ -1692,14 +1694,20 @@ async function findPerson(){const name=document.getElementById("ap_name").value.
   res.innerHTML=`<div class="ctlh" style="margin-top:12px">Is this them? Pick the matching source(s)</div>
    ${wiki.length?`<div class="apgrp"><div class="tmut" style="font-size:12px">Wikipedia</div>${wiki.map((w,i)=>`<label class="apc"><input type="radio" name="apw" value="${i}"${i===0&&wScore(w)>=3?" checked":""}><span><b>${esc(w.title)}</b> <span class="tmut">${esc(w.desc)}</span><br><span class="apx">${esc(w.extract.slice(0,170))}${w.extract.length>170?"…":""}</span></span></label>`).join("")}<label class="apc"><input type="radio" name="apw" value=""${wScore(wiki[0])>=3?"":" checked"}><span class="tmut">None of these</span></label></div>`:""}
    ${ol.length?`<div class="apgrp"><div class="tmut" style="font-size:12px">Open Library (books)</div>${ol.map((o,i)=>`<label class="apc"><input type="radio" name="apo" value="${i}"${i===0&&oScore(o)>=2?" checked":""}><span><b>${esc(o.name)}</b> <span class="tmut">${esc([o.birth&&"b. "+o.birth,o.death&&"d. "+o.death].filter(Boolean).join(" · "))}</span><br><span class="apx">${o.top?"Best known: "+esc(o.top)+" · ":""}${o.count} works${bk&&o.top.toLowerCase().includes(bk.slice(0,18))?' · <b class="apok">matches your book ✓</b>':""}</span></span></label>`).join("")}<label class="apc"><input type="radio" name="apo" value=""${ol.length&&oScore(ol[0])>=2?"":" checked"}><span class="tmut">None of these</span></label></div>`:""}
+   <p class="tmut" style="font-size:12px;margin:6px 0 0">Pick whichever you're sure of — one is enough. Other matches with the same name are kept as "possible" sources and their books are included for research.</p>
    <div class="btngrid" style="margin-top:8px"><button class="primary" data-a="confirm">Confirm &amp; save</button></div>`}
 async function confirmPerson(){const c=addCands;if(!c)return;const wi=(document.querySelector('input[name="apw"]:checked')||{}).value,oi=(document.querySelector('input[name="apo"]:checked')||{}).value;
   const w=wi!==""&&wi!=null?c.wiki[+wi]:null,o=oi!==""&&oi!=null?c.ol[+oi]:null;
   if(!w&&!o){toast("Pick at least one source to confirm, or Save without checking");return}
-  let books=[];if(o){try{const j=await (await fetch(`https://openlibrary.org/search.json?author_key=${o.key}&limit=8&fields=title,first_publish_year&sort=editions`)).json();
-    const seen=new Set();books=j.docs.filter(d=>{const k=d.title.toLowerCase();if(seen.has(k))return false;seen.add(k);return true}).slice(0,6).map(d=>[d.title,String(d.first_publish_year||"")])}catch(e){}}
-  const name=(w&&w.title.replace(/ \(.*\)$/,""))||(o&&o.name)||c.name;
-  savePerson({name,book:c.book,notes:document.getElementById("ap_notes").value.trim(),confirmed:true,wiki:w,ol:o,books})}
+  const name=c.name.replace(/\s+/g," ").trim(),nl=name.toLowerCase();
+  // confirming one source doesn't rule out the others: keep same-name matches as "possible" sources for research
+  const alt=[...c.wiki.filter(x=>x!==w&&x.title.replace(/ \(.*\)$/,"").toLowerCase()===nl).map(x=>({type:"wiki",title:x.title,url:x.url})),
+             ...c.ol.filter(x=>x!==o&&x.name.toLowerCase()===nl).map(x=>({type:"ol",key:x.key,name:x.name,top:x.top}))];
+  const keys=[o&&o.key,...alt.filter(x=>x.type==="ol").map(x=>x.key)].filter(Boolean);let books=[];const seen=new Set();
+  for(const k of keys){try{const j=await (await fetch(`https://openlibrary.org/search.json?author_key=${k}&limit=8&fields=title,first_publish_year&sort=editions`)).json();
+    j.docs.forEach(d=>{const t=d.title.toLowerCase();if(!seen.has(t)){seen.add(t);books.push([d.title,String(d.first_publish_year||"")])}})}catch(e){}}
+  books=books.slice(0,10);
+  savePerson({name,book:c.book,notes:document.getElementById("ap_notes").value.trim(),confirmed:true,wiki:w,ol:o,books,alt})}
 function savePerson(a){a.saved=Date.now();mergeAdded([a]);applyAdded();saveAdded();const P=PEOPLE.find(p=>p.name===cleanAdded(a).name);if(P)P.on=true;
   toast(a.confirmed?`Saved ${a.name} — added to the research queue`:`Saved ${a.name} — check them when you're online`);
   document.getElementById("ap_res").innerHTML="";["ap_name","ap_book","ap_notes"].forEach(id=>document.getElementById(id).value="");renderQueue();if(view==="compare")renderCompare()}
@@ -1710,6 +1718,9 @@ function addClick(e){const b=e.target.closest("[data-a]");if(e.target===addBox){
   if(a==="quick"){const name=document.getElementById("ap_name").value.trim();if(!name){toast("Type a name first");return}
     savePerson({name,book:document.getElementById("ap_book").value.trim(),notes:document.getElementById("ap_notes").value.trim(),confirmed:false})}
   if(a==="check"){const x=ADDED.find(y=>y.name===b.dataset.n);openAdd(x);findPerson()}
+  if(a==="rename"){const row=b.closest(".aq");row.innerHTML=`<input class="chin" id="ap_rn" value="${esc(b.dataset.n)}" style="flex:1;width:auto!important"><div class="aqb"><button class="mini primary" data-a="rnsave" data-n="${esc(b.dataset.n)}">Save name</button></div>`;document.getElementById("ap_rn").focus();return}
+  if(a==="rnsave"){const nn=document.getElementById("ap_rn").value.replace(/\s+/g," ").trim(),x=ADDED.find(y=>y.name===b.dataset.n);if(!nn||!x)return;
+    if(nn!==x.name){const copy=Object.assign({},x,{name:nn,saved:Date.now()});x.removed=true;x.saved=Date.now();mergeAdded([copy]);applyAdded();saveAdded();toast("Renamed to "+nn)}renderQueue();if(view==="compare")renderCompare();return}
   if(a==="remove"){const x=ADDED.find(y=>y.name===b.dataset.n);if(x){x.removed=true;x.saved=Date.now();applyAdded();saveAdded();renderQueue()}}}
 // ---- light / dark (charcoal) switch ----
 const THEME_KEY="decisionwheel_theme",MODES=["auto","light","dark"],MODE_LABEL={auto:"◐ Auto",light:"☀ Light",dark:"☾ Dark"};

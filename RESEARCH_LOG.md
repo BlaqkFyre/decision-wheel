@@ -7,6 +7,7 @@
 - Inferred views (from a person's church, school or wider teaching, not their own words) start with "(inferred)" and show in italics in the app.
 - If sources conflict about a person's view, use the most recent one, and note the older view in the log.
 - Also check the app's research queue (people Luke added with "＋ Add a person", stored as `added` in index.html) and research those first.
+- For added people, Luke may confirm identity from just one source or book. That doesn't rule out other sources: Wikipedia pages, Open Library records and other books for the same person can be used once it's clear they're the same person. Same-name matches are stored as "possible" sources to check.
 - Status: paused (Oct 2026). Next up when resumed: ask Luke which group to start with.
 
 Order: 1 Cahn + Begg · 2 Comer + Tripp · 3 Ortlund + McLaughlin · 4 Lennox + Bray · 5 Chandler + Jeremiah (then ask before restarting)
