@@ -1579,7 +1579,7 @@ function tabChurches(vis){const P=target;
       <div class="trow"><span class="tl">People here</span><div>${pRow((B.people||[]).map(([n,s,note])=>({P:PEOPLE.find(p=>p.name===n),s,note})).filter(x=>x.P))||'<span class="tmut">no one yet</span>'}</div></div></div>`).join("");
     const fam=(C.people||[]).map(([n,s,note])=>({P:PEOPLE.find(p=>p.name===n),s,note})).filter(x=>x.P);
     const body=`<div class="ro"><b>What it is</b><div>${esc(C.about)}</div></div>
-      ${C.b.length?`<div class="ro"><b>Usually teaches</b> <span class="tmut" style="font-size:12px">tap a view to see everyone in the app who holds it</span><div>${bel(C.b)}</div>${notes(C.b)?`<div class="tmut chnotes" style="font-size:12.5px;margin-top:6px">${notes(C.b)}</div>`:""}</div>`:""}
+      ${C.b.length?`<div class="ro"><b>Usually teaches</b> <span class="tmut" style="font-size:12px">hover or tap a view to see who holds it; click it (or "topic page →") to open that topic</span><div>${bel(C.b)}</div>${notes(C.b)?`<div class="tmut chnotes" style="font-size:12.5px;margin-top:6px">${notes(C.b)}</div>`:""}</div>`:""}
       ${fam.length?`<div class="ro"><b>People here</b>${pRow(fam)}</div>`:""}
       ${brs?`<div class="ro"><b>${C.br.length} branch${C.br.length>1?"es":""}</b></div>${brs}`:""}
       <div class="ro"><b>Among people here</b> <span class="tmut">${all.length} ${all.length===1?"person":"people"} linked to this church</span><div class="tmut" style="font-size:12px">For each topic: how many of this church's people hold each view, out of those with a view placed on that topic. For example "Premil: 1 of 2" means 2 of them have a Millennium view, and 1 of those holds Premillennial. Tap a view to see who.</div>${comp||'<span class="tmut">No one here yet in the chosen era(s).</span>'}</div>
@@ -1595,7 +1595,7 @@ function tabTopics(vis){const P=target;
   TOPICS.forEach((T,i)=>{const I=TINFO[i]||{o:[]},c=choice(P,i),al=alsoOf(P,i);
     const opts=T.opts.map((o,k)=>{const X=I.o[k]||{},tag=c==null?"":k===c?`<span class="rtag dec">${esc(P.name)}'s view</span>`:al.includes(k)?'<span class="rtag also">Also holds</span>':"";
       const holders=PEOPLE.filter(Q=>choice(Q,i)===k&&eraOK(Q)),hw=heldWith(i,k);
-      return `<div class="topt"><div class="toh"><b>${esc(o.n)}</b> ${tag}</div><div class="tod">${esc(o.d)}</div>
+      return `<div class="topt" data-o="${i}-${k}"><div class="toh"><b>${esc(o.n)}</b> ${tag}</div><div class="tod">${esc(o.d)}</div>
         <div class="trow"><span class="tl">Held by here (${holders.length})</span><div class="tdots">${holders.map(Q=>`<button class="tdot${inf(Q,i)?" inf":""}" data-goto="bio:${PEOPLE.indexOf(Q)}" title="${esc(Q.name)}${inf(Q,i)?" (inferred)":""} — open bio">${dotH(Q,20)}</button>`).join("")||'<span class="tmut">no one yet</span>'}</div></div>
         <div class="trow"><span class="tl">Often held with</span><div>${hw.map(x=>`<span class="tag pp" data-pp="both" data-v="${i},${k},${x.j},${x.m}">${esc(TSHORT[x.j])}: ${esc(TOPICS[x.j].opts[x.m].s)} · ${Math.round(100*x.f)}%</span>`).join("")||'<span class="tmut">not enough people yet</span>'}</div></div>
         ${X.for?`<div class="trow vfor"><span class="tl">Verses used to support it</span><div class="vlist">${X.for.map(verseLink).join("")}${verseAll(X.for)}</div></div>`:""}
@@ -1623,7 +1623,7 @@ function tabBios(vis){
       ${(B.crit&&B.crit.length)?`<div class="ro bcrit"><b>Critics say</b>${list(B.crit)}</div>`:""}
       ${(B.contro&&B.contro.length)?`<div class="ro bcon"><b>Controversies</b>${list(B.contro)}</div>`:""}
       <div class="ro"><b>Describing terms</b><div>${L.t.map(x=>`<span class="tag pp" data-pp="term" data-v="${esc(x)}">${esc(x)}</span>`).join("")||'<span style="color:#9AA3AD">not enough data yet</span>'}</div></div>
-      <div class="ro"><b>Beliefs (${held.length} of ${NT} topics)</b>${TOPICS.some((_,i)=>inf(P,i))?' <span class="infkey">italic = inferred</span>':""}<div>${held.join("")||'<span style="color:#9AA3AD">none recorded yet</span>'}</div></div>
+      <div class="ro"><b>Beliefs (${held.length} of ${NT} topics)</b>${TOPICS.some((_,i)=>inf(P,i))?' <span class="infkey">italic = inferred</span>':""}<span class="tmut" style="font-size:11.5px;margin-left:6px">${touch?"tap a belief, then \"topic page →\"":"click a belief to open its topic"}</span><div>${held.join("")||'<span style="color:#9AA3AD">none recorded yet</span>'}</div></div>
       <div class="ro bbtns">${BOOKS[P.name]?`<button class="lnk" data-goto="read:${k}">Reading list →</button>`:""} <button class="lnk" data-goto="heat:${k}">Compare on wheel →</button></div>`;
     const badges=`${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}${P.added?'<span class="new torsch">to research</span>':''}`;
     desk+=`<div class="rcard" id="bio-${k}"><div class="rt" style="display:flex;align-items:center;gap:8px">${dotH(P)}${esc(P.name)}${badges}</div><div class="rov">${sub}</div>${body}</div>`;
@@ -1634,6 +1634,10 @@ function renderCompare(){const vis=visible();
   let h=`<div class="cmp"><h2>People to Compare</h2><p class="sub">Choose the target person, who to compare them with, and from which era. Colours group people by end-times family; initials identify them. The target person always stays visible.</p>${chips()}<h2 class="h2b">Comparative Analysis</h2><p class="sub">Pick a view.</p>`;
   h+=`<div class="tabs btngrid">${[["cwheel","Wheel compare"],["tend","Tendencies"],["heat","Heat map"],["grid","Grid"],["scatter","Position map"],["tree","Family tree"],["combo","Unusual combos"],["read","Reading list"],["labels","Labels"],["topics","Topics"],["bios","Bios"],["churches","Churches"]].map(([k,l])=>`<button data-tab="${k}" class="${ctab===k?'on':''}">${l}</button>`).join("")}</div>`;
   h+=({cwheel:tabCmpWheel,tend:tabTend,heat:tabHeat,grid:tabGrid,scatter:tabScatter,tree:tabTree,combo:tabCombos,read:tabRead,labels:tabLabels,topics:tabTopics,bios:tabBios,churches:tabChurches})[ctab](vis);
+  if(pendingScroll&&pendingScroll.startsWith("opt:")){const o=pendingScroll.slice(4);pendingScroll=null;setTimeout(()=>{const els=[...document.querySelectorAll(`.topt[data-o="${o}"]`)];
+    const vis=x=>{const d=x.closest("details");return d?d.offsetParent!==null:x.offsetParent!==null};
+    const el=els.find(vis);if(el&&el.closest("details"))el.closest("details").open=true;
+    if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
   if(pendingScroll){const id=pendingScroll;pendingScroll=null;setTimeout(()=>{let el=document.getElementById(id);if(el&&!el.offsetParent&&/^(bio|top|rt|rp|ch)-/.test(id)){el=document.getElementById(id.replace("-","m-"));if(el)el.open=true}if(el){el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)}},30)}
   h+=`<div class="src">Theologian views are summarised from their own writings and statements where available — see the Labels tab for source links, and hover cells for notes. "—" means a different view or no clear public position. Source dots show how many independent sources were found for a placement.</div></div>`;
   s.innerHTML=h}
@@ -1828,7 +1832,7 @@ function orgPeople(org){const hits=new Set();ORG_RULES.forEach(([a,b])=>{if(!a.t
 function ppPeople(el){const t=el.dataset.pp,v=el.dataset.v;
   if(t==="org"){const ci=CH_OF[v];return {h:v,sub:"People here linked to this church or group",L:ci!=null?[...new Set([...chPeople(CHURCHES[ci]).map(x=>x.P),...orgPeople(v)])]:orgPeople(v),ch:ci}}
   if(t==="both"){const [i,k,j,m]=v.split(",").map(Number);return {h:`${TOPICS[i].opts[k].s} + ${TSHORT[j]}: ${TOPICS[j].opts[m].s}`,sub:"People here who hold both",L:PEOPLE.filter(P=>choice(P,i)===k&&choice(P,j)===m)}}
-  if(t==="view"){const [i,c]=v.split(",").map(Number);return {h:`${TOPICS[i].name}: ${TOPICS[i].opts[c].n}`,sub:"Everyone in the app who holds this view",L:PEOPLE.filter(P=>choice(P,i)===c)}}
+  if(t==="view"){const [i,c]=v.split(",").map(Number);return {h:`${TOPICS[i].name}: ${TOPICS[i].opts[c].n}`,sub:"Everyone in the app who holds this view",L:PEOPLE.filter(P=>choice(P,i)===c),topic:[i,c]}}
   if(t==="chview"){const [ci,i,c]=v.split(",").map(Number),C=CHURCHES[ci],mem=[...new Set(chPeople(C).filter(x=>eraOK(x.P)).map(x=>x.P))],withV=mem.filter(P=>choice(P,i)!=null),L=withV.filter(P=>choice(P,i)===c);
     return {h:`${TOPICS[i].name}: ${TOPICS[i].opts[c].n}`,sub:`${C.n}: ${L.length} of the ${withV.length} people here with a ${TOPICS[i].name} view hold this (${PEOPLE.filter(P=>choice(P,i)===c).length} in the whole app)`,L,noCount:true}}
   if(t==="term")return {h:v,sub:"Everyone here described this way",L:PEOPLE.filter(P=>labels(P).t.includes(v))};
@@ -1838,19 +1842,23 @@ function showPP(el){clearTimeout(ppHide);if(!ppop){ppop=document.createElement("
     ppop.addEventListener("mouseenter",()=>clearTimeout(ppHide));ppop.addEventListener("mouseleave",()=>hidePP(200))}
   const d=ppPeople(el);ppFor=el;
   ppop.innerHTML=`<div class="vph"><b>${esc(d.h)}</b>${touch?'<button class="vpx" aria-label="Close">×</button>':""}</div><div class="tmut" style="font-size:12px;margin-bottom:6px">${esc(d.sub)}${d.noCount?"":` (${d.L.length})`}</div>
-    <div class="pplist">${d.L.map(P=>`<button class="ppl" data-goto="bio:${PEOPLE.indexOf(P)}">${dotH(P,20)}<span>${esc(P.name)}</span></button>`).join("")||'<span class="tmut">No one in the app yet.</span>'}</div>${d.ch!=null?`<button class="lnk ppch" data-ch="${d.ch}">${esc(CHURCHES[d.ch].n)} — church page →</button>`:""}`;
+    <div class="pplist">${d.L.map(P=>`<button class="ppl" data-goto="bio:${PEOPLE.indexOf(P)}">${dotH(P,20)}<span>${esc(P.name)}</span></button>`).join("")||'<span class="tmut">No one in the app yet.</span>'}</div>${d.ch!=null?`<button class="lnk ppch" data-ch="${d.ch}">${esc(CHURCHES[d.ch].n)} — church page →</button>`:""}${d.topic?`<button class="lnk ppch pptop" data-t="${d.topic[0]}-${d.topic[1]}">${esc(TOPICS[d.topic[0]].name)} topic page →</button>`:""}`;
   ppop.style.display="block";placePop(ppop,el)}
 function placePop(box,a){const r=a.getBoundingClientRect(),vw=document.documentElement.clientWidth||innerWidth,w=Math.min(340,vw-16);box.style.width=w+"px";
   let x=Math.max(8,Math.min(r.left,vw-w-8)),y=r.bottom+6;const h=box.offsetHeight;if(y+h>innerHeight-8)y=Math.max(8,r.top-h-6);box.style.left=x+"px";box.style.top=y+"px"}
 function hidePP(ms){clearTimeout(ppHide);ppHide=setTimeout(()=>{if(ppop)ppop.style.display="none";ppFor=null},ms||0)}
 if(!touch){document.addEventListener("mouseover",e=>{const a=e.target.closest&&e.target.closest(".pp");if(a&&a!==ppFor)showPP(a)});
   document.addEventListener("mouseout",e=>{const a=e.target.closest&&e.target.closest(".pp");if(a)hidePP(250)})}
-document.addEventListener("click",e=>{const pc=e.target.closest&&e.target.closest(".ppch");
+function goTopicOpt(o){hidePP();if(view!=="compare")setView("compare");ctab="topics";pendingScroll="opt:"+o;renderCompare()}
+document.addEventListener("click",e=>{const pt=e.target.closest&&e.target.closest(".pptop");
+  if(pt){goTopicOpt(pt.dataset.t);e.stopPropagation();return}
+  const pc=e.target.closest&&e.target.closest(".ppch");
   if(pc){hidePP();if(view!=="compare")setView("compare");ctab="churches";pendingScroll="ch-"+pc.dataset.ch;renderCompare();e.stopPropagation();return}
   const pl=e.target.closest&&e.target.closest(".ppl");
   if(pl){const k=+pl.dataset.goto.split(":")[1];PEOPLE[k].on=true;hidePP();if(view!=="compare")setView("compare");ctab="bios";pendingScroll="bio-"+k;renderCompare();e.stopPropagation();return}
   const a=e.target.closest&&e.target.closest(".pp");
-  if(a){if(touch&&ppFor===a)hidePP();else showPP(a);return}
+  if(a){if(!touch&&a.dataset.pp==="view"){const [i,c]=a.dataset.v.split(",");goTopicOpt(i+"-"+c);e.stopPropagation();return}
+    if(touch&&ppFor===a)hidePP();else showPP(a);return}
   if(ppop&&ppop.style.display==="block"&&(!e.target.closest("#ppop")||e.target.closest(".vpx")||e.target.closest(".ppl")))hidePP()},true);
 addEventListener("scroll",()=>{if(ppFor){if(touch)placePop(ppop,ppFor);else hidePP()}},{passive:true});
 
