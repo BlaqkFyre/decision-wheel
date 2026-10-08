@@ -51,7 +51,11 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [ ] Each session: Claude checks the research queue (`added` in index.html) and researches those people properly (then they become full entries)
 - [ ] Sync added people from phone to PC automatically (now: they save on the phone; Export all on phone → Import on PC). Later: GitHub sync
 - [ ] LATER (Luke's idea): in-app auto-check for added people. The app fetches basic sources it can reach from the browser (Wikipedia article text, Wikidata, Open Library, and maybe church "what we believe" pages that allow it), scans for clear view terms (e.g. "premillennial", "cessationist", "complementarian", "believer's baptism"), and only places a view when 2 independent sources agree. Auto-found views marked "auto-found — check" (like inferred), with source links, for Luke to approve; everything else stays in the research queue for Claude. Watch for: many sites block browser requests, and keyword matches can be wrong (e.g. an article describing a view the person argues against)
-- [ ] Add more pre-1900 voices so that era isn't just Darby (e.g. Augustine, Luther, Calvin, Wesley, Spurgeon) — needs research
+- [x] Added Steve Gregg (Why Hell?) and voices his book names: Augustine of Hippo, John Calvin, Irenaeus of Lyon, Origen, George MacDonald, Clark Pinnock, F.F. Bruce (see RESEARCH_LOG.md / CHANGELOG.md)
+- [ ] Luke: confirm which hell view Why Hell? assigns to Irenaeus (and anyone else), since the publisher pages don't list names. Gregg and Bruce are left unplaced on Final judgment (both undecided)
+- [ ] Follow-ups for the new people: Origen's millennium (De Principiis 2.11), Augustine's Antichrist (City of God 20.19), Gregg on Israel & the church, Pinnock on women in ministry
+- [ ] Add more pre-1900 voices (now: Darby, Augustine, Calvin, Irenaeus, Origen, MacDonald). Still to add: e.g. Luther, Wesley, Spurgeon — needs research
+- [x] Change log: CHANGELOG.md records every commit and every people/topic/data change; git history is the backup of index.html and its saved answers
 - [ ] Check topic summaries, verse lists and church lists against sources (currently general reference)
 - [ ] Restyle (Luke to give direction)
 - Note: "Link this file" now only updates the answers inside index.html and never its code, so an old open tab can't undo an update. After any update from Claude, reload every open Decision Wheel tab once.

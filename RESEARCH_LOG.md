@@ -195,3 +195,71 @@ Order: A Hayford + Gentry · B Darby + Wright · C Chuck Smith + Laurie · D Spr
   - https://dacb.org/stories/nigeria/adeyemo-tokunboh2/
 - Also: https://en.wikipedia.org/wiki/Africa_Bible_Commentary · https://www.biola.edu/blogs/biola-magazine/2007/alumnus-produces-first-african-bible-commentary
 - Next time: his Dallas Theological Seminary doctorate may point to dispensational views on the end-times topics — look for his own statements before placing anything
+
+
+## Added people: Steve Gregg and voices named in Why Hell? (Oct 2026)
+Luke asked to add Steve Gregg, author of *Why Hell? Three Christian Views Critically Examined* (Zondervan Academic 2024; first published 2013 as *All You Want to Know About Hell*), plus people his book cites as holders of the different views. The publisher and Goodreads pages don't list the names, so which view the book assigns to each person comes from Luke. Each person's placements below come from their own works or standard references.
+- Check: all eight are Christians. Notes: Origen was condemned as a heretic by Justinian (543), and possibly by the council of 553, over teachings such as the pre-existence of souls. MacDonald left his pulpit after his preaching on God's universal love was poorly received. Pinnock is best known for open theism.
+
+### Steve Gregg (b. 1953)
+- Millennium Amillennial (by 1979); Revelation Preterist (moved on to partial preterism); Gifts Continuationist ("baptism and gifts of the Holy Spirit", 1970); never a Calvinist, so Election Arminian *(inferred)*. On hell: "moved away from the traditional view" and is "still in the process of deciding between the two alternatives", so Final judgment is not placed.
+  - https://www.thenarrowpath.com/biography.php
+  - https://www.thenarrowpath.com/statement_of_faith.php (general; return of Christ, lake of fire)
+- Daniel's 70th Fulfilled: no 2,000-year gap between the 69th and 70th weeks.
+  - https://opentheo.org/i/4296434044511726900/the-70-weeks-of-daniel-part-2
+- Rapture Post-trib *(inferred)*: rejects the pre-trib rapture; Christians "may have to endure" the tribulation.
+  - https://opentheo.org/i/3873095679538709363/the-pretrib-rapture-refuted
+- Election second source: https://opentheo.org/i/5467369947627944207/challenges-to-uncondtional-election-part-1
+- Book: https://zondervanacademic.com/products/why-hell · https://www.goodreads.com/book/show/201335305-why-hell (reviewers say he doesn't clearly declare his view)
+- Critic: https://normangeisler.com/?p=479 (Geisler on Gregg's defence of partial preterism)
+- Not placed: Israel & the church. The OpenTheo summary of "What is Replacement Theology" was unclear (https://opentheo.org/i/4296434044511726891/what-is-replacement-theology). Next time: the full lecture.
+- Searched, not usable: Wikipedia "Steve Gregg" is an Olympic swimmer, not him. The Logos product page redirects to a login.
+
+### Augustine of Hippo (354–430)
+- Millennium Amillennial: "the Church even now is the kingdom of Christ" (City of God 20.9). https://www.newadvent.org/fathers/120120.htm · https://en.wikipedia.org/wiki/Augustine_of_Hippo
+- Judgment Eternal: "the everlasting punishment of the damned shall come to pass" (City of God 21.9). https://www.newadvent.org/fathers/120121.htm
+- Election Calvinist (anachronistic label): unconditional predestination after c. 412. Security Perseverance: "the perseverance by which we persevere in Christ even to the end is the gift of God". https://www.newadvent.org/fathers/15122.htm (the page is On the Predestination of the Saints, Book 2)
+- Baptism Infant (against the Pelagians); After death Conscious (destiny fixed at death): Wikipedia.
+- Not placed: Creation (God created "all at once"; the days are a framework, not literal or long ages); Supper (real presence vs a spiritual reading is disputed); Antichrist (City of God 20.19 not read: the fetch cut off).
+
+### John Calvin (1509–1564): not already in the app
+- Millennium Amillennial and Judgment Eternal: Institutes 3.25.5 ("too puerile"; "no end" to punishment). https://www.ccel.org/ccel/calvin/institutes.v.xxvi.html
+- Atonement Penal substitution: Institutes 2.16.11 "bore the weight of the divine anger". https://www.ccel.org/ccel/calvin/institutes.iv.xvii.html
+- Security Perseverance: Institutes 3.24.6. https://www.ccel.org/ccel/calvin/institutes.v.xxv.html
+- Gifts Cessationist *(inferred)*: Institutes 4.3.4 (apostles, prophets and evangelists "not... perpetual"). https://www.ccel.org/ccel/calvin/institutes.vi.iv.html
+- Baptism Infant: Institutes 4.16. https://www.ccel.org/ccel/calvin/institutes.vi.xvii.html
+- Supper Spiritual presence: Institutes 4.17.12. https://www.ccel.org/ccel/calvin/institutes.vi.xviii.html
+- Election Calvinist (double predestination); Israel One people (covenant theology); After death Conscious (Psychopannychia): https://en.wikipedia.org/wiki/John_Calvin
+- Note: CCEL page numbers are offset (e.g. institutes.vi.xvii is Book 4 chapter 16).
+
+### Irenaeus of Lyon (d. c. 200)
+- Daniel's 70th Still future and Antichrist Future individual: Against Heresies 5.25 (half-week = "three years and six months"; Antichrist in the temple). https://www.newadvent.org/fathers/0103525.htm
+- Millennium Premillennial: 5.32 ("resurrection of the just"; creation "restored to its primeval condition"). https://www.newadvent.org/fathers/0103532.htm
+- New creation Renewal: 5.36 (substance not annihilated; "the fashion of the world passes away"). https://www.newadvent.org/fathers/0103536.htm
+- Baptism Infant *(inferred)*: 2.22.4 ("born again to God: infants, and children"). https://www.newadvent.org/fathers/0103222.htm
+- Supper Real presence: 4.18.4–5. https://www.newadvent.org/fathers/0103418.htm
+- Atonement Christus Victor & restoration (recapitulation); Revelation Futurist *(inferred)*: https://en.wikipedia.org/wiki/Irenaeus
+- Not placed: Final judgment. Conditionalists cite Against Heresies 2.34 (life is God's gift), while 4.28 speaks of eternal fire. Next time: confirm which view Why Hell? gives him.
+
+### Origen (c. 185–c. 253)
+- Judgment Universal reconciliation (a hope he called speculation); Atonement Christus Victor (ransom); Election Arminian *(inferred, free will)*; Revelation Idealist *(inferred, allegorical reading)*: https://en.wikipedia.org/wiki/Origen
+- Baptism Infant: Commentary on Romans 5.9, "received from the apostles the tradition of giving baptism even to infants". https://heidelblog.net/2020/05/origen-the-early-church-received-the-practice-of-infant-baptism-from-the-apostles
+- Not placed: Millennium. De Principiis 2.11 (against literal earthly hopes) wasn't reachable: the New Advent page cut off. Next time: https://www.newadvent.org/fathers/04122.htm, chapter 11.
+
+### George MacDonald (1824–1905)
+- Judgment Universal reconciliation ("no hell will be lacking which would help the just mercy of God to redeem his children"); Atonement Christus Victor (rejected penal substitution); Baptism Infant *(inferred, Congregational minister)*.
+  - https://en.wikipedia.org/wiki/George_MacDonald
+  - https://www.gutenberg.org/ebooks/9057 (Unspoken Sermons; see "Justice")
+- Not placed: Election. He disliked Calvinist election, but no positive view was found.
+
+### Clark Pinnock (1937–2010)
+- Judgment Annihilationism; Missions Inclusivism; Election Arminian (open theist); Gifts Continuationist; Baptism Believer's *(inferred, Baptist schools)*.
+  - https://en.wikipedia.org/wiki/Clark_Pinnock
+  - https://brow.on.ca/Articles/Pinnock.html
+  - https://ia803008.us.archive.org/12/items/fourviewsonhell00croc/fourviewsonhell00croc.pdf (Four Views on Hell)
+- Next time: women in ministry; Evangelical Theological Society debate over open theism (2003), which needs a source.
+
+### F.F. Bruce (1910–1990)
+- Women Egalitarian: "unsatisfactory to rest with a halfway house"; gifts to "men and women alike". https://margmowczko.com/prominent-biblical-scholars-on-women-in-ministry/
+- Baptism Believer's and Supper Memorial, both *(inferred, lifelong Brethren; preached at his local assembly)*: https://www.thegospelcoalition.org/themelios/review/f-f-bruce-a-life/ · https://en.wikipedia.org/wiki/F._F._Bruce
+- Final judgment not placed: "I would be regarded as neither a traditionalist nor a conditionalist" (close to C.S. Lewis). https://www.lutterworth.com/wp-content/uploads/extracts/fire-that-consumes-forewords.pdf
