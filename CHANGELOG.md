@@ -36,7 +36,8 @@ Every commit gets a row here, with the people, topics and data it changed. Claud
 | 2026-10-08 15:32 | `b2bb300` | Add Steve Gregg and seven voices from Why Hell?; add change log | People added: Steve Gregg, Augustine of Hippo, John Calvin, Irenaeus of Lyon, Origen, George MacDonald, Clark Pinnock, F.F. Bruce (43 people now). Reading list: Why Hell? added under Final judgment. New CHANGELOG.md. No answers or topics changed |
 | 2026-10-08 16:50 | `8f8a1a8` | Churches tab, Labels rename, atonement checks (batch 1) | New Churches tab: 20 church families with branches, who here belongs (member / partial / left / multiple / background) and usual teaching. "Labels & churches" renamed "Labels". Atonement placed for 11 people (Darby, Hayford, Laurie, Chandler, Warren, Storms, Augustine, Gentry, DeYoung, Athas, Jeremiah). No answers changed |
 | 2026-10-08 17:06 | `568c839` | Churches: clearer counts, more spacing, bio links to churches | Church cards: "Among people here" is grouped by topic, reads "Premil: 1 of 2" with an explanation, and its pop-ups list only that church's people. A bit more space in all cards. Bios get a "Churches & groups" row linking to church pages. No data changed |
-| 2026-10-09 | (next) | Beliefs link to their topic page | Belief tags (bios, church cards, anywhere a view is shown) open that topic page and highlight the view: click on desktop, or tap and then "topic page →" on phones. No data changed |
+| 2026-10-09 09:37 | `589664f` | Beliefs link to their topic page | Belief tags (bios, church cards, anywhere a view is shown) open that topic page and highlight the view: click on desktop, or tap and then "topic page →" on phones. No data changed |
+| 2026-10-09 | (next) | Flesh out thin profiles, round 1 | 16 new placements: David Jeremiah +7, Paul David Tripp +3, John Mark Comer +2, Oskar Skarsaune +4. No answers changed |
 
 ## People and topic changes in detail (from 8 Oct 2026)
 
@@ -56,3 +57,10 @@ Inferred placements are marked *(inf.)*. All sources are listed in RESEARCH_LOG.
 - **Checked, not placed yet (more research to do):** Chuck Smith, Amir Tsarfati, C.S. Lewis, John Lennox, Rebecca McLaughlin, Jonathan Cahn, John Mark Comer, Paul David Tripp, Dane Ortlund, Oskar Skarsaune, Tokunboh Adeyemo, Steve Gregg, Clark Pinnock, F.F. Bruce. RESEARCH_LOG.md has the reasons.
 - **Church families added:** Roman Catholic, Eastern Orthodox, Early church, Lutheran, Anglican, Presbyterian & Reformed, Congregationalist, Baptist, Brethren, Methodist/Wesleyan/Holiness, Pentecostal, Charismatic & Third Wave, Calvary Chapel, Bible churches & dispensational, Messianic Jewish, Non-denominational, Anabaptist, Restorationist & Adventist, Mainline Protestant, Networks & ministries.
 - **Status notes (sourced):** Laurie in more than one (Harvest joined the SBC in 2017; Calvary Chapel roots). Warren left (Saddleback disfellowshipped by the SBC, 2023). Packer left the Anglican Church of Canada (2008), then ACNA. Sproul in more than one (ordained PCA 1975–2017; St Andrew's Chapel joined the PCA only in 2023 and voted to leave in 2025). Gregg left Calvary Chapel. MacArthur in more than one (Bible church and non-denominational).
+
+### 2026-10-09: Flesh out thin profiles, round 1
+- **David Jeremiah**: Daniel's 70th Still future *(inf.)*; Antichrist Future individual; Judgment Eternal *(inf., BF&M)*; Baptism Believer's *(inf.)*; Security OSAS *(inf.)*; Women Complementarian *(inf.)*; Supper Memorial *(inf.)*.
+- **Paul David Tripp**: Judgment Eternal; Security Perseverance; Atonement Penal substitution *(inf.)*.
+- **John Mark Comer**: New creation Renewal; Atonement Christus Victor & restoration *(inf.)*.
+- **Oskar Skarsaune** (all inferred from his Lutheran setting): Millennium Amillennial; Judgment Eternal; Security Conditional; Atonement Penal substitution.
+- Searched, nothing placeable yet: Cahn, McLaughlin, Lennox, Begg, Ortlund, Bray, Adeyemo, Athas (see RESEARCH_LOG.md).

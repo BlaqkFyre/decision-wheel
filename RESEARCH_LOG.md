@@ -293,3 +293,17 @@ Goal: everyone gets an Atonement check. Placed where a source was found; the res
 - Begg pastored Charlotte Chapel and Hamilton Baptist Church; Parkside's affiliation isn't given: https://en.wikipedia.org/wiki/Alistair_Begg
 - Lennox: no church named on Wikipedia. The Village Church: no denomination given on Wikipedia (hired as Highland Village First Baptist).
 - Family beliefs come from the confessions linked on each card (Catechism, Augsburg, Thirty-Nine Articles, Westminster, BF&M 2000, AG Fundamental Truths, DTS) and Wikipedia. They are general reference and haven't been checked line by line yet.
+
+
+## Fleshing out thin profiles: round 1 (Oct 2026)
+- Jeremiah: Shadow Mountain is SBC-affiliated (Wikipedia), so Judgment, Baptism, Security, Women and Supper are inferred from the BF&M 2000 (https://bfm.sbc.net/bfm2000/). Antichrist (stated) and Daniel's 70th (inferred from the seven-year Tribulation after the rapture) come from After the Rapture (https://www.shortform.com/pdf/after-the-rapture-pdf-david-jeremiah). New creation not placed: the summary says God "creates a new heaven and earth, removes the curse", which doesn't clearly separate renewal from re-creation. Tried and failed: davidjeremiah.org beliefs page (fetch error); the "Spotting the Counterfeit" page had no body text.
+- Tripp: his ministry's statement of faith (https://www.paultripp.com/statement-of-faith): "eternal damnation" (Judgment, stated); "substitutionary atoning blood" (Atonement, inferred penal). Security Perseverance from the TGC review of Forever (https://www.thegospelcoalition.org/reviews/forever/). The reviewer also notes Tripp blurs the present heaven and the future material new creation, so New creation isn't placed.
+- Comer: 9Marks review of Practicing the Way (https://www.9marks.org/review/engaging-with-practicing-the-way-nine-thoughts-on-john-mark-comers-bestseller/): "cosmic renewal" (New creation); Christ came "to heal us" rather than as substitute. Together with his 2025 posts, this gives Atonement Christus Victor & restoration *(inferred)*. Both come from critics; look for his own words next time. Bridgetown's beliefs page wasn't found.
+- Skarsaune: Millennium, Judgment, Security and Atonement all *(inferred)* from his Lutheran setting (Augsburg Confession, https://bookofconcord.org/augsburg-confession/). His own church membership is still unconfirmed.
+- Nothing placeable yet:
+  - Cahn: Wikipedia has no doctrinal positions; the Beth Israel / Hope of the World statements weren't found.
+  - McLaughlin: Confronting Christianity reviews give no clear view on hell (DBTS review; "the door shut in the face of the wastrel son"). Outreach interview: Church of England background, no current church named.
+  - Lennox: the TGC review of Against the Flow says he takes an early date for Daniel but "begs off" the end-times details.
+  - Begg: Truth for Life's statement says "imminent return" (not enough to place the rapture); the parkside.church beliefs page failed to load.
+  - Ortlund: Naperville Presbyterian's denomination is still unconfirmed.
+  - Adeyemo: the scielo article doesn't mention him. Bray and Athas: no new sources.

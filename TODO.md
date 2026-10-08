@@ -35,7 +35,9 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [x] Belief tags link to their topic page and highlight the view (click on desktop; tap, then "topic page →" on phones)
 - [ ] Churches: check each family's "usually teaches" line by line against its confession; add Calvary Chapel's own beliefs page (it timed out); confirm Ortlund's and Tripp's PCA ties, The Village Church's SBC status, Lennox's and McLaughlin's churches, and Parkside's affiliation
 - [ ] Atonement checks: batch 1 placed 11 people. Still to place (more research to do): Chuck Smith, Tsarfati, Lennox, McLaughlin, Cahn, Comer (rejects penal substitution, 2025), Tripp, Ortlund, Skarsaune, Adeyemo, Gregg, Pinnock, Bruce. Lewis stays unplaced on purpose
-- [ ] Next stage (Luke chose): flesh out the 12 people with 14+ gaps: Cahn, Comer, McLaughlin, Tripp, Skarsaune, Lennox, Begg, Ortlund, Bray, Adeyemo, Jeremiah, Athas
+- [x] Flesh-out round 1: Jeremiah +7, Tripp +3, Comer +2, Skarsaune +4 (16 placements)
+- [ ] Flesh-out round 2+ (still thin): Cahn, McLaughlin, Lennox, Begg, Ortlund, Bray, Adeyemo, Athas. Leads are in RESEARCH_LOG.md
+- [ ] (ongoing) Next stage (Luke chose): flesh out the 12 people with 14+ gaps: Cahn, Comer, McLaughlin, Tripp, Skarsaune, Lennox, Begg, Ortlund, Bray, Adeyemo, Jeremiah, Athas
 - [x] Verse links open in STEP Bible by default; can switch to Bible Gateway or YouVersion (opens the Bible app on phones) — choice remembered per device
 - [x] Era filter (Compare people): Ancient history (pre-1900) / Modern history (1900–2005) / Modern (2005+). Filters people in every tab, plus topic debates, "held by" and "often held with". People count in every era they were active in; survey users always show
 - [x] Wheel: tapping a spoke only shows details; changing answers on the wheel needs "✎ Edit on wheel" switched on (admin, or a visitor on their own wheel)
