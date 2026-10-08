@@ -274,6 +274,8 @@ button.ppl{display:inline-flex;align-items:center;gap:5px;border:0;background:no
 .apgrp{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:8px 0}
 .apc{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-top:1px dashed var(--line);font-size:13px;cursor:pointer}.apc:first-of-type{border-top:0}
 .apx{font-size:12px;color:var(--muted)}.apok{color:var(--teal)}
+.apnote{border:1px solid var(--teal);border-radius:12px;padding:10px 12px;margin:10px 0;font-size:13.5px}
+.apnote .btngrid{margin-top:8px}
 .aq{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;border-top:1px dashed var(--line);padding:7px 0;font-size:13.5px}.aqb{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 button.addbtn{margin-left:auto;border-radius:10px;padding:8px 12px}
 .new.torsch{background:var(--orangebg);color:var(--ink)}
@@ -1643,18 +1645,64 @@ addEventListener("scroll",()=>{if(ppFor){if(touch)placePop(ppop,ppFor);else hide
 // saved with the book you saw and notes, then checked later. Added people travel inside index.html (via "Link this file"),
 // in Export all / Import, and Claude researches the queue in the next session.
 function strc(x,n){return String(x==null?"":x).replace(/[\u0000-\u001f]/g," ").slice(0,n)}
+// ---- one person = one entry: compare names loosely ("J.I. Packer" = "JI Packer" = "Dr J. I. Packer") ----
+function nameKey(n){const NAME_TITLES=/^(dr|rev|revd|reverend|prof|professor|pastor|bishop|fr|father|sir|saint|st|mr|mrs|ms|miss)\s+/;let s=String(n||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/\(.*?\)/g," ")
+    .replace(/[.,'’"]/g," ").replace(/-/g," ").replace(/\s+/g," ").trim();
+  while(NAME_TITLES.test(s))s=s.replace(NAME_TITLES,"");
+  return s.replace(/\b(jr|sr|ii|iii|iv|phd|dd)\b/g," ").replace(/\s+/g," ").trim().replace(/\b([a-z]) (?=[a-z]\b)/g,"$1")}
+// a Wikipedia page about a book / commentary / series rather than a person
+function isWorkWiki(w){if(!w)return false;const d=w.desc||"",x=w.extract||"";
+  if(/theolog|pastor|author|writer|scholar|preacher|teacher|minister|professor|bishop|evangelist|priest|missionary|historian|lecturer|born|\b\d{3,4}\s*[–-]\s*\d{2,4}\b/i.test(d))return false;
+  return /\b(book|novel|commentary|translation|series|periodical|journal|magazine|encyclopa?edia|edition|study bible|reference work|treatise|catechism|confession|creed|hymnal|album|film)\b/i.test(d)
+    ||(!d&&/^[^.]{0,150}?\b(is|was) an? (?:[\w-]+ ){0,4}(book|novel|commentary|translation|series|study bible|encyclopa?edia|journal|magazine|treatise|catechism)\b/i.test(x))}
+// "ABC Editorial, Tokunboh Adeyemo" -> ["Tokunboh Adeyemo"]
+function splitAuthors(n){return String(n||"").split(/\s*(?:,|;|&|\band\b)\s*/).map(x=>x.trim())
+  .filter(x=>x&&x.split(/\s+/).length>=2&&!/editor|editorial|board|committee|staff|various|press|publish|society|team|unknown|anonymous/i.test(x))}
+function researchedPeople(){return PEOPLE.filter(p=>!p.user&&!p.added)}
+function researchedAuthorOf(title){const k=nameKey(title);if(k.length<6)return null;
+  const P=researchedPeople().find(p=>(BOOKS[p.name]||[]).some(b=>nameKey(b[0])===k)||nameKey(p.src||"").includes(k));return P?P.name:null}
+// is this person already in the app? -> {kind:"researched",name} or {kind:"queue",entry}
+function findExisting(names,wikiUrl,olKey,skip){const ks=new Set(names.filter(Boolean).map(nameKey).filter(Boolean));
+  const P=researchedPeople().find(p=>ks.has(nameKey(p.name))||(olKey&&(LINKS[p.name]||[]).some(l=>l&&l[1]==="https://openlibrary.org/authors/"+olKey)));
+  if(P)return {kind:"researched",name:P.name};
+  const a=ADDED.find(x=>x!==skip&&!x.removed&&(ks.has(nameKey(x.name))||(x.wiki&&!isWorkWiki(x.wiki)&&ks.has(nameKey(x.wiki.title)))||(wikiUrl&&x.wiki&&x.wiki.url===wikiUrl)||(olKey&&x.ol&&x.ol.key===olKey)));
+  return a?{kind:"queue",entry:a}:null}
+// fold a second entry for the same person into the first (keeps every book, note and source)
+function mergeInto(t,a){const join=(x,y,n)=>strc([...new Set([x,y].filter(Boolean))].join("; "),n);
+  t.book=join(t.book,a.book,140);t.notes=join(t.notes,a.notes,600);t.confirmed=t.confirmed||!!a.confirmed;
+  if(!t.wiki&&a.wiki&&!isWorkWiki(a.wiki))t.wiki=a.wiki;if(!t.ol&&a.ol)t.ol=a.ol;
+  const bs=new Set((t.books||[]).map(b=>b[0].toLowerCase()));t.books=[...(t.books||[]),...(a.books||[]).filter(b=>!bs.has(b[0].toLowerCase()))].slice(0,10);
+  const al=new Set((t.alt||[]).map(x=>x.url||x.key));t.alt=[...(t.alt||[]),...(a.alt||[]).filter(x=>!al.has(x.url||x.key))].slice(0,6);
+  const su=new Set((t.bsrc||[]).map(x=>x.url));t.bsrc=[...(t.bsrc||[]),...(a.bsrc||[]).filter(x=>!su.has(x.url))].slice(0,4);t.saved=Date.now()}
+// tidy the research queue: book titles become their author, and nobody appears twice
+function fixAdded(){let ch=false;const live=()=>ADDED.filter(a=>!a.removed);
+  live().forEach(a=>{const wikiBook=a.wiki&&isWorkWiki(a.wiki),personWiki=a.wiki&&!wikiBook;
+    const auth=personWiki?null:researchedAuthorOf(a.name);
+    if(!(wikiBook&&nameKey(a.wiki.title)===nameKey(a.name))&&!auth)return;
+    const title=wikiBook?a.wiki.title.replace(/ \((book|novel|series|commentary)\)$/i,""):a.name,who=auth||splitAuthors(a.ol&&a.ol.name)[0];
+    a.removed=true;a.saved=Date.now();ch=true;
+    if(who&&!researchedPeople().some(p=>nameKey(p.name)===nameKey(who))){
+      const n={name:who,book:title,notes:a.notes,confirmed:false,books:a.books,alt:[],bsrc:wikiBook?[{title:a.wiki.title,url:a.wiki.url}]:[],saved:Date.now()};
+      const ex=findExisting([who],null,null,a);if(ex&&ex.kind==="queue")mergeInto(ex.entry,n);else ADDED.push(cleanAdded(n))}});
+  live().forEach(a=>{if(a.removed)return;const ex=findExisting([a.name,a.wiki&&!isWorkWiki(a.wiki)&&a.wiki.title],a.wiki&&a.wiki.url,a.ol&&a.ol.key,a);if(!ex)return;
+    if(ex.kind==="queue")mergeInto(ex.entry,a);a.removed=true;a.saved=Date.now();ch=true});
+  if(ch&&isAdmin)lsSet(ADDED_KEY,JSON.stringify(ADDED));return ch}
 function cleanAdded(a){if(!a||!a.name)return null;const w=a.wiki,o=a.ol;
   return {name:strc(a.name,80).trim(),book:strc(a.book,140),notes:strc(a.notes,600),confirmed:!!a.confirmed,removed:!!a.removed,saved:+a.saved||Date.now(),
     wiki:w&&w.url&&/^https:\/\/[a-z]+\.wikipedia\.org\//.test(w.url)?{title:strc(w.title,120),desc:strc(w.desc,200),extract:strc(w.extract,700),url:strc(w.url,300)}:null,
     ol:o&&/^OL\d+A$/.test(o.key||"")?{key:o.key,name:strc(o.name,120),birth:strc(o.birth,40),death:strc(o.death,40),top:strc(o.top,160)}:null,
     books:Array.isArray(a.books)?a.books.slice(0,10).map(b=>[strc(b[0],160),strc(b[1],8)]):[],
-    alt:Array.isArray(a.alt)?a.alt.slice(0,6).map(x=>x&&x.type==="wiki"&&/^https:\/\/[a-z]+\.wikipedia\.org\//.test(x.url||"")?{type:"wiki",title:strc(x.title,120),url:strc(x.url,300)}:x&&x.type==="ol"&&/^OL\d+A$/.test(x.key||"")?{type:"ol",key:x.key,name:strc(x.name,120),top:strc(x.top,160)}:null).filter(Boolean):[]}}
-function mergeAdded(list){list.forEach(a=>{a=cleanAdded(a);if(!a)return;const i=ADDED.findIndex(x=>x.name.toLowerCase()===a.name.toLowerCase());
-  if(i<0)ADDED.push(a);else if((a.saved||0)>(ADDED[i].saved||0))ADDED[i]=a})}
+    alt:Array.isArray(a.alt)?a.alt.slice(0,6).map(x=>x&&x.type==="wiki"&&/^https:\/\/[a-z]+\.wikipedia\.org\//.test(x.url||"")?{type:"wiki",title:strc(x.title,120),url:strc(x.url,300)}:x&&x.type==="ol"&&/^OL\d+A$/.test(x.key||"")?{type:"ol",key:x.key,name:strc(x.name,120),top:strc(x.top,160)}:null).filter(Boolean):[],
+    bsrc:Array.isArray(a.bsrc)?a.bsrc.slice(0,4).filter(x=>x&&/^https:\/\/[a-z]+\.wikipedia\.org\//.test(x.url||"")).map(x=>({title:strc(x.title,120),url:strc(x.url,300)})):[]}}
+function mergeAdded(list){list.forEach(a=>{a=cleanAdded(a);if(!a)return;const i=ADDED.findIndex(x=>nameKey(x.name)===nameKey(a.name));
+  if(i<0){ADDED.push(a);return}const old=ADDED[i],nw=(a.saved||0)>(old.saved||0),keep=nw?a:old,other=nw?old:a;
+  // same person entered twice (e.g. "Jane Doe" and "jane doe"): newest wins, but no book, note or source is lost
+  if(!keep.removed&&!other.removed&&(keep.name!==other.name||keep.book!==other.book||keep.notes!==other.notes)){const t=keep.saved;mergeInto(keep,other);keep.saved=t}
+  ADDED[i]=keep})}
 function saveAdded(){if(isAdmin){lsSet(ADDED_KEY,JSON.stringify(ADDED));saveUsers()}}
 function yearOf(x){const m=String(x||"").match(/(\d{3,4})/);return m?+m[1]:null}
 function erasFromYears(b,d){b=yearOf(b);d=yearOf(d);if(d&&d<1900)return["A"];if(b&&b<1870)return["A","H"];if(b&&b<1955)return d&&d<2005?["H"]:["H","M"];return["M"]}
-function applyAdded(){
+function applyAdded(){fixAdded();
   for(let i=PEOPLE.length-1;i>=0;i--){const P=PEOPLE[i];if(P.added&&!ADDED.some(a=>!a.removed&&a.name===P.name))PEOPLE.splice(i,1)}
   ADDED.forEach(a=>{if(a.removed)return;let P=PEOPLE.find(p=>p.name===a.name&&!p.user);if(P&&!P.added)return; // already fully researched
     if(!P){P={name:a.name,added:true,trad:[],on:false,church:"",src:"",v:TOPICS.map(()=>({c:null})),also:{},conv:{}};PEOPLE.push(P)}
@@ -1664,7 +1712,7 @@ function applyAdded(){
       spec:[a.book&&"Seen: "+a.book,a.notes&&"Luke's note: "+a.notes].filter(Boolean).join(" · "),contro:[]};
     BOOKS[a.name]=(a.books||[]).map(([t])=>[t,[]]);
     LINKS[a.name]=[a.wiki&&["Wikipedia: "+a.wiki.title,a.wiki.url],a.ol&&["Open Library: "+a.ol.name,"https://openlibrary.org/authors/"+a.ol.key],
-      ...(a.alt||[]).map(x=>x.type==="wiki"?["Wikipedia (possibly the same person): "+x.title,x.url]:["Open Library (possibly the same person): "+x.name+(x.top?" — "+x.top:""),"https://openlibrary.org/authors/"+x.key])].filter(Boolean);
+      ...(a.bsrc||[]).map(x=>["Wikipedia (book): "+x.title,x.url]),...(a.alt||[]).map(x=>x.type==="wiki"?["Wikipedia (possibly the same person): "+x.title,x.url]:["Open Library (possibly the same person): "+x.name+(x.top?" — "+x.top:""),"https://openlibrary.org/authors/"+x.key])].filter(Boolean);
     ERA_OF[a.name]=erasFromYears(o.birth,o.death)})}
 let addBox=null,addCands=null;
 function openAdd(prefill){if(!isAdmin)return;if(!addBox){addBox=document.createElement("div");addBox.id="addp";document.body.appendChild(addBox);addBox.addEventListener("click",addClick)}
@@ -1680,22 +1728,44 @@ function renderQueue(){const q=ADDED.filter(a=>!a.removed),el=document.getElemen
   el.innerHTML=q.length?q.map((a,i)=>`<div class="aq"><div><b>${esc(a.name)}</b> <span class="rtag ${a.confirmed?"dec":"con"}">${a.confirmed?"Confirmed":"Not checked"}</span>${PEOPLE.some(p=>p.name===a.name&&!p.added)?' <span class="rtag also">Researched</span>':""}
      <div class="tmut" style="font-size:12px">${esc([a.book,a.notes].filter(Boolean).join(" · "))}</div></div>
      <div class="aqb">${a.confirmed?"":`<button class="mini" data-a="check" data-n="${esc(a.name)}">Check now</button>`}<button class="mini" data-a="rename" data-n="${esc(a.name)}">Rename</button><button class="mini" data-a="remove" data-n="${esc(a.name)}">Remove</button></div></div>`).join(""):'<span class="tmut">No one added yet.</span>'}
-async function findPerson(){const name=document.getElementById("ap_name").value.trim(),book=document.getElementById("ap_book").value.trim(),res=document.getElementById("ap_res");
+let carryWorks=[]; // book pages found while looking up a title, kept as sources for its author
+async function findPerson(opt){opt=opt||{};const name=document.getElementById("ap_name").value.trim(),book=document.getElementById("ap_book").value.trim(),res=document.getElementById("ap_res");
   if(!name){toast("Type a name first");return}
+  if(!opt.keepWorks)carryWorks=[];
+  const pre=findExisting([name]);
+  if(pre&&pre.kind==="researched"){res.innerHTML=`<div class="apnote"><b>${esc(pre.name)}</b> is already in the app, so they won't be added twice.</div>`;return}
   if(navigator.onLine===false){res.innerHTML=`<p class="err">You're offline. Use "Save without checking" and check them later.</p>`;return}
   res.innerHTML=`<p class="tmut">Searching Wikipedia and Open Library…</p>`;
   const q=encodeURIComponent(name);let wiki=[],ol=[];
   try{const j=await (await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${q}&format=json&origin=*&srlimit=4`)).json();
     wiki=(await Promise.all(j.query.search.slice(0,4).map(async x=>{try{const s=await (await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/"+encodeURIComponent(x.title.replace(/ /g,"_")))).json();
       return s.type==="standard"?{title:s.title,desc:s.description||"",extract:s.extract||"",url:(s.content_urls&&s.content_urls.desktop.page)||("https://en.wikipedia.org/wiki/"+encodeURIComponent(x.title))}:null}catch(e){return null}}))).filter(Boolean)}catch(e){}
+  let works=[];try{const j=await (await fetch(`https://openlibrary.org/search.json?q=${q}&limit=5&fields=title,author_name,author_key`)).json();
+    works=(j.docs||[]).map(d=>({title:d.title||"",authors:d.author_name||[]}))}catch(e){}
   try{const j=await (await fetch(`https://openlibrary.org/search/authors.json?q=${q}&limit=5`)).json();
     ol=j.docs.map(d=>({key:String(d.key).replace("/authors/",""),name:d.name,birth:d.birth_date||"",death:d.death_date||"",top:d.top_work||"",count:d.work_count||0}))}catch(e){}
-  const bk=book.toLowerCase(),nm=name.toLowerCase();
+  const bk=book.toLowerCase(),nm=name.toLowerCase(),nk=nameKey(name);
+  // is the name actually a book title? people are added by the author's name, never the book's
+  const bookWiki=wiki.filter(isWorkWiki),wikiTitleMatch=bookWiki.find(w=>nameKey(w.title)===nk),workMatch=works.find(w=>nameKey(w.title)===nk);
+  const isAuthorName=ol.some(o=>nameKey(o.name)===nk)||wiki.some(w=>!isWorkWiki(w)&&nameKey(w.title)===nk);
+  const knownAuthor=researchedAuthorOf(name);
+  if(!opt.notBook&&(knownAuthor||wikiTitleMatch||(workMatch&&!isAuthorName))){
+    const title=(wikiTitleMatch&&wikiTitleMatch.title.replace(/ \((book|novel|series|commentary)\)$/i,""))||(workMatch&&workMatch.title)||name,seen=new Set(),auths=[];
+    [knownAuthor,...(workMatch?workMatch.authors.flatMap(splitAuthors):[]),...ol.filter(o=>nameKey(o.top).includes(nk)).flatMap(o=>splitAuthors(o.name))]
+      .forEach(a=>{const k=nameKey(a);if(a&&k&&!seen.has(k)){seen.add(k);auths.push(a)}});
+    carryWorks=bookWiki.filter(w=>nameKey(w.title)===nk).map(w=>({title:w.title,url:w.url}));
+    res.innerHTML=`<div class="apnote"><b>“${esc(title)}” looks like a book, not a person.</b> People are added by the author's name, and the book is kept as a source. Who's the author?
+      ${auths.length?`<div class="btngrid">${auths.slice(0,5).map(a=>{const ex=findExisting([a]);return `<button data-a="author" data-n="${esc(a)}" data-t="${esc(title)}">${esc(a)}${ex&&ex.kind==="researched"?" · already in the app":ex?" · in your queue":""}</button>`}).join("")}</div>`:""}
+      <label class="aplab" style="margin-top:8px">Author's name<input id="ap_auth" class="chin" autocomplete="off"></label>
+      <div class="btngrid"><button class="primary" data-a="author" data-t="${esc(title)}">Look up this author</button><button data-a="notbook">It's a person — show results</button></div></div>`;return}
+  const queued=pre&&pre.kind==="queue"?pre.entry:null;
+  wiki=wiki.filter(w=>!isWorkWiki(w)); // book pages can't be confirmed as a person
+  if(!wiki.length&&!ol.length&&queued){res.innerHTML=`<div class="apnote"><b>${esc(queued.name)}</b> is already in your research queue.</div>`;return}
   const wScore=w=>(w.title.toLowerCase()===nm?3:0)+(/theolog|pastor|bishop|author|scholar|preacher|minister|christian|church|bible|professor/i.test(w.desc+" "+w.extract)?2:0)+(bk&&(w.extract.toLowerCase().includes(bk))?3:0);
   const oScore=o=>(o.name.toLowerCase()===nm?2:0)+(bk&&o.top.toLowerCase().includes(bk.slice(0,18))?4:0)+Math.min(2,o.count/10);
   wiki.sort((a,b)=>wScore(b)-wScore(a));ol.sort((a,b)=>oScore(b)-oScore(a));addCands={wiki,ol,name,book};
   if(!wiki.length&&!ol.length){res.innerHTML=`<p class="err">Nothing found. Check the spelling, or "Save without checking".</p>`;return}
-  res.innerHTML=`<div class="ctlh" style="margin-top:12px">Is this them? Pick the matching source(s)</div>
+  res.innerHTML=`${queued?`<div class="apnote"><b>${esc(queued.name)}</b> is already in your research queue. Confirming adds any new details to that entry, not a second copy.</div>`:""}<div class="ctlh" style="margin-top:12px">Is this them? Pick the matching source(s)</div>
    ${wiki.length?`<div class="apgrp"><div class="tmut" style="font-size:12px">Wikipedia</div>${wiki.map((w,i)=>`<label class="apc"><input type="radio" name="apw" value="${i}"${i===0&&wScore(w)>=3?" checked":""}><span><b>${esc(w.title)}</b> <span class="tmut">${esc(w.desc)}</span><br><span class="apx">${esc(w.extract.slice(0,170))}${w.extract.length>170?"…":""}</span></span></label>`).join("")}<label class="apc"><input type="radio" name="apw" value=""${wScore(wiki[0])>=3?"":" checked"}><span class="tmut">None of these</span></label></div>`:""}
    ${ol.length?`<div class="apgrp"><div class="tmut" style="font-size:12px">Open Library (books)</div>${ol.map((o,i)=>`<label class="apc"><input type="radio" name="apo" value="${i}"${i===0&&oScore(o)>=2?" checked":""}><span><b>${esc(o.name)}</b> <span class="tmut">${esc([o.birth&&"b. "+o.birth,o.death&&"d. "+o.death].filter(Boolean).join(" · "))}</span><br><span class="apx">${o.top?"Best known: "+esc(o.top)+" · ":""}${o.count} works${bk&&o.top.toLowerCase().includes(bk.slice(0,18))?' · <b class="apok">matches your book ✓</b>':""}</span></span></label>`).join("")}<label class="apc"><input type="radio" name="apo" value=""${ol.length&&oScore(ol[0])>=2?"":" checked"}><span class="tmut">None of these</span></label></div>`:""}
    <p class="tmut" style="font-size:12px;margin:6px 0 0">Pick whichever you're sure of — one is enough. Other matches with the same name are kept as "possible" sources and their books are included for research.</p>
@@ -1711,20 +1781,32 @@ async function confirmPerson(){const c=addCands;if(!c)return;const wi=(document.
   for(const k of keys){try{const j=await (await fetch(`https://openlibrary.org/search.json?author_key=${k}&limit=8&fields=title,first_publish_year&sort=editions`)).json();
     j.docs.forEach(d=>{const t=d.title.toLowerCase();if(!seen.has(t)){seen.add(t);books.push([d.title,String(d.first_publish_year||"")])}})}catch(e){}}
   books=books.slice(0,10);
-  savePerson({name,book:c.book,notes:document.getElementById("ap_notes").value.trim(),confirmed:true,wiki:w,ol:o,books,alt})}
-function savePerson(a){a.saved=Date.now();mergeAdded([a]);applyAdded();saveAdded();const P=PEOPLE.find(p=>p.name===cleanAdded(a).name);if(P)P.on=true;
+  savePerson({name,book:c.book,notes:document.getElementById("ap_notes").value.trim(),confirmed:true,wiki:w,ol:o,books,alt,bsrc:carryWorks})}
+function clearAddForm(){document.getElementById("ap_res").innerHTML="";["ap_name","ap_book","ap_notes"].forEach(id=>document.getElementById(id).value="");carryWorks=[];renderQueue()}
+function savePerson(a){a.saved=Date.now();
+  const ex=findExisting([a.name,a.wiki&&a.wiki.title,a.ol&&a.ol.name],a.wiki&&a.wiki.url,a.ol&&a.ol.key);
+  if(ex&&ex.kind==="researched"){toast(`${ex.name} is already in the app — not added again`);clearAddForm();return}
+  if(ex&&ex.kind==="queue"){mergeInto(ex.entry,cleanAdded(a));applyAdded();saveAdded();toast(`${ex.entry.name} is already in the queue — new details added there`);clearAddForm();if(view==="compare")renderCompare();return}
+  mergeAdded([a]);applyAdded();saveAdded();const P=PEOPLE.find(p=>p.name===cleanAdded(a).name);if(P)P.on=true;
   toast(a.confirmed?`Saved ${a.name} — added to the research queue`:`Saved ${a.name} — check them when you're online`);
   document.getElementById("ap_res").innerHTML="";["ap_name","ap_book","ap_notes"].forEach(id=>document.getElementById(id).value="");renderQueue();if(view==="compare")renderCompare()}
 function addClick(e){const b=e.target.closest("[data-a]");if(e.target===addBox){addBox.style.display="none";return}if(!b)return;const a=b.dataset.a;
   if(a==="close"){addBox.style.display="none";if(view==="compare")renderCompare()}
   if(a==="find")findPerson();
+  if(a==="author"){const n=(b.dataset.n||(document.getElementById("ap_auth")||{}).value||"").replace(/\s+/g," ").trim();if(!n){toast("Type the author's name");return}
+    document.getElementById("ap_name").value=n;const bf=document.getElementById("ap_book");if(b.dataset.t)bf.value=b.dataset.t;findPerson({keepWorks:true})}
+  if(a==="notbook")findPerson({notBook:true});
   if(a==="confirm")confirmPerson();
   if(a==="quick"){const name=document.getElementById("ap_name").value.trim();if(!name){toast("Type a name first");return}
     savePerson({name,book:document.getElementById("ap_book").value.trim(),notes:document.getElementById("ap_notes").value.trim(),confirmed:false})}
   if(a==="check"){const x=ADDED.find(y=>y.name===b.dataset.n);openAdd(x);findPerson()}
   if(a==="rename"){const row=b.closest(".aq");row.innerHTML=`<input class="chin" id="ap_rn" value="${esc(b.dataset.n)}" style="flex:1;width:auto!important"><div class="aqb"><button class="mini primary" data-a="rnsave" data-n="${esc(b.dataset.n)}">Save name</button></div>`;document.getElementById("ap_rn").focus();return}
   if(a==="rnsave"){const nn=document.getElementById("ap_rn").value.replace(/\s+/g," ").trim(),x=ADDED.find(y=>y.name===b.dataset.n);if(!nn||!x)return;
-    if(nn!==x.name){const copy=Object.assign({},x,{name:nn,saved:Date.now()});x.removed=true;x.saved=Date.now();mergeAdded([copy]);applyAdded();saveAdded();toast("Renamed to "+nn)}renderQueue();if(view==="compare")renderCompare();return}
+    if(nn!==x.name){const ex=findExisting([nn],null,null,x);x.removed=true;x.saved=Date.now();
+      if(ex&&ex.kind==="researched")toast(`${ex.name} is already in the app — entry removed from the queue`);
+      else if(ex)toast(`${ex.entry.name} is already in the queue — merged`),mergeInto(ex.entry,Object.assign({},x,{removed:false}));
+      else{mergeAdded([Object.assign({},x,{name:nn,removed:false,saved:Date.now()})]);toast("Renamed to "+nn)}
+      applyAdded();saveAdded()}renderQueue();if(view==="compare")renderCompare();return}
   if(a==="remove"){const x=ADDED.find(y=>y.name===b.dataset.n);if(x){x.removed=true;x.saved=Date.now();applyAdded();saveAdded();renderQueue()}}}
 // ---- light / dark (charcoal) switch ----
 const THEME_KEY="decisionwheel_theme",MODES=["auto","light","dark"],MODE_LABEL={auto:"◐ Auto",light:"☀ Light",dark:"☾ Dark"};
