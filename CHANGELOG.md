@@ -33,7 +33,8 @@ Every commit gets a row here, with the people, topics and data it changed. Claud
 | 2026-10-08 14:46 | `8f7051d` | Add CLAUDE.md guide for continuing the project | Docs only |
 | 2026-10-08 14:48 | `df39e20` | Add new-chat starter prompt to CLAUDE.md | Docs only |
 | 2026-10-08 15:05 | `733a2e7` | Add a person: books become their author, no duplicate people | Queue: the "Africa Bible Commentary" entry folds into Tokunboh Adeyemo; duplicates merge |
-| 2026-10-08 | (next) | Add Steve Gregg and seven voices from Why Hell?; change log | People added: Steve Gregg, Augustine of Hippo, John Calvin, Irenaeus of Lyon, Origen, George MacDonald, Clark Pinnock, F.F. Bruce (43 people now). Reading list: Why Hell? added under Final judgment. New CHANGELOG.md. No answers or topics changed |
+| 2026-10-08 15:32 | `b2bb300` | Add Steve Gregg and seven voices from Why Hell?; add change log | People added: Steve Gregg, Augustine of Hippo, John Calvin, Irenaeus of Lyon, Origen, George MacDonald, Clark Pinnock, F.F. Bruce (43 people now). Reading list: Why Hell? added under Final judgment. New CHANGELOG.md. No answers or topics changed |
+| 2026-10-08 | (next) | Churches tab, Labels rename, atonement checks (batch 1) | New Churches tab: 20 church families with branches, who here belongs (member / partial / left / multiple / background) and usual teaching. "Labels & churches" renamed "Labels". Atonement placed for 11 people (Darby, Hayford, Laurie, Chandler, Warren, Storms, Augustine, Gentry, DeYoung, Athas, Jeremiah). No answers changed |
 
 ## People and topic changes in detail (from 8 Oct 2026)
 
@@ -47,3 +48,9 @@ Inferred placements are marked *(inf.)*. All sources are listed in RESEARCH_LOG.
 - **George MacDonald**: Judgment Universal reconciliation; Baptism Infant *(inf.)*; Atonement Christus Victor & restoration.
 - **Clark Pinnock**: Judgment Annihilationism; Election Arminian; Gifts Continuationist; Baptism Believer's *(inf.)*; Missions Inclusivism.
 - **F.F. Bruce**: Baptism Believer's *(inf.)*; Women Egalitarian; Supper Memorial *(inf.)*. Final judgment not placed ("neither a traditionalist nor a conditionalist").
+
+### 2026-10-08: Churches tab and atonement checks (batch 1)
+- **Atonement placed** (*inf.* = inferred from their church's statement): J.N. Darby Penal substitution; Jack Hayford Penal substitution *(inf., Foursquare)*; Greg Laurie Penal substitution *(inf., Harvest)*; Matt Chandler Penal substitution; Rick Warren Penal substitution; Sam Storms Penal substitution; Augustine of Hippo Christus Victor & restoration; Kenneth Gentry Penal substitution *(inf., WCF)*; Kevin DeYoung Penal substitution *(inf., WCF)*; George Athas Penal substitution *(inf., Article 31 / Sydney)*; David Jeremiah Penal substitution *(inf., BF&M)*.
+- **Checked, not placed yet (more research to do):** Chuck Smith, Amir Tsarfati, C.S. Lewis, John Lennox, Rebecca McLaughlin, Jonathan Cahn, John Mark Comer, Paul David Tripp, Dane Ortlund, Oskar Skarsaune, Tokunboh Adeyemo, Steve Gregg, Clark Pinnock, F.F. Bruce. RESEARCH_LOG.md has the reasons.
+- **Church families added:** Roman Catholic, Eastern Orthodox, Early church, Lutheran, Anglican, Presbyterian & Reformed, Congregationalist, Baptist, Brethren, Methodist/Wesleyan/Holiness, Pentecostal, Charismatic & Third Wave, Calvary Chapel, Bible churches & dispensational, Messianic Jewish, Non-denominational, Anabaptist, Restorationist & Adventist, Mainline Protestant, Networks & ministries.
+- **Status notes (sourced):** Laurie in more than one (Harvest joined the SBC in 2017; Calvary Chapel roots). Warren left (Saddleback disfellowshipped by the SBC, 2023). Packer left the Anglican Church of Canada (2008), then ACNA. Sproul in more than one (ordained PCA 1975–2017; St Andrew's Chapel joined the PCA only in 2023 and voted to leave in 2025). Gregg left Calvary Chapel. MacArthur in more than one (Bible church and non-denominational).

@@ -263,3 +263,33 @@ Luke asked to add Steve Gregg, author of *Why Hell? Three Christian Views Critic
 - Women Egalitarian: "unsatisfactory to rest with a halfway house"; gifts to "men and women alike". https://margmowczko.com/prominent-biblical-scholars-on-women-in-ministry/
 - Baptism Believer's and Supper Memorial, both *(inferred, lifelong Brethren; preached at his local assembly)*: https://www.thegospelcoalition.org/themelios/review/f-f-bruce-a-life/ · https://en.wikipedia.org/wiki/F._F._Bruce
 - Final judgment not placed: "I would be regarded as neither a traditionalist nor a conditionalist" (close to C.S. Lewis). https://www.lutterworth.com/wp-content/uploads/extracts/fire-that-consumes-forewords.pdf
+
+
+## Atonement checks: batch 1 (Oct 2026)
+Goal: everyone gets an Atonement check. Placed where a source was found; the rest are listed with what was tried. More research is to be done on those.
+- Darby: Penal substitution. "the bitterest of all punishment for our sins"; "Judgment was born by Christ". https://stempublishing.com/authors/darby/miscbtpb/35003E.html
+- Hayford: Penal substitution *(inferred)*. Foursquare statement: "receiving his condemnation, dying his death, fully paying his penalty". https://resources.foursquare.org/wp-content/uploads/sites/2/2024/08/Statement-of-Faith-ENG.pdf
+- Laurie: Penal substitution *(inferred)*. Harvest statement: "substitutionary atonement in our place", "fully satisfying God's righteous wrath". https://harvest.org/?p=19392
+- Chandler: Penal substitution. The Explicit Gospel p. 208: Jesus "absorbed the wrath of God aimed at us". https://reformation21.org/the-explicit-gospel-php/
+- Warren: Penal substitution. "you pay God's penalties… Jesus paid the price you could never pay" (2025). https://www.pastorrick.com/current-teaching/devotional/why-did-jesus-have-to-die-2025
+- Storms: Penal substitution. A Dozen Things God Did with Your Sin begins with "the glory of penal substitution". https://crossway.org/press-room/a-dozen-things-god-did-with-your-sin-and-thre-tpb · https://christianstudylibrary.org/node/53164 (summary page only)
+- Augustine: Christus Victor. Wikipedia (Aulén) names him among the Fathers holding the classic view. https://en.wikipedia.org/wiki/Christus_Victor
+- Gentry: Penal substitution *(inferred: RPCGA, Westminster Confession 8.5)*. DeYoung: Penal substitution *(inferred: PCA / WCF 8.5)*. Athas: Penal substitution *(inferred: Sydney Anglican, Article 31)*. Jeremiah: Penal substitution *(inferred: Baptist Faith & Message, "substitutionary death")*.
+- Checked, not placed (more research to do):
+  - Comer: in 2025 Instagram posts he objected to "the Father poured out his wrath on Jesus in the form of retributive justice"; he said the Trinity worked together "motivated by mercy and love, while still maintaining justice", and later apologised for how he recommended Lamb of the Free. Not penal substitution, but no positive view was stated. https://www.thegospelcoalition.org/article/comer-penal-substitution/
+  - Cahn: Messiah "as the final atonement", the one who "suffers for our sins" (Yom Kippur). Substitutionary language, but no clear penal or other model. https://mycharisma.com/propheticrevival/jonathan-cahn-what-is-the-mysterious-link-between-yom-kippur-and-the-apocalypse/
+  - Ortlund: a Gentle and Lowly review says the atonement "isn't at the center" of the book ("died… on your behalf"). https://christianityfaq.com/review-gentle-and-lowly-dane-ortlund/
+  - Chuck Smith: the Calvary Chapel beliefs page wasn't reachable (permission timeout). Tripp, Tsarfati, Lennox and McLaughlin: no statement found in searches. Gregg: The Narrow Path statement says only "an atoning sacrifice". Pinnock: Robert Brow's summary lists "A Family Model of the Atonement" and "the Cross as the outcome of God's sacrificial love", not enough to place. https://brow.on.ca/Articles/Pinnock.html
+  - Lewis: checked before ("theories… are not themselves the thing"), so he stays unplaced on purpose. Skarsaune, Adeyemo and Bruce: no statement found yet.
+  - Rate-limited, not read: DeYoung's TGC post "In My Place Condemned He Stood" (https://www.thegospelcoalition.org/blogs/kevin-deyoung/place-condemned-stood/). Read it next time to change DeYoung from inferred to stated.
+
+## Churches tab sources (Oct 2026)
+- Laurie and Harvest: Wikipedia Greg Laurie (joined the SBC in June 2017; kept Calvary Chapel ties as of 2017). https://en.wikipedia.org/wiki/Greg_Laurie · https://www.christianpost.com/news/greg-lauries-harvest-christian-fellowship-joins-southern-baptist-convention-187694/
+- Saddleback disfellowshipped by the SBC (2023): https://christianitytoday.com/2023/02/saddleback-church-southern-baptist-sbc-disfellowship-female
+- Packer left the Anglican Church of Canada (2008): https://www.christiantoday.com/article/theologian.packer.quits.anglican.church.of.canada/18418.htm
+- Sproul ordained PCA (1975–2017; Wikipedia infobox). St Andrew's joined the PCA in 2023 and voted to leave on 14 Dec 2025: https://ministrywatch.com/st-andrews-chapel-votes-to-leave-pca/
+- Storms: Bridgeway (2008–); Metro Christian Fellowship (1993); Convergence Church Network (2024): https://en.wikipedia.org/wiki/Sam_Storms
+- Gentry ordained in the RPCGA: https://archive.chalcedon.edu/magazine/biographical-notes-about-dr-kenneth-gentry-1
+- Begg pastored Charlotte Chapel and Hamilton Baptist Church; Parkside's affiliation isn't given: https://en.wikipedia.org/wiki/Alistair_Begg
+- Lennox: no church named on Wikipedia. The Village Church: no denomination given on Wikipedia (hired as Highland Village First Baptist).
+- Family beliefs come from the confessions linked on each card (Catechism, Augsburg, Thirty-Nine Articles, Westminster, BF&M 2000, AG Fundamental Truths, DTS) and Wikipedia. They are general reference and haven't been checked line by line yet.

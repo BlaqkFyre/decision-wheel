@@ -49,6 +49,8 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 - `VER` (source count per person and topic, shown as dots), `LINKS` (source links per person), `BOOKS` (per person: `[title, [topic indexes]]`), `READ` (reading list per topic and option), `KOORONG`/`FREE` book links.
 - `BIO` — per person `{life, era, known, spec, crit?, contro:[[text,url]]}`. `ERA_OF` — era codes A (pre-1900), H (1900–2005), M (2005+); the default is H+M.
 - Topic pages: `TINFO` (about, controversies `[text, [eras]]`, and per option `for`/`against` verses plus `who`), `ORGS` (Commonly held by chips), `heldWith()` (worked out from people).
+- Churches tab: `CHURCHES` — families `{id, n, about, b:[[topic, option|null, note]], br:[{n, d, people, b}], people:[[name, status, note]], al:[ORGS names], src}`. Status codes: m member, p partial/ties, l left, x multiple, b background. `CH_OF` maps ORGS names to a family, so topic-page chips can link to it. `tabChurches()` renders it. When you add a person, also add them to the right church family or branch with a status.
+- `ATONE2` — atonement placements from the Oct 2026 checks (`{name:[option, note, [[title,url]…]]}`), applied after `ATONE`.
 - Verses: NET Bible. STEP links use `version=NET2full@reference=Rom.8.19-23`; several passages join with commas ("Read all in STEP"). Verse pop-ups fetch NET text from `labs.bible.org` and cache it on the device.
 - Roles: admin (Luke) unlocks per device with a passphrase. Visitors edit only their own answers. Added people (`ADDED`, the "＋ Add a person" research queue) are saved in `dw-saved.added`.
 
