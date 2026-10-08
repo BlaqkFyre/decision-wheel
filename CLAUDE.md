@@ -5,6 +5,15 @@ Live site: https://blaqkfyre.github.io/decision-wheel/ · Repo: BlaqkFyre/decisi
 
 Before starting any work, read this file, `TODO.md` (plans and progress) and the top of `RESEARCH_LOG.md` (research method). If anything here disagrees with what Luke says in the chat, Luke wins — then update this file.
 
+## Starting a new chat (for Luke — copy and paste this)
+Link the chat to your computer, give it access to the repo folder, then paste:
+
+```
+I'm continuing work on my Decision Wheel app. My repo is at C:\Users\Ruth\Documents\GitHub\decision-wheel (live at https://blaqkfyre.github.io/decision-wheel/). Before doing anything, read CLAUDE.md, TODO.md and the top of RESEARCH_LOG.md in that folder and follow them, especially the safe editing workflow and giving me a commit title + summary for every change. Then briefly tell me what's open in TODO.md and wait for what I want to work on.
+```
+
+Claude: keep this prompt up to date if the repo location, live link or key files change.
+
 ## Files in the repo
 | File | What it is |
 |---|---|
