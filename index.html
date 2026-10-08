@@ -117,7 +117,7 @@ button.chip.tgt{border-color:var(--ink);box-shadow:0 0 0 1.5px var(--ink) inset}
 .rl{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .rcard{border:1px solid var(--line);border-radius:8px;padding:12px 14px}
 .rt{font-weight:700;font-size:15px;margin-bottom:4px}.rov{font-size:12.5px;color:var(--muted);margin-bottom:6px}
-.ro{font-size:13px;padding:6px 0;border-top:1px dashed var(--line)}.ro div{color:var(--muted);margin-top:2px}
+.ro{font-size:13px;padding:10px 0 9px;border-top:1px dashed var(--line)}.ro div{color:var(--muted);margin-top:4px}
 .rtag{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:4px}.rtag.dec{background:var(--tealbg);color:#fff}.rtag.also{background:var(--bg);color:var(--teal);border:1.5px solid var(--teal)}.rtag.con{background:var(--soft);color:var(--muted)}.rcard.flash{box-shadow:0 0 0 3px var(--teal)}.rcard{transition:box-shadow .3s}
 .blinks{display:inline-flex;flex-wrap:wrap;gap:4px;margin-left:4px;vertical-align:middle}
 .blink{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;text-decoration:none;white-space:nowrap}
@@ -184,7 +184,7 @@ a.btnlink.primary{background:var(--tealbg);color:#fff}
 .tnumbig{background:var(--tealbg);color:#fff}
 .topt{border-top:1px dashed var(--line);padding:9px 0 6px}
 .toh{font-size:14px}.tod{font-size:12.5px;color:var(--muted);margin:2px 0 6px}
-.trow{display:grid;grid-template-columns:150px 1fr;gap:8px;font-size:12.5px;padding:3px 0;align-items:start}
+.trow{display:grid;grid-template-columns:150px 1fr;gap:8px;font-size:12.5px;padding:5px 0;align-items:start}
 .trow>div{color:var(--ink)}
 .tl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding-top:2px}
 .vfor .tl{color:var(--teal)}.vag .tl{color:#C0703C}
@@ -211,7 +211,13 @@ html[data-theme=dark] .etag.eA{background:#4A3E2C;color:#EBD3A8}html[data-theme=
 .chp{display:flex;gap:8px;align-items:flex-start;padding:4px 0;font-size:13px}
 .rtag.csm{background:var(--tealbg);color:#fff}.rtag.csp,.rtag.csx{background:var(--bg);color:var(--teal);border:1.5px solid var(--teal)}.rtag.csl{background:var(--soft);color:var(--muted)}.rtag.csb{background:var(--soft);color:var(--ink);border:1px dashed var(--grey)}
 .tag.chvar{font-style:italic;color:var(--muted)}
-.ppch{margin-top:8px}td.inf{font-style:italic}
+.ppch{margin-top:8px}
+.chnotes div{margin-top:5px;line-height:1.45}
+.chag{display:grid;grid-template-columns:120px 1fr;gap:8px;align-items:start;padding:4px 0;font-size:12.5px}
+.chag .tl{font-weight:600;color:var(--ink);padding-top:3px}
+@media(max-width:700px){.chag{grid-template-columns:1fr;gap:2px}}
+.tag.chlink{border:1px solid var(--line);cursor:pointer;font:inherit;font-size:12.5px;color:var(--ink)}
+.tag.chlink:hover{border-color:var(--teal)}td.inf{font-style:italic}
 .tdot.inf .dot{outline:2px dashed var(--grey);outline-offset:1px}
 .infkey{font-weight:400;font-style:italic;font-size:11.5px;color:var(--muted);margin-left:6px}
 /* commonly held by */
@@ -1558,6 +1564,7 @@ const CHURCHES=[
 const CH_OF={};CHURCHES.forEach((C,i)=>(C.al||[]).forEach(a=>CH_OF[a]=i));
 function chPeople(C){const out=[],seen=new Set();const add=(arr,br)=>arr.forEach(([n,s,note])=>{const P=PEOPLE.find(p=>p.name===n);if(!P)return;out.push({P,s,note,br});seen.add(n)});
   add(C.people||[],null);(C.br||[]).forEach(B=>add(B.people||[],B.n));return out}
+function churchesOf(P){const out=[];CHURCHES.forEach((C,ci)=>{(C.people||[]).forEach(([n,s,note])=>{if(n===P.name)out.push({ci,br:null,s,note})});(C.br||[]).forEach(B=>(B.people||[]).forEach(([n,s,note])=>{if(n===P.name)out.push({ci,br:B.n,s,note})}))});return out}
 function tabChurches(vis){const P=target;
   let h=`<p class="sub">Each church family, with its branches shown like a topic's options. For each: what it usually teaches on this app's topics, who here belongs (members, people with partial ties, people who left, and people in more than one), and what the people here actually hold.</p><p class="sub" style="font-size:12px">"Usually teaches" is general reference from each church's confession or statement and the linked sources, and doesn't apply to every congregation. "Among people here" is worked out from the people in this app in the chosen era(s). ✓ marks a view the selected person (${esc(P.name)}) holds. Hover a note-less tag to see who here holds that view.</p>`;
   let desk=`<div class="rl tdesk">`,mob=`<div class="bio-mob">`;
@@ -1566,16 +1573,16 @@ function tabChurches(vis){const P=target;
   const pRow=(L)=>L.filter(x=>eraOK(x.P)).map(({P:Q,s,note})=>`<div class="chp"><button class="tdot" data-goto="bio:${PEOPLE.indexOf(Q)}" title="${esc(Q.name)} — open bio">${dotH(Q,20)}</button><span><b>${esc(Q.name)}</b> <span class="rtag cs${s}">${CH_STATUS[s]}</span>${note?`<br><span class="tmut">${esc(note)}</span>`:""}</span></div>`).join("");
   CHURCHES.forEach((C,ci)=>{const all=chPeople(C).filter(x=>eraOK(x.P));
     const comp=TOPICS.map((T,i)=>{const cnt={};let n=0;all.forEach(({P:Q})=>{const c=choice(Q,i);if(c!=null){cnt[c]=(cnt[c]||0)+1;n++}});if(!n)return "";
-      return Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([c,k])=>`<span class="tag pp" data-pp="view" data-v="${i},${c}">${esc(TSHORT[i])}: ${esc(T.opts[c].s)} · ${k}/${n}</span>`).join("")}).join("");
+      return `<div class="chag"><span class="tl">${esc(T.name)}</span><div>${Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([c,k])=>`<span class="tag pp" data-pp="chview" data-v="${ci},${i},${c}">${esc(T.opts[c].s)}: ${k} of ${n}</span>`).join("")}</div></div>`}).join("");
     const brs=(C.br||[]).map(B=>`<div class="topt"><div class="toh"><b>${esc(B.n)}</b></div><div class="tod">${esc(B.d)}</div>
-      ${B.b&&B.b.length?`<div class="trow"><span class="tl">Branch teaching</span><div>${bel(B.b)}</div></div>${notes(B.b)?`<div class="tmut" style="font-size:12px">${notes(B.b)}</div>`:""}`:""}
+      ${B.b&&B.b.length?`<div class="trow"><span class="tl">Branch teaching</span><div>${bel(B.b)}</div></div>${notes(B.b)?`<div class="tmut chnotes" style="font-size:12px">${notes(B.b)}</div>`:""}`:""}
       <div class="trow"><span class="tl">People here</span><div>${pRow((B.people||[]).map(([n,s,note])=>({P:PEOPLE.find(p=>p.name===n),s,note})).filter(x=>x.P))||'<span class="tmut">no one yet</span>'}</div></div></div>`).join("");
     const fam=(C.people||[]).map(([n,s,note])=>({P:PEOPLE.find(p=>p.name===n),s,note})).filter(x=>x.P);
     const body=`<div class="ro"><b>What it is</b><div>${esc(C.about)}</div></div>
-      ${C.b.length?`<div class="ro"><b>Usually teaches</b><div>${bel(C.b)}</div>${notes(C.b)?`<div class="tmut" style="font-size:12.5px;margin-top:4px">${notes(C.b)}</div>`:""}</div>`:""}
+      ${C.b.length?`<div class="ro"><b>Usually teaches</b> <span class="tmut" style="font-size:12px">tap a view to see everyone in the app who holds it</span><div>${bel(C.b)}</div>${notes(C.b)?`<div class="tmut chnotes" style="font-size:12.5px;margin-top:6px">${notes(C.b)}</div>`:""}</div>`:""}
       ${fam.length?`<div class="ro"><b>People here</b>${pRow(fam)}</div>`:""}
       ${brs?`<div class="ro"><b>${C.br.length} branch${C.br.length>1?"es":""}</b></div>${brs}`:""}
-      <div class="ro"><b>Among people here</b> <span class="tmut">${all.length} ${all.length===1?"person":"people"}</span><div>${comp||'<span class="tmut">No one here yet in the chosen era(s).</span>'}</div></div>
+      <div class="ro"><b>Among people here</b> <span class="tmut">${all.length} ${all.length===1?"person":"people"} linked to this church</span><div class="tmut" style="font-size:12px">For each topic: how many of this church's people hold each view, out of those with a view placed on that topic. For example "Premil: 1 of 2" means 2 of them have a Millennium view, and 1 of those holds Premillennial. Tap a view to see who.</div>${comp||'<span class="tmut">No one here yet in the chosen era(s).</span>'}</div>
       ${C.src&&C.src.length?`<div class="ro"><b>Sources</b>${C.src.map(([t,u])=>`<div>• ${esc(t)} <a href="${esc(u)}" target="_blank" rel="noopener" class="blink us">source</a></div>`).join("")}</div>`:""}`;
     const cnt=all.length?` · ${all.length} here`:"";
     desk+=`<div class="rcard" id="ch-${ci}"><div class="rt"><span class="tnum">${ci+1}</span>${esc(C.n)}</div><div class="rov">${esc((C.br||[]).map(B=>B.n).join(" · ")||"")}</div>${body}</div>`;
@@ -1609,7 +1616,9 @@ function tabBios(vis){
     const held=TOPICS.map((T,i)=>{const c=choice(P,i);return c==null?null:`<span class="tag pp${inf(P,i)?" inf":""}" data-pp="view" data-v="${i},${c}">${esc(TSHORT[i])}: ${esc(T.opts[c].s)}</span>`}).filter(Boolean);
     const sub=`${esc(B.life||(P.user?"Survey user":""))} ${erasOf(P).map(x=>`<span class="etag e${x}">${ERA_SHORT[x]}</span>`).join("")} · ${esc(F.n)}${P.church?" · "+esc(P.church):""}`;
     const list=(arr)=>arr.map(([t,u])=>`<div>• ${esc(t)}${u?` <a href="${esc(u)}" target="_blank" rel="noopener" class="blink us">source</a>`:""}</div>`).join("");
+    const chs=churchesOf(P);
     const body=`${B.known?`<div class="ro"><b>Known for</b><div>${esc(B.known)}</div></div>`:""}
+      ${chs.length?`<div class="ro"><b>Churches &amp; groups</b><div>${chs.map(x=>`<button class="tag chlink" data-goto="church:${x.ci}" title="${esc(x.note||"")}">${esc(CHURCHES[x.ci].n)}${x.br?" › "+esc(x.br):""} <span class="rtag cs${x.s}">${CH_STATUS[x.s]}</span></button>`).join("")}</div></div>`:""}
       ${B.spec?`<div class="ro bspec"><b>Speciality</b><div>${esc(B.spec)}</div></div>`:""}
       ${(B.crit&&B.crit.length)?`<div class="ro bcrit"><b>Critics say</b>${list(B.crit)}</div>`:""}
       ${(B.contro&&B.contro.length)?`<div class="ro bcon"><b>Controversies</b>${list(B.contro)}</div>`:""}
@@ -1819,14 +1828,16 @@ function orgPeople(org){const hits=new Set();ORG_RULES.forEach(([a,b])=>{if(!a.t
 function ppPeople(el){const t=el.dataset.pp,v=el.dataset.v;
   if(t==="org"){const ci=CH_OF[v];return {h:v,sub:"People here linked to this church or group",L:ci!=null?[...new Set([...chPeople(CHURCHES[ci]).map(x=>x.P),...orgPeople(v)])]:orgPeople(v),ch:ci}}
   if(t==="both"){const [i,k,j,m]=v.split(",").map(Number);return {h:`${TOPICS[i].opts[k].s} + ${TSHORT[j]}: ${TOPICS[j].opts[m].s}`,sub:"People here who hold both",L:PEOPLE.filter(P=>choice(P,i)===k&&choice(P,j)===m)}}
-  if(t==="view"){const [i,c]=v.split(",").map(Number);return {h:`${TOPICS[i].name}: ${TOPICS[i].opts[c].n}`,sub:"Everyone here who holds this view",L:PEOPLE.filter(P=>choice(P,i)===c)}}
+  if(t==="view"){const [i,c]=v.split(",").map(Number);return {h:`${TOPICS[i].name}: ${TOPICS[i].opts[c].n}`,sub:"Everyone in the app who holds this view",L:PEOPLE.filter(P=>choice(P,i)===c)}}
+  if(t==="chview"){const [ci,i,c]=v.split(",").map(Number),C=CHURCHES[ci],mem=[...new Set(chPeople(C).filter(x=>eraOK(x.P)).map(x=>x.P))],withV=mem.filter(P=>choice(P,i)!=null),L=withV.filter(P=>choice(P,i)===c);
+    return {h:`${TOPICS[i].name}: ${TOPICS[i].opts[c].n}`,sub:`${C.n}: ${L.length} of the ${withV.length} people here with a ${TOPICS[i].name} view hold this (${PEOPLE.filter(P=>choice(P,i)===c).length} in the whole app)`,L,noCount:true}}
   if(t==="term")return {h:v,sub:"Everyone here described this way",L:PEOPLE.filter(P=>labels(P).t.includes(v))};
   return {h:"",sub:"",L:[]}}
 let ppop=null,ppFor=null,ppHide=null;
 function showPP(el){clearTimeout(ppHide);if(!ppop){ppop=document.createElement("div");ppop.id="ppop";ppop.className="popbox";document.body.appendChild(ppop);
     ppop.addEventListener("mouseenter",()=>clearTimeout(ppHide));ppop.addEventListener("mouseleave",()=>hidePP(200))}
   const d=ppPeople(el);ppFor=el;
-  ppop.innerHTML=`<div class="vph"><b>${esc(d.h)}</b>${touch?'<button class="vpx" aria-label="Close">×</button>':""}</div><div class="tmut" style="font-size:12px;margin-bottom:6px">${esc(d.sub)} (${d.L.length})</div>
+  ppop.innerHTML=`<div class="vph"><b>${esc(d.h)}</b>${touch?'<button class="vpx" aria-label="Close">×</button>':""}</div><div class="tmut" style="font-size:12px;margin-bottom:6px">${esc(d.sub)}${d.noCount?"":` (${d.L.length})`}</div>
     <div class="pplist">${d.L.map(P=>`<button class="ppl" data-goto="bio:${PEOPLE.indexOf(P)}">${dotH(P,20)}<span>${esc(P.name)}</span></button>`).join("")||'<span class="tmut">No one in the app yet.</span>'}</div>${d.ch!=null?`<button class="lnk ppch" data-ch="${d.ch}">${esc(CHURCHES[d.ch].n)} — church page →</button>`:""}`;
   ppop.style.display="block";placePop(ppop,el)}
 function placePop(box,a){const r=a.getBoundingClientRect(),vw=document.documentElement.clientWidth||innerWidth,w=Math.min(340,vw-16);box.style.width=w+"px";
