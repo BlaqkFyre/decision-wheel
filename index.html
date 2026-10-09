@@ -49,6 +49,7 @@ button.on,button.primary{background:var(--tealbg);color:#fff}
 #tip .o.dec b,#tip .o.also b{color:var(--teal)}
 #tip .o.also:before{border-color:var(--teal)}
 .cmp{width:100%;max-width:1060px;padding:8px 16px 32px;box-sizing:border-box}
+#s>*{margin-left:auto;margin-right:auto}
 .cmp h2{font-size:22px;margin:10px 0 2px}
 .cmp .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
 .people{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
@@ -122,11 +123,25 @@ button.chip.tgt{border-color:var(--ink);box-shadow:0 0 0 1.5px var(--ink) inset}
 .blinks{display:inline-flex;flex-wrap:wrap;gap:4px;margin-left:4px;vertical-align:middle}
 .blink{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;text-decoration:none;white-space:nowrap}
 .blink.au{background:var(--tealsoft);color:var(--tealdark)}.blink.us{background:var(--soft);color:var(--muted)}.blink.free{background:var(--greenbg);color:var(--greenfg)}
-.bk{margin:3px 0}
+.bk{margin:6px 0 8px}
+.bkt{color:var(--ink)!important;font-size:13.5px;line-height:1.35}.bkt b{font-weight:700}.bkt .bka{color:var(--muted)}
+.bkm{margin-top:3px!important;display:flex;flex-wrap:wrap;gap:4px;align-items:center}.bkm .lean{margin-left:0}
 .lean{display:inline-block;font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:4px;vertical-align:1px;cursor:help}
 .lean.bal{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
 .lean.arg{background:var(--bg);color:#B8962E;border:1.5px solid #C9A227}
+.lean.agn{background:var(--bg);color:#B8483A;border:1.5px solid #D98B7E}
 .lean.sur{background:var(--soft);color:var(--muted)}
+.simgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.scard{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--bg)}
+.scard h3{margin:0;font-size:16px;display:flex;gap:8px;align-items:center}
+.scard .sq{font-size:13px;color:var(--muted);margin:6px 0 10px}
+.sopt{padding:8px 0;border-top:1px solid var(--line)}
+.sopt .sn{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-weight:600}
+.sopt .sd{font-size:12.5px;color:var(--muted);margin:3px 0 6px;line-height:1.4}
+.sbar{height:8px;border-radius:99px;background:var(--soft);overflow:hidden}.sbar i{display:block;height:100%;background:var(--teal);border-radius:99px}
+.sopt.mine .sn{color:var(--teal)}
+.scnt{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+.sfull{margin-top:8px;font-size:12px}
 .tcount{font-size:12px;font-weight:600;color:var(--muted);margin-left:auto;white-space:nowrap}
 .kbadge{font-size:10px;font-weight:700;background:var(--amberbg);color:var(--amberfg);border-radius:4px;padding:1px 5px;margin-left:4px}.rtag.dif{background:var(--orangebg);color:var(--ink)}
 .sv .svtop{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;font-size:14px}
@@ -1114,17 +1129,20 @@ const LEAN={"why hell? three christian views critically examined":["bal",null,"S
  "body, soul, and life everlasting":["arg",0,"Defends 'holistic dualism': the person lives on consciously between death and resurrection."],
  "heaven":["arg",0,"Argues for a renewed, physical New Earth."],
  "let the nations be glad!":["arg",0,"Argues that conscious faith in Christ is needed for salvation."],
+ "what about those who have never heard?":["bal",null,"Three views (Sanders, Fackre, Nash), each argued by its own supporter."],
  "four views on salvation in a pluralistic world":["bal",null,"Multi-view book. Listed here because hopeful agnosticism has no standard single-view book."]};
 function leanTag(t,i,k){const L=LEAN[t.toLowerCase().trim()];let kind,o,note;
   if(L)[kind,o,note]=L;else if(/\b(views|perspectives)\b/i.test(t)){kind="bal";note="Multi-view book: each view is argued by one of its own supporters."}
   else if(k!=null){kind="arg";o=k;note=""}else return "";
   if(i==null)return "";
   if(kind==="bal")return `<span class="lean bal" title="${esc(note)}">⚖ Balanced</span>`;
-  if(kind==="sur")return `<span class="lean sur" title="${esc(note)}">History / survey</span>`;
-  return `<span class="lean arg" title="${esc(note||"Written to argue for this view")}">Argues for: ${esc(TOPICS[i].opts[o].s)}</span>`}
+  if(kind==="sur")return `<span class="lean sur" title="${esc(note)}">Survey</span>`;
+  const vn=TOPICS[i].opts[o].s;
+  if(kind==="agn")return `<span class="lean agn" title="${esc(note||"Argues against "+vn)}">Against view</span>`;
+  return `<span class="lean arg" title="${esc((note?note+" ":"")+"Argues for "+vn+".")}">${k===o?"For view":"For: "+esc(vn)}</span>`}
 function bookLine(str,i,k){ // "Title — Author; Title2 — Author2" -> each book with its links
   return String(str).split(";").map(x=>x.trim()).filter(Boolean).map(x=>{const [t,a]=x.split(" — ");if(!a||t.startsWith("("))return `<div class="bk">${esc(x)}</div>`;
-    return `<div class="bk">${esc(t)} — ${esc(a)} ${leanTag(t,i,k)} ${bookLinks(t,a.replace(/\(.*?\)/g,"").split(/&| and /)[0].trim())}</div>`}).join("")}
+    return `<div class="bk"><div class="bkt"><b>${esc(t)}</b> <span class="bka">— ${esc(a)}</span></div><div class="bkm">${leanTag(t,i,k)}${bookLinks(t,a.replace(/\(.*?\)/g,"").split(/&| and /)[0].trim())}</div></div>`}).join("")}
 function tabReadPeople(vis){const P=target;
   let h=`<p class="sub">Notable books by each person shown, tagged with the topics they cover. Tags are teal where the author agrees with ${esc(P.name)} on that topic and peach where they differ. "Koorong bestseller" marks books on Koorong's current bestseller list.</p><div class="rl">`;
   let mob=`<div class="bio-mob">`;h=h.replace(/<div class="rl">$/,'<div class="rl bio-desk">');
@@ -1612,8 +1630,19 @@ function tabChurches(vis){const P=target;
     mob+=`<details class="bpill" id="chm-${ci}"><summary><span class="bav tnumbig">${ci+1}</span><span class="bpm"><span class="bpn">${esc(C.n)}</span><span class="bps">${esc((C.br||[]).map(B=>B.n).join(" · ")||"No branches listed")}${cnt}</span></span><span class="bchev">›</span></summary><div class="bbody">${body}</div></details>`});
   return h+desk+`</div>`+mob+`</div>`}
 
+let topicSimple=(()=>{const v=lsGet("decisionwheel_topicview");return v!=="full"})();
+function tabTopicsSimple(){const P=target,ALLP=PEOPLE.filter(Q=>!Q.added);
+  let h=`<div class="simgrid">`;
+  TOPICS.forEach((T,i)=>{const hold=T.opts.map((o,k)=>ALLP.filter(Q=>choice(Q,i)===k).length),nv=hold.reduce((a,b)=>a+b,0),c=choice(P,i);
+    h+=`<div class="scard" id="stop-${i}"><h3><span class="tnum">${i+1}</span>${esc(T.name)}</h3><div class="sq">${esc(T.q)}</div>
+      ${T.opts.map((o,k)=>`<div class="sopt${k===c?" mine":""}"><div class="sn"><span>${esc(o.n)}${k===c?` ✓`:""}</span><span class="scnt">${hold[k]} ${hold[k]===1?"person":"people"}</span></div><div class="sd">${esc(o.d)}</div><div class="sbar"><i style="width:${nv?Math.round(100*hold[k]/nv):0}%"></i></div></div>`).join("")}
+      <div class="tmut" style="font-size:12px;margin-top:8px">${nv} of ${ALLP.length} people have a recorded view${c!=null?` · ✓ = ${esc(P.name)}'s view`:""}</div>
+      <button class="lnk sfull" data-tfull="${i}">Full topic page →</button></div>`});
+  return h+`</div>`}
 function tabTopics(vis){const P=target;
-  let h=`<p class="sub">A page for each topic: what it's about, the main debates, and for each view the verses its supporters use, the verses critics raise, which churches typically hold it, who in this app holds it, and which other views usually go with it. Tags show ${esc(P.name)}'s view. </p><p class="sub">Open verses in <select class="selref" id="selbible">${Object.entries(BIBLES).map(([k,l])=>`<option value="${k}"${k===bibleSite?" selected":""}>${l}</option>`).join("")}</select> — all in the NET Bible. <span class="tmut">Hover a verse (or tap it on a phone) to read it here; "Read all in STEP" opens every verse in a list together.</span></p><p class="sub" style="font-size:12px">Summaries are general reference and haven't yet been individually checked against sources. "Held by" and "Often held with" are worked out from the people in this app in the chosen era(s), so they change as people are added.</p>`;
+  const sw=`<div class="tabs" style="margin-top:0"><button class="mini${topicSimple?" on":""}" data-ts="1">Simple view</button><button class="mini${!topicSimple?" on":""}" data-ts="0">Full view</button></div>`;
+  if(topicSimple)return sw+`<p class="sub">Each topic at a glance: the question, the main views, and how many people in the app hold each (all eras). Switch to Full view for verses, churches, debates and who holds what.</p>`+tabTopicsSimple();
+  let h=sw+`<p class="sub">A page for each topic: what it's about, the main debates, and for each view the verses its supporters use, the verses critics raise, which churches typically hold it, who in this app holds it, and which other views usually go with it. Tags show ${esc(P.name)}'s view. </p><p class="sub">Open verses in <select class="selref" id="selbible">${Object.entries(BIBLES).map(([k,l])=>`<option value="${k}"${k===bibleSite?" selected":""}>${l}</option>`).join("")}</select> — all in the NET Bible. <span class="tmut">Hover a verse (or tap it on a phone) to read it here; "Read all in STEP" opens every verse in a list together.</span></p><p class="sub" style="font-size:12px">Summaries are general reference and haven't yet been individually checked against sources. "Held by" and "Often held with" are worked out from the people in this app in the chosen era(s), so they change as people are added.</p>`;
   let desk=`<div class="rl tdesk">`,mob=`<div class="bio-mob">`;
   const ALLP=PEOPLE.filter(Q=>!Q.added);
   TOPICS.forEach((T,i)=>{const I=TINFO[i]||{o:[]},c=choice(P,i),al=alsoOf(P,i),nv=ALLP.filter(Q=>choice(Q,i)!=null).length,cntTxt=`${nv} of ${ALLP.length} people have a recorded view`;
@@ -1776,7 +1805,7 @@ s.addEventListener("click",e=>{
   if(e.target.id==="addperson"){openAdd();return}
   if(e.target.id==="cwswap"&&cwOther){const a=target;target=cwOther;cwOther=a;target.on=true;renderCompare();return}
   const go=e.target.closest("[data-goto]");if(go){const [w,k]=go.dataset.goto.split(":");
-    if(w==="topic"){ctab="topics";pendingScroll="top-"+k;renderCompare();return}
+    if(w==="topic"){ctab="topics";topicSimple=false;pendingScroll="top-"+k;renderCompare();return}
     if(w==="church"){ctab="churches";pendingScroll="ch-"+k;renderCompare();return}
     if(w==="tread"){ctab="read";readMode="topic";pendingScroll="rt-"+k;renderCompare();return}
     const P=PEOPLE[+k];P.on=true;
@@ -1784,6 +1813,8 @@ s.addEventListener("click",e=>{
     renderCompare();return}
   const cw=e.target.closest("[data-cw]");if(cw){cwMode=cw.dataset.cw;renderCompare();return}
   const rm=e.target.closest("[data-rm]");if(rm){readMode=rm.dataset.rm;renderCompare();return}
+  const ts=e.target.closest("[data-ts]");if(ts){topicSimple=ts.dataset.ts==="1";lsSet("decisionwheel_topicview",topicSimple?"simple":"full");renderCompare();return}
+  const tf=e.target.closest("[data-tfull]");if(tf){topicSimple=false;lsSet("decisionwheel_topicview","full");pendingScroll="top-"+tf.dataset.tfull;renderCompare();return}
   const qb=e.target.closest("[data-q]");if(qb){const q=qb.dataset.q;
     if(q==="all")PEOPLE.forEach(P=>{if(eraOK(P))P.on=true});else if(q==="none")PEOPLE.forEach(P=>P.on=false);
     else if(q==="modern")PEOPLE.forEach(P=>{if(P.modern)P.on=true});else closest(target,q==="two"?1:3).forEach(x=>x.Q.on=true);
@@ -1873,7 +1904,7 @@ function placePop(box,a){const r=a.getBoundingClientRect(),vw=document.documentE
 function hidePP(ms){clearTimeout(ppHide);ppHide=setTimeout(()=>{if(ppop)ppop.style.display="none";ppFor=null},ms||0)}
 if(!touch){document.addEventListener("mouseover",e=>{const a=e.target.closest&&e.target.closest(".pp");if(a&&a!==ppFor)showPP(a)});
   document.addEventListener("mouseout",e=>{const a=e.target.closest&&e.target.closest(".pp");if(a)hidePP(250)})}
-function goTopicOpt(o){hidePP();if(view!=="compare")setView("compare");ctab="topics";pendingScroll="opt:"+o;renderCompare()}
+function goTopicOpt(o){hidePP();if(view!=="compare")setView("compare");ctab="topics";topicSimple=false;pendingScroll="opt:"+o;renderCompare()}
 document.addEventListener("click",e=>{const pt=e.target.closest&&e.target.closest(".pptop");
   if(pt){goTopicOpt(pt.dataset.t);e.stopPropagation();return}
   const pc=e.target.closest&&e.target.closest(".ppch");
