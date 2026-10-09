@@ -123,6 +123,11 @@ button.chip.tgt{border-color:var(--ink);box-shadow:0 0 0 1.5px var(--ink) inset}
 .blink{font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;text-decoration:none;white-space:nowrap}
 .blink.au{background:var(--tealsoft);color:var(--tealdark)}.blink.us{background:var(--soft);color:var(--muted)}.blink.free{background:var(--greenbg);color:var(--greenfg)}
 .bk{margin:3px 0}
+.lean{display:inline-block;font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;margin-left:4px;vertical-align:1px;cursor:help}
+.lean.bal{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.lean.arg{background:var(--bg);color:#B8962E;border:1.5px solid #C9A227}
+.lean.sur{background:var(--soft);color:var(--muted)}
+.tcount{font-size:12px;font-weight:600;color:var(--muted);margin-left:auto;white-space:nowrap}
 .kbadge{font-size:10px;font-weight:700;background:var(--amberbg);color:var(--amberfg);border-radius:4px;padding:1px 5px;margin-left:4px}.rtag.dif{background:var(--orangebg);color:var(--ink)}
 .sv .svtop{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;font-size:14px}
 .svrow{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0;font-size:14px;align-items:center}
@@ -1102,9 +1107,24 @@ function bookLinks(title,author){const k=bookKey(title),h=KOORONG[k],f=FREE[k]||
     :`<a class="blink us" href="https://www.christianbook.com/apps/search?Ntt=${encodeURIComponent(k+" "+(author||""))}" target="_blank" title="Not found at Koorong — search Christianbook, USA">Christianbook (US)</a>`;
   return `<span class="blinks">${buy}${f.map(([l,u])=>`<a class="blink free" href="${u}" target="_blank">Free: ${esc(l)}</a>`).join("")}</span>`}
 
-function bookLine(str){ // "Title — Author; Title2 — Author2" -> each book with its links
+// Does a reading-list book argue for one view, or set out several? [kind, topic option it leans to (or null), note]
+// bal = balanced / multi-view, arg = argues for a view, sur = history or survey. Books not listed: multi-view titles are "balanced"; books under an option argue for that option.
+const LEAN={"why hell? three christian views critically examined":["bal",null,"Sets out all three views 'without advocating for any one' (publisher). Some reviewers sense it leans away from eternal torment."],
+ "antichrist: two thousand years of the human fascination with evil":["sur",null,"A history of the idea, not an argument for one view."],
+ "body, soul, and life everlasting":["arg",0,"Defends 'holistic dualism': the person lives on consciously between death and resurrection."],
+ "heaven":["arg",0,"Argues for a renewed, physical New Earth."],
+ "let the nations be glad!":["arg",0,"Argues that conscious faith in Christ is needed for salvation."],
+ "four views on salvation in a pluralistic world":["bal",null,"Multi-view book. Listed here because hopeful agnosticism has no standard single-view book."]};
+function leanTag(t,i,k){const L=LEAN[t.toLowerCase().trim()];let kind,o,note;
+  if(L)[kind,o,note]=L;else if(/\b(views|perspectives)\b/i.test(t)){kind="bal";note="Multi-view book: each view is argued by one of its own supporters."}
+  else if(k!=null){kind="arg";o=k;note=""}else return "";
+  if(i==null)return "";
+  if(kind==="bal")return `<span class="lean bal" title="${esc(note)}">⚖ Balanced</span>`;
+  if(kind==="sur")return `<span class="lean sur" title="${esc(note)}">History / survey</span>`;
+  return `<span class="lean arg" title="${esc(note||"Written to argue for this view")}">Argues for: ${esc(TOPICS[i].opts[o].s)}</span>`}
+function bookLine(str,i,k){ // "Title — Author; Title2 — Author2" -> each book with its links
   return String(str).split(";").map(x=>x.trim()).filter(Boolean).map(x=>{const [t,a]=x.split(" — ");if(!a||t.startsWith("("))return `<div class="bk">${esc(x)}</div>`;
-    return `<div class="bk">${esc(t)} — ${esc(a)} ${bookLinks(t,a.replace(/\(.*?\)/g,"").split(/&| and /)[0].trim())}</div>`}).join("")}
+    return `<div class="bk">${esc(t)} — ${esc(a)} ${leanTag(t,i,k)} ${bookLinks(t,a.replace(/\(.*?\)/g,"").split(/&| and /)[0].trim())}</div>`}).join("")}
 function tabReadPeople(vis){const P=target;
   let h=`<p class="sub">Notable books by each person shown, tagged with the topics they cover. Tags are teal where the author agrees with ${esc(P.name)} on that topic and peach where they differ. "Koorong bestseller" marks books on Koorong's current bestseller list.</p><div class="rl">`;
   let mob=`<div class="bio-mob">`;h=h.replace(/<div class="rl">$/,'<div class="rl bio-desk">');
@@ -1120,8 +1140,8 @@ function tabRead(vis){const mode=`<div class="tabs" style="margin-top:0"><button
 function tabReadTopic(){const P=target;let h=`<p class="sub">One overview (usually a multi-view book) and a book per option for each topic. Tags show ${esc(P.name)}'s decision, "also holds" and considered options. <label style="margin-left:8px"><input type="checkbox" id="readmine"${readMine?' checked':''}> Only show the options ${esc(P.name)} didn't choose</label></p><p class="sub" style="font-size:12px">Each book links to <b>Koorong (AU)</b> where Koorong stocks it, otherwise to a <b>Christianbook (US)</b> search. <b>Free</b> links go to legal, free-to-read copies (author/publisher downloads or public-domain texts) where one exists.</p><div class="rl">`;
   let mob=`<div class="bio-mob">`;h=h.replace(/<div class="rl">$/,'<div class="rl bio-desk">');
   TOPICS.forEach((T,i)=>{const R=READ[i],c=choice(P,i),al=alsoOf(P,i);
-    const body=`<div class="rov">📚 Overview: ${bookLine(R.ov)}</div>`+T.opts.map((o,k)=>{if(readMine&&k===c)return "";const tag=c==null?"":k===c?'<span class="rtag dec">Your view</span>':al.includes(k)?'<span class="rtag also">Also holds</span>':'<span class="rtag con">Considered</span>';
-      return `<div class="ro"><b>${esc(o.n)}</b> ${tag}<div>${R.o[k]?bookLine(R.o[k]):"—"}</div></div>`}).join("");
+    const body=`<div class="rov">📚 Overview: ${bookLine(R.ov,i,null)}</div>`+T.opts.map((o,k)=>{if(readMine&&k===c)return "";const tag=c==null?"":k===c?'<span class="rtag dec">Your view</span>':al.includes(k)?'<span class="rtag also">Also holds</span>':'<span class="rtag con">Considered</span>';
+      return `<div class="ro"><b>${esc(o.n)}</b> ${tag}<div>${R.o[k]?bookLine(R.o[k],i,k):"—"}</div></div>`}).join("");
     h+=`<div class="rcard" id="rt-${i}"><div class="rt" style="display:flex;align-items:center">${esc(T.name)}<button class="lnk" data-goto="topic:${i}" style="margin-left:auto">Topic page →</button></div>${body}</div>`;
     mob+=`<details class="bpill" id="rtm-${i}"><summary><span class="bav tnumbig">${i+1}</span><span class="bpm"><span class="bpn">${esc(T.name)}</span><span class="bps">${c==null?"Books for each view":esc(P.name)+": "+esc(T.opts[c].s)}</span></span><span class="bchev">›</span></summary><div class="bbody">${body}<div class="ro bbtns"><button class="lnk" data-goto="topic:${i}">Topic page →</button></div></div></details>`});
   return h+`</div>`+mob+`</div>`}
@@ -1595,7 +1615,8 @@ function tabChurches(vis){const P=target;
 function tabTopics(vis){const P=target;
   let h=`<p class="sub">A page for each topic: what it's about, the main debates, and for each view the verses its supporters use, the verses critics raise, which churches typically hold it, who in this app holds it, and which other views usually go with it. Tags show ${esc(P.name)}'s view. </p><p class="sub">Open verses in <select class="selref" id="selbible">${Object.entries(BIBLES).map(([k,l])=>`<option value="${k}"${k===bibleSite?" selected":""}>${l}</option>`).join("")}</select> — all in the NET Bible. <span class="tmut">Hover a verse (or tap it on a phone) to read it here; "Read all in STEP" opens every verse in a list together.</span></p><p class="sub" style="font-size:12px">Summaries are general reference and haven't yet been individually checked against sources. "Held by" and "Often held with" are worked out from the people in this app in the chosen era(s), so they change as people are added.</p>`;
   let desk=`<div class="rl tdesk">`,mob=`<div class="bio-mob">`;
-  TOPICS.forEach((T,i)=>{const I=TINFO[i]||{o:[]},c=choice(P,i),al=alsoOf(P,i);
+  const ALLP=PEOPLE.filter(Q=>!Q.added);
+  TOPICS.forEach((T,i)=>{const I=TINFO[i]||{o:[]},c=choice(P,i),al=alsoOf(P,i),nv=ALLP.filter(Q=>choice(Q,i)!=null).length,cntTxt=`${nv} of ${ALLP.length} people have a recorded view`;
     const opts=T.opts.map((o,k)=>{const X=I.o[k]||{},tag=c==null?"":k===c?`<span class="rtag dec">${esc(P.name)}'s view</span>`:al.includes(k)?'<span class="rtag also">Also holds</span>':"";
       const holders=PEOPLE.filter(Q=>choice(Q,i)===k&&eraOK(Q)),hw=heldWith(i,k);
       return `<div class="topt" data-o="${i}-${k}"><div class="toh"><b>${esc(o.n)}</b> ${tag}</div><div class="tod">${esc(o.d)}</div>
@@ -1609,8 +1630,8 @@ function tabTopics(vis){const P=target;
       ${(()=>{const cs=(I.contro||[]).filter(([t,e])=>eraItemOK(e));return cs.length?`<div class="ro bcon"><b>Debates &amp; controversies</b>${cs.map(([t,e])=>`<div>• ${esc(t)} ${e.map(x=>`<span class="etag e${x}">${ERA_SHORT[x]}</span>`).join("")}</div>`).join("")}</div>`:(I.contro&&I.contro.length?`<div class="ro bcon"><b>Debates &amp; controversies</b><div class="tmut">None in the chosen era — change the Era filter above.</div></div>`:"")})()}
       <div class="ro bbtns"><button class="lnk" data-goto="tread:${i}">Reading list →</button></div>`;
     const yours=c==null?"":` · ${esc(P.name)}: ${esc(T.opts[c].s)}`;
-    desk+=`<div class="rcard" id="top-${i}"><div class="rt"><span class="tnum">${i+1}</span>${esc(T.name)}</div><div class="rov">${esc(T.q)}</div>${body}</div>`;
-    mob+=`<details class="bpill" id="topm-${i}"><summary><span class="bav tnumbig">${i+1}</span><span class="bpm"><span class="bpn">${esc(T.name)}</span><span class="bps">${esc(T.opts.map(o=>o.s).join(" · "))}${yours}</span></span><span class="bchev">›</span></summary><div class="bbody"><div class="rov">${esc(T.q)}</div>${body}</div></details>`});
+    desk+=`<div class="rcard" id="top-${i}"><div class="rt" style="display:flex;align-items:center;gap:6px"><span class="tnum">${i+1}</span>${esc(T.name)}<span class="tcount" title="All eras, including survey users">${cntTxt}</span></div><div class="rov">${esc(T.q)}</div>${body}</div>`;
+    mob+=`<details class="bpill" id="topm-${i}"><summary><span class="bav tnumbig">${i+1}</span><span class="bpm"><span class="bpn">${esc(T.name)}</span><span class="bps">${esc(T.opts.map(o=>o.s).join(" · "))}${yours}</span></span><span class="bchev">›</span></summary><div class="bbody"><div class="rov">${esc(T.q)}</div><div class="tcount" style="margin:0 0 6px">${cntTxt}</div>${body}</div></details>`});
   return h+desk+`</div>`+mob+`</div>`}
 function tabBios(vis){
   let h=`<p class="sub">A short profile for each person shown. Beliefs and tags come from their placements in this app; hover the heat map for sources. Controversies are listed only where widely reported. <i>Italic</i> beliefs are inferred (from their church or wider teaching) rather than stated by the person.</p>`;

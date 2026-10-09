@@ -37,7 +37,8 @@ Every commit gets a row here, with the people, topics and data it changed. Claud
 | 2026-10-08 16:50 | `8f8a1a8` | Churches tab, Labels rename, atonement checks (batch 1) | New Churches tab: 20 church families with branches, who here belongs (member / partial / left / multiple / background) and usual teaching. "Labels & churches" renamed "Labels". Atonement placed for 11 people (Darby, Hayford, Laurie, Chandler, Warren, Storms, Augustine, Gentry, DeYoung, Athas, Jeremiah). No answers changed |
 | 2026-10-08 17:06 | `568c839` | Churches: clearer counts, more spacing, bio links to churches | Church cards: "Among people here" is grouped by topic, reads "Premil: 1 of 2" with an explanation, and its pop-ups list only that church's people. A bit more space in all cards. Bios get a "Churches & groups" row linking to church pages. No data changed |
 | 2026-10-09 09:37 | `589664f` | Beliefs link to their topic page | Belief tags (bios, church cards, anywhere a view is shown) open that topic page and highlight the view: click on desktop, or tap and then "topic page →" on phones. No data changed |
-| 2026-10-09 | (next) | Flesh out thin profiles, round 1 | 16 new placements: David Jeremiah +7, Paul David Tripp +3, John Mark Comer +2, Oskar Skarsaune +4. No answers changed |
+| 2026-10-09 09:47 | `d4a87a1` | Flesh out thin profiles, round 1 | 16 new placements: David Jeremiah +7, Paul David Tripp +3, John Mark Comer +2, Oskar Skarsaune +4. No answers changed |
+| 2026-10-09 | (next) | Reading list lean tags; topic view counts | Reading-list books tagged "⚖ Balanced", "Argues for: …" or "History / survey" (hover for the reason). Topic pages show "xx of 43 people have a recorded view". No data changed |
 
 ## People and topic changes in detail (from 8 Oct 2026)
 

@@ -307,3 +307,9 @@ Goal: everyone gets an Atonement check. Placed where a source was found; the res
   - Begg: Truth for Life's statement says "imminent return" (not enough to place the rapture); the parkside.church beliefs page failed to load.
   - Ortlund: Naperville Presbyterian's denomination is still unconfirmed.
   - Adeyemo: the scielo article doesn't mention him. Bray and Athas: no new sources.
+
+
+## Reading list lean tags (Oct 2026)
+- The rule: titles with "Views" or "Perspectives" are multi-view (each view written by its own supporter), so they're tagged ⚖ Balanced. A book listed under an option is tagged as arguing for that option. Exceptions are set by hand in `LEAN`.
+- Why Hell? (Gregg): Balanced. The publisher says it's meant to educate "without advocating for any one point of view" (https://zondervanacademic.com/products/why-hell). Goodreads reviewers sense it leans away from eternal torment (https://www.goodreads.com/book/show/201335305-why-hell).
+- Set from general knowledge of the book, not yet checked against reviews: McGinn, Antichrist (history / survey); Cooper, Body, Soul, and Life Everlasting (argues for a conscious intermediate state); Alcorn, Heaven (argues for a renewed New Earth); Piper, Let the Nations Be Glad! (argues for exclusivism); Four Views on Salvation in a Pluralistic World (multi-view, so Balanced even though it's listed under hopeful agnosticism).
