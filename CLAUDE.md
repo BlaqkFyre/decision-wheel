@@ -30,7 +30,7 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 - **Every change gets a `CHANGELOG.md` entry** (same title as the commit, plus every person, topic, answer or queue change). Write "(next)" for the hash. At the start of the next change, stage `.git/logs/HEAD` and fill in the real hash and time of the last commit.
 - Backups: git history is the backup of `index.html` and its `dw-saved` data. Data saved only in a browser (e.g. on the phone) isn't backed up until it is exported and imported into the PC copy and committed. Remind Luke of this when he mentions changes made on the phone.
 - Ask clarifying questions in the chat. Show preview images before big UI changes. Do work in small steps when asked.
-- Mobile-first, modern, uncluttered. Light and charcoal-grey dark mode. Teal accent. Equal-size rounded buttons that wrap (no sideways scrolling on phones).
+- Mobile-first, modern, uncluttered. Colour modes: Light, charcoal-grey Dark, BookWorm (parchment, serif font) and LampLight (dark leather and gold, modern font), set by `data-mode` on `<html>`. Teal accent in Light/Dark. Equal-size rounded buttons that wrap (no sideways scrolling on phones).
 - Pills: thin grey border when closed, teal when open. The views inside a topic page keep their gold border.
 
 ## Safe editing workflow (important — learned the hard way)

@@ -36,7 +36,7 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [x] Reading list: each book tagged Balanced / Argues for a view / History-survey (LEAN in index.html; multi-view titles count as balanced, books under an option argue for it)
 - [x] Topic pages show "xx of 43 people have a recorded view" (all eras, survey users included)
 - [x] Pages centred on PC; reading-list titles bold with tags on their own line; simpler lean tags (For view / Balanced / Survey / Against view)
-- [ ] BookWorm colour mode: A Parchment library and B Leather & lamplight, each previewed with serif and modern fonts; Luke leaning towards both, waiting for the font choice
+- [x] Colour modes: Auto, Light, Dark, BookWorm (parchment, serif) and LampLight (leather, dark, modern font)
 - [x] Simple view for Topics, saved as the default (Simple / Full switch, remembered per device). Luke is trialling it
 - [ ] If Luke likes it: simple views for other tabs (e.g. Bios)
 - [ ] Lean tags: check the hand-set ones (Alcorn Heaven, Cooper, Piper Let the Nations Be Glad!, McGinn) against reviews

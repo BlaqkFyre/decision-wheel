@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Decision Wheel</title>
-<script>/* theme: "auto" follows the phone/PC setting; "light" or "dark" (charcoal) is remembered on this device */
+<script>/* theme: "auto" follows the phone/PC setting; "light", "dark" (charcoal), "bookworm" (parchment, serif) or "lamplight" (leather, dark) is remembered on this device */
 (function(){var m="auto";try{m=localStorage.getItem("decisionwheel_theme")||"auto"}catch(e){}
-  var d=m==="dark"||(m==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
+  var d=m==="dark"||m==="lamplight"||(m==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
   document.documentElement.setAttribute("data-theme",d?"dark":"light");document.documentElement.setAttribute("data-mode",m)})();</script>
 <meta name="theme-color" content="#0E7C86"><meta name="referrer" content="no-referrer"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Decision Wheel">
 <script id="dw-saved" type="application/json">{"version":1,"people":[{"name":"Luke","self":true,"church":"Brethren / Baptist background","trad":["Brethren","Baptist"],"answers":{"Millennium":0,"Rapture timing":0,"Reading Revelation":0,"Israel & the Church":0,"Daniel's 70th week":0,"The Antichrist":0,"Final judgment":0,"After death":0,"New creation":0,"Election":1,"Spiritual gifts":1,"Baptism":0,"Missions & the unreached":0,"Eternal security":0,"Creation":0,"Women in ministry":1,"Lord's Supper":0,"Atonement":1},"alsoHolds":{"Israel & the Church":[1],"Atonement":[0]},"conviction":{"Missions & the unreached":5,"Eternal security":5,"Creation":5,"Women in ministry":4,"Lord's Supper":5,"Atonement":4},"saved":1791350535313},{"name":"Sarah","self":false,"church":"Brethren","trad":[],"answers":{"Millennium":0,"Rapture timing":0,"Reading Revelation":0,"Israel & the Church":1,"Daniel's 70th week":null,"The Antichrist":0,"Final judgment":0,"After death":0,"New creation":0,"Election":2,"Spiritual gifts":0,"Baptism":0,"Missions & the unreached":0,"Eternal security":0,"Creation":0,"Women in ministry":1,"Lord's Supper":0},"alsoHolds":{"Rapture timing":[1],"New creation":[1],"Missions & the unreached":[1]},"conviction":{"Millennium":4,"Rapture timing":3,"Reading Revelation":4,"Israel & the Church":4,"The Antichrist":5,"Final judgment":5,"After death":5,"New creation":4,"Election":5,"Spiritual gifts":5,"Baptism":5,"Missions & the unreached":4,"Eternal security":5,"Creation":5,"Women in ministry":3,"Lord's Supper":5},"saved":1791192538872}],"deleted":{},"admin":{"salt":"6ada70a9ff1d3e072cdce08e8768f928","iter":310000,"check":"3ca1ed0b02eb1983d652129bb5e1c151a7d78cc48d896cc8afb9937cabfc9e2c"}}</script>
@@ -14,6 +14,17 @@
 html[data-theme=dark]{--bg:#2A2C30;--surface:#33363B;--soft:#3A3D43;--line:#4A4E56;--ink:#ECEDEF;--muted:#BCC3CA;--grey:#8E969F;--teal:#5CC8D1;--tealbg:#0F7F89;--tealsoft:#21474B;--tealline:#2F6267;--tealdark:#A6E3E8;
   --amberbg:#4A3E1E;--amberfg:#F3D27A;--amberline:#8A7230;--greenbg:#1F3B2A;--greenfg:#9EDDB2;--orangebg:#5A3A2C;--toastbg:#111214;color-scheme:dark}
 html,body{background:var(--bg)}
+/* BookWorm: parchment library, serif. LampLight: leather and lamplight, dark, modern font */
+html[data-mode=bookworm]{--bg:#F3EBD8;--surface:#FBF6EA;--soft:#E9DFC6;--line:#D6C7A1;--ink:#33281C;--muted:#6A5843;--grey:#9C8A6E;--teal:#7B2D26;--tealbg:#7B2D26;--tealsoft:#EFDCD3;--tealline:#DDBFB3;--tealdark:#5A1F1A;--orangebg:#F1D7C4;--toastbg:#33281C;color-scheme:light}
+html[data-mode=bookworm] body,html[data-mode=bookworm] button,html[data-mode=bookworm] select,html[data-mode=bookworm] input,html[data-mode=bookworm] textarea{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif}
+html[data-mode=bookworm] .topt,html[data-mode=bookworm] .bpill{border-color:#A9812F}
+html[data-mode=bookworm] .tnum,html[data-mode=bookworm] .tnumbig{background:#2F4A3A!important}
+html[data-mode=lamplight]{--bg:#251A13;--surface:#30231A;--soft:#3B2C21;--line:#5A4433;--ink:#F2E7D2;--muted:#D2BF9E;--grey:#A08B6E;--teal:#E0B15A;--tealbg:#8A5A1C;--tealsoft:#46331E;--tealline:#6E5130;--tealdark:#F3D594;--orangebg:#5B3424;--toastbg:#140E0A;color-scheme:dark}
+html[data-mode=lamplight] .topt,html[data-mode=lamplight] .bpill,html[data-mode=lamplight] .tab-read .rcard,html[data-mode=lamplight] .bio-desk .rcard{border-color:#B98B3A}
+html[data-mode=lamplight] .tnum,html[data-mode=lamplight] .tnumbig{background:#6E2A22!important}
+html[data-mode=bookworm] #s svg rect[fill="#fff"]{fill:var(--bg)}
+html[data-mode=bookworm] #s svg [fill="#1F2933"]{fill:var(--ink)}html[data-mode=bookworm] #s svg [stroke="#1F2933"]{stroke:var(--ink)}html[data-mode=bookworm] #s svg [fill="#52606D"]{fill:var(--muted)}
+html[data-theme=dark][data-mode=lamplight] #s svg,html[data-theme=dark][data-mode=lamplight] .cmp svg{filter:invert(.88) hue-rotate(180deg) sepia(.55) saturate(1.25)}
 html[data-theme=dark] #s svg,html[data-theme=dark] .cmp svg{filter:invert(.86) hue-rotate(180deg) saturate(1.15)}
 html[data-theme=dark] .dot{filter:none}
 html[data-theme=dark] input,html[data-theme=dark] select,html[data-theme=dark] textarea{background:var(--surface);color:var(--ink);border-color:var(--line)}
@@ -315,7 +326,7 @@ button.addbtn{margin-left:auto;border-radius:10px;padding:8px 12px}
   <button id="vWheel" class="on">Wheel</button>
   <button id="vCompare">Compare people</button>
   <button id="vSurvey">Survey</button>
-  <button id="theme" title="Light / dark mode" aria-label="Light or dark mode">◐</button>
+  <button id="theme" title="Colour mode" aria-label="Colour mode">◐</button>
 </div>
 <div class="savestat" id="savestat"></div>
 <div class="bar" id="wheelBar">
@@ -2086,14 +2097,14 @@ function addClick(e){const b=e.target.closest("[data-a]");if(e.target===addBox){
       applyAdded();saveAdded()}renderQueue();if(view==="compare")renderCompare();return}
   if(a==="remove"){const x=ADDED.find(y=>y.name===b.dataset.n);if(x){x.removed=true;x.saved=Date.now();applyAdded();saveAdded();renderQueue()}}}
 // ---- light / dark (charcoal) switch ----
-const THEME_KEY="decisionwheel_theme",MODES=["auto","light","dark"],MODE_LABEL={auto:"◐ Auto",light:"☀ Light",dark:"☾ Dark"};
-function applyTheme(){const m=document.documentElement.getAttribute("data-mode")||"auto";
-  const dark=m==="dark"||(m==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);
+const THEME_KEY="decisionwheel_theme",MODES=["auto","light","dark","bookworm","lamplight"],MODE_LABEL={auto:"◐ Auto",light:"☀ Light",dark:"☾ Dark",bookworm:"📖 BookWorm",lamplight:"🕯 LampLight"};
+function applyTheme(){let m=document.documentElement.getAttribute("data-mode")||"auto";if(!MODE_LABEL[m]){m="auto";document.documentElement.setAttribute("data-mode",m)}
+  const dark=m==="dark"||m==="lamplight"||(m==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);
   document.documentElement.setAttribute("data-theme",dark?"dark":"light");
   const b=document.getElementById("theme");b.textContent=MODE_LABEL[m];b.title="Colour mode: "+m+" (tap to change)";
-  const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=dark?"#2A2C30":"#0E7C86"}
+  const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=m==="bookworm"?"#7B2D26":m==="lamplight"?"#251A13":dark?"#2A2C30":"#0E7C86"}
 document.getElementById("theme").onclick=()=>{const m=document.documentElement.getAttribute("data-mode")||"auto";
-  const n=MODES[(MODES.indexOf(m)+1)%MODES.length];document.documentElement.setAttribute("data-mode",n);lsSet(THEME_KEY,n);applyTheme();toast("Colour mode: "+n)};
+  const n=MODES[(MODES.indexOf(m)+1)%MODES.length];document.documentElement.setAttribute("data-mode",n);lsSet(THEME_KEY,n);applyTheme();toast("Colour mode: "+MODE_LABEL[n].replace(/^\S+ /,""))};
 try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyTheme)}catch(e){}
 applyTheme();
 // offline: once the app is opened from the website, it keeps working with no internet (phone or PC)
