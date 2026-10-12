@@ -15,6 +15,17 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [ ] Open the site on the phone once, sign in as admin, Add to Home Screen
 - [ ] Test on desktop (Chrome/Edge) and on mobile, online and offline
 
+## Goal: live research from the site (free sources only, no paid AI)
+Use case: in a shop, scan or type a book or author, get a quick report, saved for Luke to verify. Stated views (an author's own words) still come from research sessions with Claude; the site does identity, books, papers and inferred views.
+- [ ] Look up by book barcode (ISBN) or title: phone camera scan (Android Chrome has a built-in barcode reader; iPhone needs a small library), then Open Library / Google Books to get the exact author
+- [ ] Identity and background from Wikidata: church, college or seminary, denomination, religion (flag anyone not known to be a Christian), plus the Wikipedia summary
+- [ ] Inferred views from the Churches data: person → church / school → that body's usual teaching → suggested view, shown in italics and marked "to verify"
+- [ ] Books (Open Library, Google Books) and academic papers (OpenAlex, Crossref, ORCID) listed on the person's entry, with links
+- [ ] Quick report: who, Christian?, tradition and church, books (marking ones already on the reading list), all 18 topics as stated / inferred / not found, related people already in the app
+- [ ] Save across devices: admin enters a GitHub token once per device; the site writes results into the repo (a data file, never index.html code). Also solves syncing answers and added people from the phone (Option 2 above)
+- [ ] Admin review: everything found automatically stays "to verify" until Luke approves it; research rules from RESEARCH_LOG.md apply (2 sources, latest words win, inferred marked, "not found" rather than a guess)
+- Note: no server needed, since these sources allow requests from the browser. Paid AI lookups are out for now (Luke, Oct 2026)
+
 ## Syncing answers between devices
 - [x] Option 1 — move them by hand with export / "Paste a response" (already works)
 - [ ] Option 3 — Claude builds the latest answers into the file and pushes it to the repo
