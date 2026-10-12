@@ -70,6 +70,8 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [ ] Luke: confirm which hell view Why Hell? assigns to Irenaeus (and anyone else), since the publisher pages don't list names. Gregg and Bruce are left unplaced on Final judgment (both undecided)
 - [ ] Follow-ups for the new people: Origen's millennium (De Principiis 2.11), Augustine's Antichrist (City of God 20.19), Gregg on Israel & the church, Pinnock on women in ministry
 - [ ] Add more pre-1900 voices (now: Darby, Augustine, Calvin, Irenaeus, Origen, MacDonald). Still to add: e.g. Luther, Wesley, Spurgeon — needs research
+- [x] Data split out of index.html into `data/*.js` (topics, people, research, reading list, churches). index.html keeps the app code and saved answers. Works on the live site, offline on the phone, and when index.html is opened as a file on the PC (keep the `data` folder next to it)
+- [ ] Academic-source research on scholars in pairs (Wright+Bock, Bruce+Pinnock, Athas+Skarsaune, Packer+Grudem, Walvoord+Gentry, Storms+Ortlund, Adeyemo): journals (Themelios, JETS, Tyndale Bulletin, TMSJ, SBJT, BiblicalStudies.org.uk), OpenAlex/ORCID, faculty pages; CCEL for pre-1900 voices
 - [x] Change log: CHANGELOG.md records every commit and every people/topic/data change; git history is the backup of index.html and its saved answers
 - [ ] Check topic summaries, verse lists and church lists against sources (currently general reference)
 - [ ] Restyle (Luke to give direction)

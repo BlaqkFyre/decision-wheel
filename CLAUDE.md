@@ -17,7 +17,12 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 ## Files in the repo
 | File | What it is |
 |---|---|
-| `index.html` | The whole app (HTML, CSS and JS inline). Also holds the saved answers in `<script id="dw-saved" type="application/json">` near the top |
+| `index.html` | The app code (HTML, CSS and JS inline) and the saved answers in `<script id="dw-saved" type="application/json">` near the top. Loads the data files below with `<script src="data/…js?v=…">` |
+| `data/topics.js` | TOPICS, TSHORT, AXES, TINFO, ORGS |
+| `data/people.js` | V, PEOPLE, VER, LINKS (+ later VER/LINKS additions), NEWV, BOOKS, INI, ERA_OF, BIO |
+| `data/research.js` | Research layers: ATONE (+ATONE_SRC), ATONE2, R4, ATHAS_SRC, GREGG_SRC (+GREGG_VER), R3, RESEARCH. The code that applies them, in that order, stays in index.html |
+| `data/reading.js` | READ, KOORONG, FREE, LEAN |
+| `data/churches.js` | CH_STATUS, CHURCHES |
 | `survey.html` | Standalone survey Luke sends to people; they email back a `DW1:…:END` code that he pastes into the app |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png`, `apple-touch-icon.png` | Offline / home-screen support (service worker: network first, cached copy offline) |
 | `TODO.md` | Plans, done list and open items. Update it with every change |
@@ -34,7 +39,7 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 - Pills: thin grey border when closed, teal when open. The views inside a topic page keep their gold border.
 
 ## Safe editing workflow (important — learned the hard way)
-1. **Always start from the repo file.** Stage `index.html` (and anything else you'll change) from Luke's folder and note its modified time.
+1. **Always start from the repo file.** Stage `index.html` and the `data/*.js` files you'll change (and anything else) from Luke's folder and note its modified time.
 2. Edit a working copy. Keep the **`dw-saved` data block from the repo file** (Luke's and users' answers, the admin passphrase check value, and people added on the go). Only replace it deliberately, e.g. when Luke asks to change his own answers. Give that person a newer `saved` timestamp so the change wins over browser copies.
 3. Check the scripts' syntax and test with Playwright on desktop and phone sizes, in light and dark mode: switch through every Compare tab and look for page errors. On `file://` with no passphrase the app runs in admin "setup mode". To test visitor mode, use a copy that has the passphrase check value.
 4. **Write files into a fresh folder under `/mnt/user-data/outputs/`, send them with SendUserFile, and commit by `fileUuid`** using the modified time from step 1. Don't `cp` over an existing outputs file and commit by path. That once sent an older version and silently undid work.
@@ -42,7 +47,9 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 6. Remind Luke to reload any open Decision Wheel tabs after an update. "Link this file" saves only update the `dw-saved` block now, so an old tab can't undo code, but reloading avoids confusion.
 - Never touch or try to guess the admin passphrase. Its check value lives in `dw-saved.admin`.
 
-## Data model (inside `index.html` — search for these names)
+## Data model (in `data/*.js`; code and `dw-saved` in `index.html` — search for these names)
+- The data files are plain scripts (`const NAME=…`), not JSON, so the app also works when `index.html` is opened as a file on the PC. They share globals with the app script. Keep only data in them; code that applies or reads data stays in index.html.
+- **After changing any data file, bump the `?v=` number on all five data script tags in index.html** (e.g. `?v=20261012a`), so browsers don't use an old copy. `sw.js` fetches them fresh when online and keeps a copy for offline; add any new data file to its `DATA` list.
 - `TOPICS` — 18 topics, each `{name, q, pick, opts:[{s (short), n (name), d (description)}]}`. 2–5 options (Atonement has 5). `TSHORT` gives short names. `AXES` drives the Tendencies view and needs a value per option.
 - `PEOPLE` — built with `V(...)`: one value per topic, either `null`, an option index, or `[optionIndex, "note"]`. **Notes starting `(inferred)` are shown in italics** — use that for views worked out from a church, school or statement of faith rather than the person's own words. Also: `trad`, `church`, `src`, `modern`.
 - Later data layers applied on top: `NEWV` (topics 13–17 for older entries), `RESEARCH` (agent research), `ATONE` (atonement), `ATHAS_SRC` (extra sources for newly added people), `R3` (rotating research: `{name:{topicIndex:[option, note, [[title,url]…]]}}`).
@@ -55,7 +62,7 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 - Roles: admin (Luke) unlocks per device with a passphrase. Visitors edit only their own answers. Added people (`ADDED`, the "＋ Add a person" research queue) are saved in `dw-saved.added`.
 
 ## Adding or updating a person
-- Add the `PEOPLE` entry (with `V(...)` for all 18 topics), `BIO`, `BOOKS`, `ERA_OF` if not H+M, and sources (`LINKS`/`VER`, e.g. via `R3` or a `*_SRC` block such as `GREGG_SRC`/`GREGG_VER`). Log everything in `RESEARCH_LOG.md` and `CHANGELOG.md`.
+- These all live in `data/people.js` and `data/research.js` (sources) and `data/churches.js`. Add the `PEOPLE` entry (with `V(...)` for all 18 topics), `BIO`, `BOOKS`, `ERA_OF` if not H+M, and sources (`LINKS`/`VER`, e.g. via `R3` or a `*_SRC` block such as `GREGG_SRC`/`GREGG_VER`). Log everything in `RESEARCH_LOG.md` and `CHANGELOG.md`.
 - Before adding anyone, check they aren't already in `PEOPLE` (names are compared loosely in the app: "J.I. Packer" = "JI Packer"). People are always added by the person's name, never a book title.
 - Tell Luke if anyone he asks to add is not a Christian, or is widely regarded as outside orthodoxy.
 - Follow the research rules at the top of `RESEARCH_LOG.md`: 2 sources where possible; mark inferred views; the most recent source wins when sources conflict; check the research queue (`added`) first; confirming a person from one source doesn't rule out their other sources.
