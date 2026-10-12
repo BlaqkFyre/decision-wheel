@@ -9,6 +9,7 @@
 - Also check the app's research queue (people Luke added with "＋ Add a person", stored as `added` in index.html) and research those first.
 - For added people, Luke may confirm identity from just one source or book. That doesn't rule out other sources: Wikipedia pages, Open Library records and other books for the same person can be used once it's clear they're the same person. Same-name matches are stored as "possible" sources to check.
 - Status: paused (Oct 2026). Next up when resumed: ask Luke which group to start with.
+- Academic-source round (from 12 Oct 2026, placements in `ACAD` in data/research.js): see "Academic sources" at the end. Pairs 1–4 done; ask Luke before pair 5.
 
 Order: 1 Cahn + Begg · 2 Comer + Tripp · 3 Ortlund + McLaughlin · 4 Lennox + Bray · 5 Chandler + Jeremiah (then ask before restarting)
 
@@ -313,3 +314,51 @@ Goal: everyone gets an Atonement check. Placed where a source was found; the res
 - The rule: titles with "Views" or "Perspectives" are multi-view (each view written by its own supporter), so they're tagged ⚖ Balanced. A book listed under an option is tagged as arguing for that option. Exceptions are set by hand in `LEAN`.
 - Why Hell? (Gregg): Balanced. The publisher says it's meant to educate "without advocating for any one point of view" (https://zondervanacademic.com/products/why-hell). Goodreads reviewers sense it leans away from eternal torment (https://www.goodreads.com/book/show/201335305-why-hell).
 - Set from general knowledge of the book, not yet checked against reviews: McGinn, Antichrist (history / survey); Cooper, Body, Soul, and Life Everlasting (argues for a conscious intermediate state); Alcorn, Heaven (argues for a renewed New Earth); Piper, Let the Nations Be Glad! (argues for exclusivism); Four Views on Salvation in a Pluralistic World (multi-view, so Balanced even though it's listed under hopeful agnosticism).
+
+## Academic sources: scholars in pairs (Oct 2026)
+Where to look: free evangelical journals (Themelios, JETS, Tyndale Bulletin, The Master's Seminary Journal, SBJT, Evangelical Quarterly and Churchman via BiblicalStudies.org.uk / gospelstudies.org.uk, Mishkan via caspari.com), OpenAlex / Crossref / ORCID for paper lists, faculty pages, and CCEL for pre-1900 texts. Lead to check: the Atla Digital Library (dl.atla.com) came up in searches and may have open-access items.
+Rule reminder: a paper describing a view isn't the author holding it. Only first-person statements (or a reviewer's account of the author's own book) count as stated.
+
+Order: 1 Wright + Bock · 2 Bruce + Pinnock · 3 Athas + Skarsaune · 4 Packer + Grudem · 5 Walvoord + Gentry · 6 Storms + Ortlund · 7 Adeyemo (then ask before restarting)
+
+### Pair 1 — N.T. Wright, Darrell Bock
+- Wright — Reading Revelation: Preterist (new). Revelation for Everyone (2011) reads the book against the church's first-century conflict with Rome and treats its symbols as lasting truths; one reviewer classes it as "Preterist/Idealist", another as historical for the letters and symbolic for the visions.
+  - https://www.collectedmiscellany.com/?p=8718 (2011)
+  - https://www.goodreads.com/author_blog_posts/1970811-non-fiction-review-revelation-for-everyone-by-n-t-wright (2012)
+- Wright — Final judgment: found but NOT placed (doesn't fit the three options). Surprised by Hope (2008) rejects universalism, criticises eternal conscious torment and questions conditionalism; he suggests the finally impenitent "cease to bear the divine image at all" and live on in "a God-less state, beyond pity". Source is a blogger's summary, not his own words.
+  - https://oneinjesus.info/2008/07/surprised-by-hope-hell-part-1/
+- Wright — Final judgment: Annihilation, placed 12 Oct 2026 on Luke's rule (go with the author's own latest known words, note the earlier view). On the Premier Unbelievable podcast he said the finally impenitent person "simply ceases ultimately to exist", "you are no longer an image bearer", and that annihilationism "has something going for it" (Judas: "better for that man if he'd never been born"). The report doesn't give the episode date, but it is later than Surprised by Hope (2008). Earlier view kept in the note.
+  - https://protestia.substack.com/p/nt-wright-defends-annihilationism (critic's report quoting the podcast; undated)
+  - Tried: Premier "Ask NT Wright Anything" S2 episode on heaven and hell (page has summary only, no date or quotes)
+- Bock — New creation: Renewal (new). Redemption includes the created order; redeemed Jewish and Gentile nations live on in the new creation (his chapter in Covenantal and Dispensational Theologies: Four Views, IVP 2022, as summarised by Brian Collins).
+  - https://exegesisandtheology.com/2022/11/30/darrell-bock-progressive-dispensationalism-in-covenantal-and-dispensational-theologies-four-views-agreements-and-disagreements/
+- Bock — Women in ministry: not placed. DTS Voice "Women in leadership roles" chapel (7 Sep 2017) is Bock interviewing women leaders; it doesn't state his own view.
+  - https://voice.dts.edu/chapel/women-leadership-roles/
+- Searched, not yet usable: Bock on spiritual gifts (no first-person source found).
+- Next time: Bock's JETS / Bibliotheca Sacra articles (he was ETS president, 2000) for gifts, women, creation; Wright on election in Paul and the Faithfulness of God (corporate election, may not fit Calvinist/Arminian).
+
+### Pair 2 — F.F. Bruce, Clark Pinnock
+- Nothing new placed.
+- Pinnock: Wikipedia confirms only what's already in the app (annihilationism, Four Views on Hell 1996; inclusivism and possible post-mortem conversion, A Wideness in God's Mercy 1992; "sacramental and charismatic"). Women in ministry, security, creation not found stated.
+  - https://en.wikipedia.org/wiki/Clark_Pinnock
+- Bruce: Evangelical Quarterly 53.1 (1981) "The Seventy Weeks of Daniel 9:24-27" is by R.J.M. Gurney, not Bruce, and doesn't cite him.
+  - https://gospelstudies.org.uk/biblicalstudies/pdf/eq/1981-1_029.pdf
+- Next time: Bruce's own Evangelical Quarterly articles (he edited EQ 1949–80) and his commentaries on Thessalonians (Antichrist / man of lawlessness) and Romans 11 (Israel); Pinnock's "Climbing Out of a Swamp" (Interpretation 43, 1989) for creation; The Grace of God, the Will of Man (1989) for security.
+
+### Pair 3 — George Athas, Oskar Skarsaune
+- Nothing new placed.
+- Skarsaune, "We Have Found the Messiah", Mishkan 45 (2005): on Romans 11, Israel "will be saved" through watching the Gentiles receive salvation. A future salvation of Israel fits more than one Israel & Church option, so not placed.
+  - https://www.caspari.com/wp-content/uploads/2016/05/mishkan45.pdf
+- Skarsaune, "From the Jewish Messiah to the Creeds of the Church", Evangelical Review of Theology 32.3 (2008), via a Pneuma Review summary (2009): creeds rooted in Israel's faith; no topic views.
+  - https://pneumareview.com/oskar-skarsaune-from-the-jewish-messiah-to-the-creeds-of-the-church/
+- Athas: searches returned only Atla Digital Library records, not yet checked.
+- Next time: Athas's own articles (Moore College faculty page, Atla Digital Library); Skarsaune's In the Shadow of the Temple chapters on Israel and the church.
+
+### Pair 4 — J.I. Packer, Wayne Grudem
+- Packer — Eternal security: Perseverance (new, stated). Concise Theology (1993), "Perseverance: God Keeps His People Safe": the regenerate "can neither totally nor finally fall from the state of grace"; he prefers "preservation", since Christ "persists in preserving them"; "That does not mean that all who ever professed conversion will be saved."
+  - https://www.monergism.com/thethreshold/articles/onsite/packer/perseverance.html
+  - https://chedspellman.com/2007/02/ji-packer-on-perseverance-of-saints.html
+- Packer — still open: Millennium, Rapture, Revelation, Antichrist, After death, New creation, Creation, Lord's Supper. Concise Theology has chapters on Mortality, Second Coming, Heaven, Creation and the Lord's Supper (index at https://www.preceptaustin.org/concise-theology-j-i-packer), but the chapter texts weren't reachable. No chapter on the millennium or Antichrist.
+- Grudem — nothing new. Missions & the unreached and Daniel's 70th week still open; searches didn't find his own words.
+  - Tried: https://andynaselli.com/exclusivism-inclusivism-pluralism (no Grudem)
+- Next time: Packer's Concise Theology chapters (Mortality, Heaven, Lord's Supper) on Monergism; Grudem's Systematic Theology chapters on the unevangelised (ch. 19/33) and on Daniel 9.
