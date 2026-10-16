@@ -30,6 +30,7 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 | `RESEARCH_LOG.md` | Research method plus every source used or tried, person by person |
 | `CHANGELOG.md` | One row per commit (date, hash, title, people/topics/data changed) plus the detailed placements for each person added or changed. Also explains how backups work |
 | `README.md` | Short public description |
+| `.gitignore` | Keeps the `Claude outputs` preview folder and `decision-wheel-answers*.json` exports out of the (public) repo. Delete export files once their contents are in index.html |
 
 ## How Luke works (always)
 - Luke commits and pushes himself in GitHub Desktop. **Give a commit title plus a short summary with every change.**

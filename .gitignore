@@ -1,0 +1,5 @@
+# Preview screenshots the Claude app saves into this folder (not part of the site)
+Claude outputs/
+
+# Answer exports from the app ("Export all"); everything in them belongs in index.html
+decision-wheel-answers*.json
