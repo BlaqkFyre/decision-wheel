@@ -59,6 +59,7 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 - Churches tab: `CHURCHES` — families `{id, n, about, b:[[topic, option|null, note]], br:[{n, d, people, b}], people:[[name, status, note]], al:[ORGS names], src}`. Status codes: m member, p partial/ties, l left, x multiple, b background. `CH_OF` maps ORGS names to a family, so topic-page chips can link to it. `tabChurches()` renders it. When you add a person, also add them to the right church family or branch with a status.
 - `ATONE2` — atonement placements from the Oct 2026 checks (`{name:[option, note, [[title,url]…]]}`), applied after `ATONE`.
 - Verses: NET Bible. STEP links use `version=NET2full@reference=Rom.8.19-23`; several passages join with commas ("Read all in STEP"). Verse pop-ups fetch NET text from `labs.bible.org` and cache it on the device.
+- Person drop-downs use `personOpts(selected, skip, label)` (groups by `SEL_GROUPS` / `selGroup()`, A–Z) and `meFirst()` for user-only lists. Use them for any new person drop-down.
 - Roles: admin (Luke) unlocks per device with a passphrase. Visitors edit only their own answers. Added people (`ADDED`, the "＋ Add a person" research queue) are saved in `dw-saved.added`.
 
 ## Adding or updating a person

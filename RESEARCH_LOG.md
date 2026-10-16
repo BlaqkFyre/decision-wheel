@@ -376,3 +376,32 @@ Added by Luke with "＋ Add a person" (browser only), copied into index.html fro
   - https://ri.conicet.gov.ar/handle/11336/44412
   - Tried: https://en.wikipedia.org/wiki/Biblical_minimalism (doesn't mention him)
 - Result: 0 topics each, below Luke's 3–5 threshold, so none placed on the wheel. They stay in the research queue with notes. A "reference scholars" place in the app (bio + books, outside the comparisons) would need a small new feature; see TODO.md.
+
+## Added people: Jerome and Thomas Aquinas; Augustine follow-ups (16 Oct 2026)
+Luke asked for Jerome, Augustine (already in the app) and "the famous medieval theologian" (Thomas Aquinas suggested). Placements are in `ACAD` in data/research.js; people, bios, books and eras in data/people.js; church ties in data/churches.js. Pre-1900 labels like "Calvinist" or "Complementarian" are anachronistic; notes say so where it matters.
+
+### Jerome (c. 347–420)
+- Millennium: Amil. Opposed millenarianism; replaced the millenarian ending of Victorinus's Revelation commentary with a spiritual reading of Rev 20–21.
+  - https://apcz.umk.pl/BPTh/article/view/40419 (Paczkowski, Biblica et Patristica Thoruniensia 16.1, 2023)
+  - https://airus.unisalento.it/handle/11587/511326 (Capone, in Revelation's New Jerusalem in Late Antiquity, Mohr Siebeck 2023)
+- Antichrist: Future individual. Commentary on Daniel: the little horn is Antichrist, "one of the human race, in whom Satan will wholly take up his residence in bodily form", at the end when Rome is divided among ten kings; rejects Porphyry's Antiochus reading.
+  - https://en.wikipedia.org/wiki/Antichrist
+  - https://en.wikipedia.org/wiki/Jerome
+- Final judgment: Eternal, for the devil and unbelievers; opposed Origen's restoration. He held that Christians who die in sin are punished only for a time (noted).
+  - https://en.wikipedia.org/wiki/Jerome
+- Baptism: Infant. Against the Pelagians 3: children are baptised "that their sins may be forgiven them in baptism".
+  - https://www.newadvent.org/fathers/30113.htm
+- Tried: tertullian.org Commentary on Daniel (the online text covers Daniel 1–6 only, so Daniel 9 and 11 weren't reachable). Daniel's 70th week not placed.
+
+### Thomas Aquinas (1225–1274), all from his own Summa Theologiae (New Advent)
+- Final judgment: Eternal (Supplement q.99). New creation: Renewal (Supplement q.91 a.1). Election: Calvinist label, since predestination is not caused by foreseen merits (I q.23 a.5); note says he also taught grace can be lost by mortal sin. Baptism: Infant (III q.68 a.9). Women: Complementarian (Supplement q.39 a.1). Lord's Supper: Real presence, transubstantiation (III q.75). Atonement: Satisfaction (III q.48 a.2).
+  - https://www.newadvent.org/summa/5099.htm · 5091.htm · 1023.htm · 4068.htm · 5039.htm · 4075.htm · 4048.htm
+- Note: the Supplement was compiled after his death by Reginald of Piperno from Aquinas's commentary on the Sentences.
+- Next time: millennium (follows Augustine?), Antichrist (III q.8 a.8), after death (Supplement q.69), Eternal security.
+
+### Augustine of Hippo: follow-ups
+- Antichrist: Future individual. City of God 20.19: "Christ will not come to judge quick and dead unless Antichrist, His adversary, first come"; admits "I frankly confess I do not know what he means" about what restrains. 20.30 lists "Antichrist shall persecute" among the last events.
+  - https://ccel.org/ccel/schaff/npnf102.iv.XX.19.html
+  - https://ccel.org/ccel/schaff/npnf102.iv.XX.30.html
+- New creation: Renewal. City of God 20.16: the world passes away in fire and is "renewed to some better thing"; 20.30: "the world shall be burned and renewed".
+  - https://ccel.org/ccel/schaff/npnf102.iv.XX.16.html

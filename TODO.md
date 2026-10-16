@@ -80,8 +80,8 @@ Use case: in a shop, scan or type a book or author, get a quick report, saved fo
 - [ ] LATER (Luke's idea): in-app auto-check for added people. The app fetches basic sources it can reach from the browser (Wikipedia article text, Wikidata, Open Library, and maybe church "what we believe" pages that allow it), scans for clear view terms (e.g. "premillennial", "cessationist", "complementarian", "believer's baptism"), and only places a view when 2 independent sources agree. Auto-found views marked "auto-found — check" (like inferred), with source links, for Luke to approve; everything else stays in the research queue for Claude. Watch for: many sites block browser requests, and keyword matches can be wrong (e.g. an article describing a view the person argues against)
 - [x] Added Steve Gregg (Why Hell?) and voices his book names: Augustine of Hippo, John Calvin, Irenaeus of Lyon, Origen, George MacDonald, Clark Pinnock, F.F. Bruce (see RESEARCH_LOG.md / CHANGELOG.md)
 - [ ] Luke: confirm which hell view Why Hell? assigns to Irenaeus (and anyone else), since the publisher pages don't list names. Gregg and Bruce are left unplaced on Final judgment (both undecided)
-- [ ] Follow-ups for the new people: Origen's millennium (De Principiis 2.11), Augustine's Antichrist (City of God 20.19), Gregg on Israel & the church, Pinnock on women in ministry
-- [ ] Add more pre-1900 voices (now: Darby, Augustine, Calvin, Irenaeus, Origen, MacDonald). Still to add: e.g. Luther, Wesley, Spurgeon — needs research
+- [ ] Follow-ups for the new people: Origen's millennium (De Principiis 2.11), Augustine's Antichrist (done 16 Oct: Future individual, City of God 20.19), Gregg on Israel & the church, Pinnock on women in ministry
+- [ ] Add more pre-1900 voices (now: Darby, Augustine, Jerome, Aquinas, Calvin, Irenaeus, Origen, MacDonald). Still to add: e.g. Anselm, Luther, Wesley, Spurgeon — needs research
 - [x] Data split out of index.html into `data/*.js` (topics, people, research, reading list, churches). index.html keeps the app code and saved answers. Works on the live site, offline on the phone, and when index.html is opened as a file on the PC (keep the `data` folder next to it)
 - [ ] (ongoing) Academic-source research on scholars in pairs — pairs 1–4 done (Wright+Bock, Bruce+Pinnock, Athas+Skarsaune, Packer+Grudem; 4 placements); next pair 5 Walvoord+Gentry, ask Luke first. Rule from Luke: when an author's view has changed, use their own latest known words and note the earlier view. Pairs: (Wright+Bock, Bruce+Pinnock, Athas+Skarsaune, Packer+Grudem, Walvoord+Gentry, Storms+Ortlund, Adeyemo): journals (Themelios, JETS, Tyndale Bulletin, TMSJ, SBJT, BiblicalStudies.org.uk), OpenAlex/ORCID, faculty pages; CCEL for pre-1900 voices
 - [x] Change log: CHANGELOG.md records every commit and every people/topic/data change; git history is the backup of index.html and its saved answers
@@ -95,6 +95,9 @@ Use case: in a shop, scan or type a book or author, get a quick report, saved fo
 - [ ] Group 5: Kevin DeYoung, Rick Warren, John Lennox, Rebecca McLaughlin
 - [ ] Group 6: Jonathan Cahn, Alistair Begg, John Mark Comer, Paul David Tripp, Dane Ortlund
 - Rules: 2 sources per claim where possible; new authors need at least 3 topics with views that can be cited; researched people's views are fixed and have no conviction scores (only users have them)
+
+## Person drop-downs
+- [x] Target person (and every person drop-down) grouped: Survey users (current user first, rest A–Z), Ancient (pre-1900), Modern history (1900–2005), Modern (2005+), Research queue; A–Z within each. People active in more than one era go under the earliest
 
 ## Admin & security
 - [x] Visitors: view everything, add/edit only their own answers (saved in their browser), send them to Luke by email/code
