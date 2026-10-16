@@ -870,8 +870,10 @@ const CH_OF={};CHURCHES.forEach((C,i)=>(C.al||[]).forEach(a=>CH_OF[a]=i));
 function chPeople(C){const out=[],seen=new Set();const add=(arr,br)=>arr.forEach(([n,s,note])=>{const P=PEOPLE.find(p=>p.name===n);if(!P)return;out.push({P,s,note,br});seen.add(n)});
   add(C.people||[],null);(C.br||[]).forEach(B=>add(B.people||[],B.n));return out}
 function churchesOf(P){const out=[];CHURCHES.forEach((C,ci)=>{(C.people||[]).forEach(([n,s,note])=>{if(n===P.name)out.push({ci,br:null,s,note})});(C.br||[]).forEach(B=>(B.people||[]).forEach(([n,s,note])=>{if(n===P.name)out.push({ci,br:B.n,s,note})}))});return out}
-function tabChurches(vis){const P=target;if(bioSet==="sch")return schSwitch()+tabScholarAff();
-  let h=schSwitch()+`<p class="sub">Each church family, with its branches shown like a topic's options. For each: what it usually teaches on this app's topics, who here belongs (members, people with partial ties, people who left, and people in more than one), and what the people here actually hold.</p><p class="sub" style="font-size:12px">"Usually teaches" is general reference from each church's confession or statement and the linked sources, and doesn't apply to every congregation. "Among people here" is worked out from the people in this app in the chosen era(s). ✓ marks a view the selected person (${esc(P.name)}) holds. Hover a note-less tag to see who here holds that view.</p>`;
+function tabChurches(vis){const P=target,vs=vSwitch("ch",chSimple);
+  if(bioSet==="sch")return vs+schSwitch()+(chSimple?`<p class="sub">The scholars grouped by faith background. Switch to Full view for their institutions.</p>`+schAffSimpleCards():tabScholarAff());
+  if(chSimple)return vs+schSwitch()+`<p class="sub">Each church family at a glance: what it is, its branches and who here belongs (in the chosen eras). Switch to Full view for what it usually teaches and what the people here hold.</p>`+chSimpleCards();
+  let h=vs+schSwitch()+`<p class="sub">Each church family, with its branches shown like a topic's options. For each: what it usually teaches on this app's topics, who here belongs (members, people with partial ties, people who left, and people in more than one), and what the people here actually hold.</p><p class="sub" style="font-size:12px">"Usually teaches" is general reference from each church's confession or statement and the linked sources, and doesn't apply to every congregation. "Among people here" is worked out from the people in this app in the chosen era(s). ✓ marks a view the selected person (${esc(P.name)}) holds. Hover a note-less tag to see who here holds that view.</p>`;
   let desk=`<div class="rl tdesk">`,mob=`<div class="bio-mob">`;
   const bel=(arr)=>arr.map(([i,o,n])=>`<span class="tag${o==null?" chvar":" pp"}"${o==null?"":` data-pp="view" data-v="${i},${o}"`} title="${esc(n||"")}">${esc(TSHORT[i])}: ${o==null?"varies":esc(TOPICS[i].opts[o].s)}${P&&o!=null&&choice(P,i)===o?" ✓":""}</span>`).join("");
   const notes=(arr)=>arr.filter(x=>x[2]).map(([i,o,n])=>`<div>• <b>${esc(TSHORT[i])}</b>: ${esc(n)}</div>`).join("");
@@ -955,8 +957,30 @@ function tabScholarAff(){let h=`<p class="sub">The scholars' faith background an
     return mob?`<details class="bpill"><summary><span class="bav schav">${L.length}</span><span class="bpm"><span class="bpn">${esc(G.n)}</span><span class="bps">${L.map(([S])=>esc(S.name)).join(", ")}</span></span><span class="bchev">›</span></summary><div class="bbody">${body}</div></details>`
       :`<div class="rcard"><div class="rt">${esc(G.n)}</div>${body}</div>`};
   return h+`<div class="rl tdesk">${SCH_AFF.map(G=>card(G,false)).join("")}</div><div class="bio-mob">${SCH_AFF.map(G=>card(G,true)).join("")}</div>`}
-function tabBios(vis){if(bioSet==="sch")return schSwitch()+tabScholars();
-  let h=schSwitch()+`<p class="sub">A short profile for each person shown. Beliefs and tags come from their placements in this app; hover the heat map for sources. Controversies are listed only where widely reported. <i>Italic</i> beliefs are inferred (from their church or wider teaching) rather than stated by the person.</p>`;
+// ---- Simple / Full views for Bios and Churches (same switch as Topics), remembered per device ----
+let bioSimple=(()=>lsGet("decisionwheel_bioview")!=="full")(),chSimple=(()=>lsGet("decisionwheel_chview")!=="full")();
+const vSwitch=(k,on)=>`<div class="tabs" style="margin-top:0"><button class="mini${on?" on":""}" data-vs="${k}:1">Simple view</button><button class="mini${!on?" on":""}" data-vs="${k}:0">Full view</button></div>`;
+const fullBtn=(k,id,l)=>`<button class="lnk sfull" data-vfull="${k}:${id}">${l} →</button>`;
+function bioSimpleCards(vis){return `<div class="simgrid">${vis.map(P=>{const B=BIO[P.name]||{},k=PEOPLE.indexOf(P),n=TOPICS.filter((_,i)=>choice(P,i)!=null).length;
+  const badges=`${P.user?'<span class="new usr">user</span>':''}${P.scholar?'<span class="new sch">scholar</span>':''}`;
+  return `<div class="scard" id="sbio-${k}"><h3>${dotH(P)}${esc(P.name)}${badges}</h3><div class="sq">${esc(B.life||(P.user?"Survey user":""))} ${erasOf(P).map(x=>`<span class="etag e${x}">${ERA_SHORT[x]}</span>`).join("")}${P.church?" · "+esc(P.church):""}</div>
+    ${B.known?`<div class="sopt"><div class="sd" style="margin:0">${esc(B.known)}</div></div>`:""}
+    <div class="sopt"><div class="sn"><span>Beliefs recorded</span><span class="scnt">${n} of ${NT} topics</span></div><div class="sbar"><i style="width:${Math.round(100*n/NT)}%"></i></div></div>
+    ${fullBtn("bio",k,"Full bio")}</div>`}).join("")}</div>`}
+function schSimpleCards(){return `<div class="simgrid">${SCH.map((S,i)=>[S,i]).sort((a,b)=>byName(a[0],b[0])).map(([S,i])=>`<div class="scard" id="ssch-${i}"><h3><span class="bav schav">${esc(ini(S.name))}</span>${esc(S.name)}<span class="new sch">scholar</span></h3><div class="sq">${esc(S.life)}</div>
+    <div class="sopt"><div class="sn"><span class="tag schf" style="font-weight:600">${esc(S.faith)}</span></div><div class="sd">${esc(S.known)}</div></div>
+    ${fullBtn("sch",i,"Full bio")}</div>`).join("")}</div>`}
+function chSimpleCards(){return `<div class="simgrid">${CHURCHES.map((C,ci)=>{const all=[...new Map(chPeople(C).filter(x=>eraOK(x.P)).map(x=>[x.P,x])).values()],first=String(C.about).split(/(?<=\.)\s/)[0];
+  return `<div class="scard" id="sch-c-${ci}"><h3><span class="tnum">${ci+1}</span>${esc(C.n)}</h3><div class="sq">${esc(first)}</div>
+    ${(C.br||[]).length?`<div class="sopt"><div class="sn"><span>Branches</span><span class="scnt">${C.br.length}</span></div><div class="sd">${esc(C.br.map(B=>B.n).join(" · "))}</div></div>`:""}
+    <div class="sopt"><div class="sn"><span>People here</span><span class="scnt">${all.length}</span></div><div class="sd">${all.length?all.map(x=>esc(x.P.name)).join(", "):"No one yet"}</div></div>
+    ${fullBtn("ch",ci,"Full page")}</div>`}).join("")}</div>`}
+function schAffSimpleCards(){return `<div class="simgrid">${SCH_AFF.map(G=>{const L=SCH.filter(S=>S.aff&&S.aff.group===G.id).sort(byName);if(!L.length)return "";
+  return `<div class="scard"><h3>${esc(G.n)}</h3><div class="sq">${esc(G.about)}</div><div class="sopt"><div class="sn"><span>Scholars</span><span class="scnt">${L.length}</span></div><div class="sd">${L.map(S=>esc(S.name)).join(", ")}</div></div>${fullBtn("cha","0","Full view")}</div>`}).join("")}</div>`}
+function tabBios(vis){const vs=vSwitch("bio",bioSimple);
+  if(bioSet==="sch")return vs+schSwitch()+(bioSimple?`<p class="sub">Each scholar at a glance. Switch to Full view for positions, critics, works and sources.</p>`+schSimpleCards():tabScholars());
+  if(bioSimple)return vs+schSwitch()+`<p class="sub">Each person shown at a glance: dates, era, church, what they're known for and how many topics have a recorded view. Switch to Full view for beliefs, churches, critics and links.</p>`+bioSimpleCards(vis);
+  let h=vs+schSwitch()+`<p class="sub">A short profile for each person shown. Beliefs and tags come from their placements in this app; hover the heat map for sources. Controversies are listed only where widely reported. <i>Italic</i> beliefs are inferred (from their church or wider teaching) rather than stated by the person.</p>`;
   let desk=`<div class="rl bio-desk">`,mob=`<div class="bio-mob">`;
   vis.forEach(P=>{const B=BIO[P.name]||{},L=labels(P),k=PEOPLE.indexOf(P),F=fam(P);
     const held=TOPICS.map((T,i)=>{const c=choice(P,i);return c==null?null:`<span class="tag pp${inf(P,i)?" inf":""}" data-pp="view" data-v="${i},${c}">${esc(TSHORT[i])}: ${esc(T.opts[c].s)}</span>`}).filter(Boolean);
@@ -1099,14 +1123,20 @@ s.addEventListener("click",e=>{
   if(e.target.id==="cwswap"&&cwOther){const a=target;target=cwOther;cwOther=a;target.on=true;renderCompare();return}
   const go=e.target.closest("[data-goto]");if(go){const [w,k]=go.dataset.goto.split(":");
     if(w==="topic"){ctab="topics";topicSimple=false;pendingScroll="top-"+k;renderCompare();return}
-    if(w==="church"){ctab="churches";pendingScroll="ch-"+k;renderCompare();return}
-    if(w==="sbio"){ctab="bios";bioSet="sch";lsSet("decisionwheel_bioset","sch");pendingScroll="sch-"+k;renderCompare();return}
+    if(w==="church"){ctab="churches";bioSet="people";chSimple=false;pendingScroll="ch-"+k;renderCompare();return}
+    if(w==="sbio"){ctab="bios";bioSet="sch";bioSimple=false;lsSet("decisionwheel_bioset","sch");pendingScroll="sch-"+k;renderCompare();return}
     if(w==="tread"){ctab="read";readMode="topic";pendingScroll="rt-"+k;renderCompare();return}
     const P=PEOPLE[+k];P.on=true;
-    if(w==="read"){ctab="read";readMode="person";pendingScroll="rp-"+k}else if(w==="bio"){ctab="bios";bioSet="people";pendingScroll="bio-"+k}else{ctab="cwheel";if(P!==target)cwOther=P}
+    if(w==="read"){ctab="read";readMode="person";pendingScroll="rp-"+k}else if(w==="bio"){ctab="bios";bioSet="people";bioSimple=false;pendingScroll="bio-"+k}else{ctab="cwheel";if(P!==target)cwOther=P}
     renderCompare();return}
   const cw=e.target.closest("[data-cw]");if(cw){cwMode=cw.dataset.cw;renderCompare();return}
   const rm=e.target.closest("[data-rm]");if(rm){readMode=rm.dataset.rm;renderCompare();return}
+  const vsb=e.target.closest("[data-vs]");if(vsb){const [k,v]=vsb.dataset.vs.split(":"),on=v==="1";if(k==="bio"){bioSimple=on;lsSet("decisionwheel_bioview",on?"simple":"full")}else{chSimple=on;lsSet("decisionwheel_chview",on?"simple":"full")}renderCompare();return}
+  const vf=e.target.closest("[data-vfull]");if(vf){const [k,id]=vf.dataset.vfull.split(":");
+    if(k==="bio"){bioSimple=false;lsSet("decisionwheel_bioview","full");pendingScroll="bio-"+id}
+    else if(k==="sch"){bioSimple=false;lsSet("decisionwheel_bioview","full");pendingScroll="sch-"+id}
+    else{chSimple=false;lsSet("decisionwheel_chview","full");if(k==="ch")pendingScroll="ch-"+id}
+    renderCompare();return}
   const bs=e.target.closest("[data-bs]");if(bs){bioSet=bs.dataset.bs;lsSet("decisionwheel_bioset",bioSet);renderCompare();return}
   const ts=e.target.closest("[data-ts]");if(ts){topicSimple=ts.dataset.ts==="1";lsSet("decisionwheel_topicview",topicSimple?"simple":"full");renderCompare();return}
   const tf=e.target.closest("[data-tfull]");if(tf){topicSimple=false;lsSet("decisionwheel_topicview","full");pendingScroll="top-"+tf.dataset.tfull;renderCompare();return}

@@ -13,7 +13,7 @@ Old copies in Downloads (`decision_wheel.html`, `decision_wheel_TODO.md`) are no
 - [x] Add offline support: `manifest.webmanifest` + `sw.js` + icons (works offline once opened from the website; PC file copy already works offline)
 - [x] Turn on hosting
 - [ ] Open the site on the phone once, sign in as admin, Add to Home Screen
-- [ ] Test on desktop (Chrome/Edge) and on mobile, online and offline
+- [x] Test on desktop (Chrome/Edge) and on mobile, online and offline (Luke, 16 Oct: all good)
 
 ## Goal: live research from the site (free sources only, no paid AI)
 Use case: in a shop, scan or type a book or author, get a quick report, saved for Luke to verify. Stated views (an author's own words) still come from research sessions with Claude; the site does identity, books, papers and inferred views.
@@ -49,7 +49,7 @@ Use case: in a shop, scan or type a book or author, get a quick report, saved fo
 - [x] Pages centred on PC; reading-list titles bold with tags on their own line; simpler lean tags (For view / Balanced / Survey / Against view)
 - [x] Colour modes: Auto, Light, Dark, BookWorm (parchment, serif) and LampLight (leather, dark, modern font)
 - [x] Simple view for Topics, saved as the default (Simple / Full switch, remembered per device). Luke is trialling it
-- [ ] If Luke likes it: simple views for other tabs (e.g. Bios)
+- [x] Simple / Full views added to Bios and Churches (16 Oct), same switch and style as Topics
 - [ ] Lean tags: check the hand-set ones (Alcorn Heaven, Cooper, Piper Let the Nations Be Glad!, McGinn) against reviews
 - [ ] Churches: check each family's "usually teaches" line by line against its confession; add Calvary Chapel's own beliefs page (it timed out); confirm Ortlund's and Tripp's PCA ties, The Village Church's SBC status, Lennox's and McLaughlin's churches, and Parkside's affiliation
 - [ ] Atonement checks: batch 1 placed 11 people. Still to place (more research to do): Chuck Smith, Tsarfati, Lennox, McLaughlin, Cahn, Comer (rejects penal substitution, 2025), Tripp, Ortlund, Skarsaune, Adeyemo, Gregg, Pinnock, Bruce. Lewis stays unplaced on purpose
