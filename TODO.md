@@ -97,6 +97,7 @@ Use case: in a shop, scan or type a book or author, get a quick report, saved fo
 - Rules: 2 sources per claim where possible; new authors need at least 3 topics with views that can be cited; researched people's views are fixed and have no conviction scores (only users have them)
 
 ## Person drop-downs
+- [x] Target people picks highlight when fully shown (several at once), click again to remove; new picks: 3 most different, same end-times family, same church family, survey users. Era buttons show name over dates and count (16 Oct)
 - [x] Target person (and every person drop-down) grouped: Survey users (current user first, rest A–Z), Ancient (pre-1900), Modern history (1900–2005), Modern (2005+), Research queue; A–Z within each. People active in more than one era go under the earliest
 
 ## Admin & security

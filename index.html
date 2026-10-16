@@ -288,6 +288,7 @@ a.vall{font-size:11.5px;font-weight:700;color:var(--teal);text-decoration:none;b
 .cmp .tabs.btngrid{display:grid;flex-wrap:initial;overflow:visible}
 .btngrid button small{font-size:11px;opacity:.85}
 button.era{opacity:1}button.era:not(.on){background:var(--bg);color:var(--teal)}
+.era .en{display:block;font-weight:600}.era .ed{display:block;font-size:11.5px;opacity:.85;margin-top:1px}
 .ctl{border:1px solid var(--line);border-radius:14px;padding:12px 14px 2px;margin:0 0 14px;background:var(--soft)}
 .ctlrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .ctlrow .selref{flex:1;min-width:180px;max-width:340px;margin:0;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
@@ -321,6 +322,7 @@ button.ppl{display:inline-flex;align-items:center;gap:5px;border:0;background:no
 button.addbtn{margin-left:auto;border-radius:10px;padding:8px 12px}
 .new.torsch{background:var(--orangebg);color:var(--ink)}
 .new.sch{background:#5B4B8A;color:#fff}
+.qpick .qn{font-size:11px;opacity:.75;margin-left:2px}.qpick[disabled]{opacity:.45;cursor:default}
 .bav.schav{background:#5B4B8A;color:#fff;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;width:28px;height:28px;font-size:11px;font-weight:700;flex:none}
 .tag.schf{border-color:#5B4B8A}
 .schp{margin:3px 0}.schs{font-size:12px}
@@ -643,9 +645,27 @@ const SEL_GROUPS=["Survey users","Ancient history (pre-1900)","Modern history (1
 function selGroup(P){if(P.user)return 0;if(P.added)return 4;if(P.scholar)return 5;const e=erasOf(P);return e.includes("A")?1:e.includes("H")?2:3}
 function personOpts(sel,skip,label){const G=SEL_GROUPS.map(()=>[]);PEOPLE.forEach(P=>{if(P!==skip)G[selGroup(P)].push(P)});
   return G.map((L,g)=>L.length?`<optgroup label="${esc(SEL_GROUPS[g])}">${(g?L.sort(byName):meFirst(L)).map(P=>`<option value="${PEOPLE.indexOf(P)}"${P===sel?" selected":""}>${esc(label?label(P):P.name)}</option>`).join("")}</optgroup>`:"").join("")}
+// ---- Target people quick picks: highlighted when everyone in that group is currently shown (several can be lit at once); click a lit "+" pick again to remove its people ----
+function farthest(P,k=3){return PEOPLE.filter(Q=>Q!==P).map(Q=>({Q,...sim(P,Q)})).filter(x=>x.n>=5).sort((a,b)=>a.f-b.f||b.n-a.n).slice(0,k)}
+const QPICKS=[
+ ["all","Select all",()=>PEOPLE.filter(eraOK)],
+ ["none","Deselect all",()=>[]],
+ ["two","+ Closest",()=>closest(target,1).map(x=>x.Q)],
+ ["near","+ 3 closest",()=>closest(target,3).map(x=>x.Q)],
+ ["far","+ 3 most different",()=>farthest(target,3).map(x=>x.Q)],
+ ["fam","+ Same end-times family",()=>{const F=fam(target);return PEOPLE.filter(Q=>Q!==target&&fam(Q)===F)}],
+ ["church","+ Same church family",()=>{const mine=new Set(churchesOf(target).map(x=>x.ci));return mine.size?PEOPLE.filter(Q=>Q!==target&&churchesOf(Q).some(x=>mine.has(x.ci))):[]}],
+ ["modern","+ Modern authors",()=>PEOPLE.filter(P=>P.modern)],
+ ["users","+ Survey users",()=>PEOPLE.filter(P=>P.user&&P!==target)]];
+const shown=P=>(P.on||P===target)&&eraOK(P);
+function qActive(k,list){if(k==="all")return PEOPLE.filter(eraOK).every(shown);if(k==="none")return !PEOPLE.some(P=>P!==target&&shown(P));
+  const L=list.filter(eraOK);return L.length>0&&L.every(shown)}
+function qButtons(){return QPICKS.map(([k,l,f])=>{const L=f(),on=qActive(k,L),n=k==="none"?0:L.filter(P=>P!==target).length;
+  const tip=k==="all"||k==="none"?"":(n?(on?"Shown (click to remove): ":"Adds: ")+L.filter(P=>P!==target).map(P=>P.name).join(", "):"No one in this group for "+target.name);
+  return `<button class="mini qpick${on?" on":""}" data-q="${k}"${tip?` title="${esc(tip)}"`:""}${!n&&k!=="all"&&k!=="none"?" disabled":""}>${esc(l)}${n&&k!=="all"?` <span class="qn">${n}</span>`:""}</button>`}).join("")}
 function chips(){const tg=PEOPLE.indexOf(target);
   let h=`<div class="ctl"><div class="ctlrow"><label class="ctlh" for="seltarget">Target person</label><select class="selref" id="seltarget">${personOpts(target,null,P=>P.name+(P.user&&!P.self?" (survey)":""))}</select>${isAdmin?'<button class="mini addbtn" id="addperson">＋ Add a person</button>':""}</div>
-  <div class="ctlh">Target people</div><div class="btngrid"><button class="mini" data-q="all">Select all</button><button class="mini" data-q="none">Deselect all</button><button class="mini" data-q="two">+ Closest</button><button class="mini" data-q="near">+ 3 closest</button><button class="mini" data-q="modern">+ Modern authors</button></div>
+  <div class="ctlh">Target people</div><div class="btngrid">${qButtons()}</div><div class="tmut" style="font-size:12px;margin:4px 0 10px">Highlighted picks are fully shown right now; click a highlighted "+" pick again to remove those people.</div>
   ${eraBar()}</div><details class="pbox" id="pbox"${peopleOpen?" open":""}><summary><span class="pbt">People shown</span> <span class="pbn">${visible().length} of ${PEOPLE.filter(eraOK).length}</span> <span class="pbd">${visible().slice(0,14).map(P=>dotH(P,18)).join("")}${visible().length>14?" …":""}</span><span class="bchev">›</span></summary><div class="fams">`;
   FAM.forEach((F,fi)=>{const ps=PEOPLE.filter(P=>fam(P)===F&&eraOK(P));if(!ps.length)return;
     h+=`<div class="fam"><div class="fh"><i style="background:${F.col}"></i>${F.n}<button class="lnk" data-fa="${fi}">all</button><button class="lnk" data-fn="${fi}">none</button></div><div class="people">`+ps.map(P=>{const k=PEOPLE.indexOf(P);return `<button class="chip${P.on||P===target?'':' off'}${P===target?' tgt':''}" data-p="${k}">${dotH(P,20)}<span>${esc(P.name)}</span>${P.modern?'<span class="new">modern</span>':''}${P.user?'<span class="new usr">user</span>':''}</button>`}).join("")+`</div></div>`});
@@ -659,7 +679,7 @@ const eraOK=P=>P.user||P===target||erasOf(P).some(e=>eraSel.has(e)); // survey u
 const eraItemOK=eras=>eras.some(e=>eraSel.has(e));
 const ERA_BTN={A:["Ancient","pre-1900"],H:["Modern history","1900–2005"],M:["Modern","2005+"]};
 function eraBar(){return `<div class="ctlh">Target era <span class="ctlnote">People count in every era they were active in. Also filters topic debates.</span></div><div class="btngrid">${["A","H","M"].map(e=>{const n=PEOPLE.filter(P=>!P.user&&erasOf(P).includes(e)).length;
-  return `<button class="mini era${eraSel.has(e)?" on":""}" data-era="${e}" title="${ERA_NAMES[e]}">${ERA_BTN[e][0]} <small>${ERA_BTN[e][1]}</small> <span class="ecount">${n}</span></button>`}).join("")}</div>`}
+  return `<button class="mini era${eraSel.has(e)?" on":""}" data-era="${e}" title="${ERA_NAMES[e]}"><span class="en">${ERA_BTN[e][0]}</span><span class="ed">${ERA_BTN[e][1]} (${n})</span></button>`}).join("")}</div>`}
 const visible=()=>PEOPLE.filter(P=>(P.on||P===target)&&eraOK(P));
 function tabTend(vis){
   const W=1040,Lx=270,Rx=820,TW=Rx-Lx,lane=24,PER=8,GAP=21;let y=10,svg="",lastG="";const F=target;
@@ -1142,7 +1162,7 @@ s.addEventListener("click",e=>{
   const tf=e.target.closest("[data-tfull]");if(tf){topicSimple=false;lsSet("decisionwheel_topicview","full");pendingScroll="top-"+tf.dataset.tfull;renderCompare();return}
   const qb=e.target.closest("[data-q]");if(qb){const q=qb.dataset.q;
     if(q==="all")PEOPLE.forEach(P=>{if(eraOK(P))P.on=true});else if(q==="none")PEOPLE.forEach(P=>P.on=false);
-    else if(q==="modern")PEOPLE.forEach(P=>{if(P.modern)P.on=true});else closest(target,q==="two"?1:3).forEach(x=>x.Q.on=true);
+    else{const Q=QPICKS.find(x=>x[0]===q);if(Q){const L=Q[2](),off=qActive(q,L);L.forEach(P=>{if(P!==target)P.on=!off})}}
     renderCompare();return}
   const fa=e.target.closest("[data-fa],[data-fn]");if(fa){const F=FAM[+(fa.dataset.fa??fa.dataset.fn)],on=fa.dataset.fa!=null;PEOPLE.forEach(P=>{if(fam(P)===F)P.on=on});renderCompare();return}
   const chip=e.target.closest(".chip");if(chip){const P=PEOPLE[+chip.dataset.p];if(P!==target)P.on=!P.on;renderCompare();return}

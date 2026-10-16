@@ -63,6 +63,7 @@ Claude: keep this prompt up to date if the repo location, live link or key files
 - Verses: NET Bible. STEP links use `version=NET2full@reference=Rom.8.19-23`; several passages join with commas ("Read all in STEP"). Verse pop-ups fetch NET text from `labs.bible.org` and cache it on the device.
 - Topics, Bios and Churches each have a Simple / Full switch (`topicSimple`, `bioSimple`, `chSimple`; Simple is the default). Links into a bio or church from elsewhere open Full view.
 - Bios and Churches have a People / Scholars switch (`bioSet`, remembered per device); scholar cards come from `tabScholars()` and `tabScholarAff()`.
+- Target people quick picks live in `QPICKS` ([key, label, () => people]); `qActive()` lights a pick when all its people are shown, and clicking a lit pick removes them.
 - Person drop-downs use `personOpts(selected, skip, label)` (groups by `SEL_GROUPS` / `selGroup()`, A–Z) and `meFirst()` for user-only lists. Use them for any new person drop-down.
 - Roles: admin (Luke) unlocks per device with a passphrase. Visitors edit only their own answers. Added people (`ADDED`, the "＋ Add a person" research queue) are saved in `dw-saved.added`.
 
