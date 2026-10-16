@@ -405,3 +405,10 @@ Luke asked for Jerome, Augustine (already in the app) and "the famous medieval t
   - https://ccel.org/ccel/schaff/npnf102.iv.XX.30.html
 - New creation: Renewal. City of God 20.16: the world passes away in fire and is "renewed to some better thing"; 20.30: "the world shall be burned and renewed".
   - https://ccel.org/ccel/schaff/npnf102.iv.XX.16.html
+
+## Scholars & academics: Tov, Finkelstein, Pfoh (16 Oct 2026)
+Moved from the research queue to the new Scholars section (data/scholars.js). Content comes from Luke's History Files 2 collection (read: Tov 397, 300, 233 and bibliography; Finkelstein 2010, 2015, 2021; Pfoh 2014, 2018, 2021; reviews by Pfoh of Arnold & Hess, Pioske of The Forgotten Kingdom, Hawkins of The Quest for the Historical Israel; Kletter 2004; Amit 2014) plus these web checks of affiliations:
+- Finkelstein: born 29 Mar 1949, Tel Aviv, Ashkenazi Jewish family; Tel Aviv University (emeritus), University of Haifa, Megiddo. https://en.wikipedia.org/wiki/Israel_Finkelstein . Faith: "complete separation" of faith and research; "far from orthodoxy" but committed to Jewish tradition (Amit 2014, HF2).
+- Tov: born 15 Sep 1941, Amsterdam; Hebrew University; DSS editor-in-chief 1990/91–2009; Israel Prize 2009. https://en.wikipedia.org/wiki/Emanuel_Tov . NIAS gives 1944 (https://nias.knaw.nl/fellow/tov-e); 1941 used (fuller biography).
+- Pfoh: CONICET researcher at IICS, Pontifical Catholic University of Argentina; Lic. Historia UNLP, doctorate UBA 2011. https://bicyt.conicet.gov.ar/fichas/persona/en/9583 . Personal faith not stated (the Catholic university is his workplace, not evidence of his faith).
+- None of the three holds views on the wheel's 18 topics.

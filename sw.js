@@ -1,8 +1,8 @@
 // Decision Wheel offline support.
 // The app page and its data files (data/*.js) are fetched fresh whenever you're online (so you always get the latest version),
 // and the last copies are kept so the app still opens with no internet.
-const CACHE = "decision-wheel-v2";
-const DATA = ["./data/topics.js", "./data/people.js", "./data/research.js", "./data/reading.js", "./data/churches.js"];
+const CACHE = "decision-wheel-v3";
+const DATA = ["./data/topics.js", "./data/people.js", "./data/research.js", "./data/reading.js", "./data/churches.js", "./data/scholars.js"];
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", ...DATA];
 
 self.addEventListener("install", e => {
