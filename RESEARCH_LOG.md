@@ -362,3 +362,17 @@ Order: 1 Wright + Bock · 2 Bruce + Pinnock · 3 Athas + Skarsaune · 4 Packer +
 - Grudem — nothing new. Missions & the unreached and Daniel's 70th week still open; searches didn't find his own words.
   - Tried: https://andynaselli.com/exclusivism-inclusivism-pluralism (no Grudem)
 - Next time: Packer's Concise Theology chapters (Mortality, Heaven, Lord's Supper) on Monergism; Grudem's Systematic Theology chapters on the unevangelised (ch. 19/33) and on Daniel 9.
+
+## Research queue: Emanuel Tov, Israel Finkelstein, Emanuel Pfoh (16 Oct 2026)
+Added by Luke with "＋ Add a person" (browser only), copied into index.html from his export. Luke's instruction: treat as reference scholars; add to the wheel only if 3–5 topic views can be found; note that they're scholars and whether they're Christian.
+- Emanuel Tov — Hebrew Bible text scholar (Dead Sea Scrolls, Septuagint), Hebrew University. Not a Christian: Jewish background (born Amsterdam 1941, Bar Mitzvah, Habonim Dror, emigrated to Israel 1961). No views found on any of the 18 topics.
+  - https://en.wikipedia.org/wiki/Emanuel_Tov
+  - Tried: searches on Tov and the dating of Daniel (only third-party articles on the Qumran Daniel manuscripts)
+- Israel Finkelstein — archaeologist (Tel Aviv University, University of Haifa; Megiddo). Not known to be a Christian: Israeli Jewish; 2005 interview: "We ourselves in the family are not cut off from tradition"; keeps research separate from tradition, "no anti- or pro- agenda". No views found on the 18 topics (his work is on the history behind the Old Testament, not doctrine).
+  - https://en.wikipedia.org/wiki/Israel_Finkelstein
+  - https://hayadan.com/interview-with-israel-finkelstein-after-dandavid-award-270205 (27 Feb 2005)
+- Emanuel Pfoh — historian of ancient Israel/Palestine, CONICET (Argentina); sceptical ("minimalist") approach (The Emergence of Israel in Ancient Palestine, 2009). No information found on his faith; not known to be a Christian. No views found on the 18 topics.
+  - https://openlibrary.org/authors/OL6502864A
+  - https://ri.conicet.gov.ar/handle/11336/44412
+  - Tried: https://en.wikipedia.org/wiki/Biblical_minimalism (doesn't mention him)
+- Result: 0 topics each, below Luke's 3–5 threshold, so none placed on the wheel. They stay in the research queue with notes. A "reference scholars" place in the app (bio + books, outside the comparisons) would need a small new feature; see TODO.md.
